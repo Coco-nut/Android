@@ -3,22 +3,19 @@
 //
 
 
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.login;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import com.egoists.coco_nut.android.R.id;
+import android.view.Window;
 import com.egoists.coco_nut.android.R.layout;
-import com.googlecode.androidannotations.api.SdkVersionHelper;
 
-public final class KanbanActivity_
-    extends KanbanActivity
+public final class LoginActivity_
+    extends LoginActivity
 {
 
 
@@ -26,15 +23,15 @@ public final class KanbanActivity_
     public void onCreate(Bundle savedInstanceState) {
         init_(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
+        setContentView(layout.fragment_project_info);
     }
 
     private void init_(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     private void afterSetContentView_() {
-        mViewPager = ((ViewPager) findViewById(id.pager));
-        initViewPager();
+        doFinish();
     }
 
     @Override
@@ -55,16 +52,8 @@ public final class KanbanActivity_
         afterSetContentView_();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (((SdkVersionHelper.getSdkInt()< 5)&&(keyCode == KeyEvent.KEYCODE_BACK))&&(event.getRepeatCount() == 0)) {
-            onBackPressed();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    public static KanbanActivity_.IntentBuilder_ intent(Context context) {
-        return new KanbanActivity_.IntentBuilder_(context);
+    public static LoginActivity_.IntentBuilder_ intent(Context context) {
+        return new LoginActivity_.IntentBuilder_(context);
     }
 
     public static class IntentBuilder_ {
@@ -74,14 +63,14 @@ public final class KanbanActivity_
 
         public IntentBuilder_(Context context) {
             context_ = context;
-            intent_ = new Intent(context, KanbanActivity_.class);
+            intent_ = new Intent(context, LoginActivity_.class);
         }
 
         public Intent get() {
             return intent_;
         }
 
-        public KanbanActivity_.IntentBuilder_ flags(int flags) {
+        public LoginActivity_.IntentBuilder_ flags(int flags) {
             intent_.setFlags(flags);
             return this;
         }

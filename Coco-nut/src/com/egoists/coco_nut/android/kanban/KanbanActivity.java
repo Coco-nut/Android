@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -7,21 +7,23 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
+import com.egoists.coco_nut.android.R;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_main)
+@EActivity(R.layout.activity_kanban)
 public class KanbanActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	/**
 	 * TODO FragmentPagerAdapter를 받겠지만 한번에 메모리 로딩을 해야함. (5페이지 전부)
-	 * 메모리 부담이 크다고 판단된면 FragmentStatePagerAdapter로 바꾸기.
+	 * 메모리 부담이 크다고 판단되면 FragmentStatePagerAdapter로 바꾸기.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	@ViewById(R.id.pager)
+	@ViewById(R.id.pager_kanban)
 	ViewPager mViewPager;
 
 	
@@ -31,6 +33,33 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 //		getMenuInflater().inflate(R.menu.main, menu);
 //		return true;
 //	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case android.R.id.home:
+	            // This is called when the Home (Up) button is pressed in the action bar.
+	            // Create a simple intent that starts the hierarchical parent activity and
+	            // use NavUtils in the Support Package to ensure proper handling of Up.
+//	            Intent upIntent = new Intent(this, ProjectSelectionActivity_.class);
+//	            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+//	                // This activity is not part of the application's task, so create a new task
+//	                // with a synthesized back stack.
+//	                TaskStackBuilder.from(this)
+//	                        // If there are ancestor activities, they should be added here.
+//	                        .addNextIntent(upIntent)
+//	                        .startActivities();
+//	                finish();
+//	            } else {
+//	                // This activity is part of the application's task, so simply
+//	                // navigate up to the hierarchical parent activity.
+//	                NavUtils.navigateUpTo(this, upIntent);
+//	            }
+	        	finish();
+	            return true;
+	    }
+	    return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -51,6 +80,7 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 	void initViewPager() {
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		// Create the adapter that will return a fragment for each of the three
