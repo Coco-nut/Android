@@ -1,4 +1,7 @@
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
+
+import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

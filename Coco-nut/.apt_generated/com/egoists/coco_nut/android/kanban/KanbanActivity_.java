@@ -3,7 +3,7 @@
 //
 
 
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,14 +26,14 @@ public final class KanbanActivity_
     public void onCreate(Bundle savedInstanceState) {
         init_(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
+        setContentView(layout.activity_kanban);
     }
 
     private void init_(Bundle savedInstanceState) {
     }
 
     private void afterSetContentView_() {
-        mViewPager = ((ViewPager) findViewById(id.pager));
+        mViewPager = ((ViewPager) findViewById(id.pager_kanban));
         initViewPager();
     }
 

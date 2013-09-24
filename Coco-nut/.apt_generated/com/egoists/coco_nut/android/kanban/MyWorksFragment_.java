@@ -3,7 +3,7 @@
 //
 
 
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.egoists.coco_nut.android.R.layout;
 
-public final class InProgressFragment_
-    extends InProgressFragment
+public final class MyWorksFragment_
+    extends MyWorksFragment
 {
 
     private View contentView_;
@@ -33,7 +33,7 @@ public final class InProgressFragment_
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView_ = super.onCreateView(inflater, container, savedInstanceState);
         if (contentView_ == null) {
-            contentView_ = inflater.inflate(layout.fragment_in_progress, container, false);
+            contentView_ = inflater.inflate(layout.fragment_my_works, container, false);
         }
         return contentView_;
     }
@@ -51,8 +51,8 @@ public final class InProgressFragment_
         return contentView_.findViewById(id);
     }
 
-    public static InProgressFragment_.FragmentBuilder_ builder() {
-        return new InProgressFragment_.FragmentBuilder_();
+    public static MyWorksFragment_.FragmentBuilder_ builder() {
+        return new MyWorksFragment_.FragmentBuilder_();
     }
 
     public static class FragmentBuilder_ {
@@ -63,8 +63,8 @@ public final class InProgressFragment_
             args_ = new Bundle();
         }
 
-        public InProgressFragment build() {
-            InProgressFragment_ fragment_ = new InProgressFragment_();
+        public MyWorksFragment build() {
+            MyWorksFragment_ fragment_ = new MyWorksFragment_();
             fragment_.setArguments(args_);
             return fragment_;
         }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgMainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_main_coconut" />
+
+    <LinearLayout
+        android:id="@+id/laySignUpForm"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+
+        <!-- SMS 전송을 위한 전화번호 & 버튼 -->
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_marginBottom="20dp" >
+	        <TextView
+	            android:id="@+id/txtSignUpPhoneNum"
+	            android:layout_width="0px"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceMedium" >
+	        </TextView>
+	        <Button
+	            android:id="@+id/btnSignUpSendSms"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="다음"/>
+        </LinearLayout>
+        <!-- 인증번호 입력부 -->
+        <EditText
+            android:id="@+id/edtSignUpAuthNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:inputType="numberDecimal" >
+        </EditText>
+        <!-- 로그인 버튼 -->
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그인"/>
+    </LinearLayout>
+</RelativeLayout>

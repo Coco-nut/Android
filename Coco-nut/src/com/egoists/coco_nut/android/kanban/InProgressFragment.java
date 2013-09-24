@@ -1,5 +1,7 @@
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
 
+import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.R.layout;
 import com.googlecode.androidannotations.annotations.EFragment;
 
 import android.os.Bundle;

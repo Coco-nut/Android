@@ -3,7 +3,7 @@
 //
 
 
-package com.egoists.coco_nut.android;
+package com.egoists.coco_nut.android.kanban;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
