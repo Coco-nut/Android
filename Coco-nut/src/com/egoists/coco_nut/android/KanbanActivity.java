@@ -13,7 +13,7 @@ import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+public class KanbanActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	/**
 	 * TODO FragmentPagerAdapter를 받겠지만 한번에 메모리 로딩을 해야함. (5페이지 전부)

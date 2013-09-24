@@ -17,8 +17,8 @@ import com.egoists.coco_nut.android.R.id;
 import com.egoists.coco_nut.android.R.layout;
 import com.googlecode.androidannotations.api.SdkVersionHelper;
 
-public final class MainActivity_
-    extends MainActivity
+public final class KanbanActivity_
+    extends KanbanActivity
 {
 
 
@@ -63,8 +63,8 @@ public final class MainActivity_
         return super.onKeyDown(keyCode, event);
     }
 
-    public static MainActivity_.IntentBuilder_ intent(Context context) {
-        return new MainActivity_.IntentBuilder_(context);
+    public static KanbanActivity_.IntentBuilder_ intent(Context context) {
+        return new KanbanActivity_.IntentBuilder_(context);
     }
 
     public static class IntentBuilder_ {
@@ -74,14 +74,14 @@ public final class MainActivity_
 
         public IntentBuilder_(Context context) {
             context_ = context;
-            intent_ = new Intent(context, MainActivity_.class);
+            intent_ = new Intent(context, KanbanActivity_.class);
         }
 
         public Intent get() {
             return intent_;
         }
 
-        public MainActivity_.IntentBuilder_ flags(int flags) {
+        public KanbanActivity_.IntentBuilder_ flags(int flags) {
             intent_.setFlags(flags);
             return this;
         }
