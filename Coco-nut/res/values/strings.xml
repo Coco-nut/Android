@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Coco-nut</string>
+    <string name="app_name_locale">코코넛</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_my_works">나의 일</string>
+    <string name="title_briefing">상황판</string>
+    <string name="title_to_do">할 일</string>
+    <string name="title_in_progress">진행 중</string>
+    <string name="title_done">완료</string>
+
+</resources>
