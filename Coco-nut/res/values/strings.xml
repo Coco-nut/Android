@@ -9,5 +9,7 @@
     <string name="title_to_do">할 일</string>
     <string name="title_in_progress">진행 중</string>
     <string name="title_done">완료</string>
+    
+    <string name="signup_message">코코넛은 전화번호의 본인 사용 확인 및 부정사용 방지를 위하여 인증을 필요로 합니다.</string>
 
 </resources>

@@ -43,8 +43,9 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        txtSignUpPhoneNum = ((TextView) findViewById(id.txtSignUpPhoneNum));
         imgMainLogo = ((ImageView) findViewById(id.imgMainLogo));
+        txtSignUpPhoneNum = ((TextView) findViewById(id.txtSignUpPhoneNum));
+        laySubmmitForm = ((LinearLayout) findViewById(id.laySubmmitForm));
         laySignUpForm = ((LinearLayout) findViewById(id.laySignUpForm));
         {
             View view = findViewById(id.btnSignUp);
@@ -55,6 +56,21 @@ public final class LoginActivity_
                     @Override
                     public void onClick(View view) {
                         LoginActivity_.this.doSignUp();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.btnSignUpSendSms);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        LoginActivity_.this.doSendSms();
                     }
 
                 }
@@ -87,6 +103,42 @@ public final class LoginActivity_
     }
 
     @Override
+    public void showSignUpForm() {
+        handler_.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.showSignUpForm();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        , 1000L);
+    }
+
+    @Override
+    public void displaySignUpLayout() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.displaySignUpLayout();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
     public void holdMainLogo() {
         handler_.postDelayed(new Runnable() {
 
@@ -105,14 +157,14 @@ public final class LoginActivity_
     }
 
     @Override
-    public void displayLoginLayout() {
+    public void showSubmmitForm() {
         handler_.post(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    LoginActivity_.super.displayLoginLayout();
+                    LoginActivity_.super.showSubmmitForm();
                 } catch (RuntimeException e) {
                     Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }

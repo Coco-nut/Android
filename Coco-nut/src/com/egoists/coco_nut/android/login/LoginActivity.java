@@ -34,6 +34,9 @@ public class LoginActivity extends Activity {
 	@ViewById
 	TextView txtSignUpPhoneNum;
 	
+	@ViewById
+	LinearLayout laySubmmitForm;
+	
 	@AnimationRes
 	Animation fadeIn;
 	
@@ -54,11 +57,11 @@ public class LoginActivity extends Activity {
 			AndLog.i("User token is detected.");
 			moveToProjectSelectionActivity();
 		}
-		displayLoginLayout();
+		displaySignUpLayout();
 	}
 	
 	@UiThread
-	void displayLoginLayout() {
+	void displaySignUpLayout() {
 		// 메인 로고 위로 이동
 		Animation moveUp = new TranslateAnimation(
 				Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, 
@@ -66,10 +69,22 @@ public class LoginActivity extends Activity {
 		moveUp.setFillAfter(true);
 		moveUp.setDuration(1000);
 		imgMainLogo.startAnimation(moveUp);
-		
-		// 로그인 폼 보이기
-		laySignUpForm.setVisibility(View.VISIBLE);
+		showSignUpForm();
+	}
+	
+	@UiThread(delay=1000)
+	void showSignUpForm() {
+		// 인증번호 전송 폼 보이기
+		fadeIn.setFillAfter(true);
+		fadeIn.setDuration(2000);
+		laySignUpForm.startAnimation(fadeIn);
 		txtSignUpPhoneNum.setText(getMyPhoneNumber());
+	}
+	
+	@UiThread
+	void showSubmmitForm() {
+		// 로그인 폼 보이기
+		laySubmmitForm.setVisibility(View.VISIBLE);
 	}
 	
 	boolean hasUserToken() {
@@ -82,6 +97,13 @@ public class LoginActivity extends Activity {
 		return mgr.getLine1Number();
 	}
 	
+	@Click(R.id.btnSignUpSendSms)
+	void doSendSms() {
+		// TODO 인증번호 변경으로 변경할 것
+		showSubmmitForm();
+		
+	}
+	
 	@Click(R.id.btnSignUp)
 	void doSignUp() {
 		// TODO 계정 등록으로 변경할 것
@@ -90,7 +112,8 @@ public class LoginActivity extends Activity {
 
 	void moveToProjectSelectionActivity() {
 		// 로딩이 끝난후 이동할 Activity
-        startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class)); 
+        startActivity(new Intent(getApplication(), 
+        		com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class)); 
         LoginActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
 	}
 }
