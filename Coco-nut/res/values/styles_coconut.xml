@@ -18,7 +18,7 @@
 -->
 
 <resources>
-
+    <style name="Theme.NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar"/> 
     <style name="Theme.Coconut" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_coconut</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Coconut</item>

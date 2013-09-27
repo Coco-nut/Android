@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgMainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_main_coconut" />
+
+    <LinearLayout
+        android:id="@+id/laySignUpForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="80dp"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+        <!-- 안내 메시지 -->
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/signup_message"
+	        android:layout_marginBottom="10dp"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <!-- SMS 전송을 위한 전화번호 & 버튼 -->
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_marginBottom="20dp" >
+	        <TextView
+	            android:id="@+id/txtSignUpPhoneNum"
+	            android:layout_width="0px"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge" >
+	        </TextView>
+	        <Button
+	            android:id="@+id/btnSignUpSendSms"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@color/button_bg_coconut"
+                android:textColor="@color/font_white_coconut"
+	            android:text="다음"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/laySubmmitForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+	        <!-- 인증번호 입력부 -->
+	        <EditText
+	            android:id="@+id/edtSignUpAuthNumber"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="10dp"
+	            android:inputType="numberDecimal" >
+	        </EditText>
+	        <!-- 로그인 버튼 -->
+	        <Button
+	            android:id="@+id/btnSignUp"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@color/button_bg_coconut"
+	            android:textColor="@color/font_white_coconut"
+	            android:text="로그인"
+	            />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
