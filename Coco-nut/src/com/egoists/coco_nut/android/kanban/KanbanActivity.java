@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.kanban.briefing.BriefingFragment;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
