@@ -114,7 +114,7 @@ public class GanttView extends View {
 			
 			tid = getResources().getIdentifier("briefing_label_"+used_categories[i],"drawable",context.getPackageName());
 			BitmapDrawable temp = (BitmapDrawable)getResources().getDrawable(tid);
-			label[i] = Bitmap.createScaledBitmap(temp.getBitmap(), label_w, label_h, false);
+			label[i] = Bitmap.createScaledBitmap(temp.getBitmap(), x(label_w), y(label_h), false);
 		}
 		
 		//Calculate date difference
@@ -130,7 +130,7 @@ public class GanttView extends View {
 			int rightend = centerline_x1 + (centerline_x2 - centerline_x1)/(nLines+1)*nLines;
 			label_x1[i] = rightend - (int)(((day_of_end.getTimeInMillis() - startdates[i].getTimeInMillis())/24/3600/1000) * day_dx);
 			label_x2[i] = rightend - (int)(((day_of_end.getTimeInMillis() - enddates[i].getTimeInMillis())/24/3600/1000) * day_dx);
-			label_cropped[i] = Bitmap.createBitmap(label[category[i]-1],0,0, label_x2[i]-label_x1[i], label_h);
+			label_cropped[i] = Bitmap.createBitmap(label[category[i]-1],0,0, x(label_x2[i]-label_x1[i]), y(label_h));
 		}
 		
 	}
@@ -163,10 +163,8 @@ public class GanttView extends View {
 			canvas.drawText(tmp.get(Calendar.MONTH)+"."+tmp.get(Calendar.DATE),x(toptext_x1 + (nLines-i-1)*toptext_dx),y(toptext_y),paint);
 		}
 		
-		for(int i = 0; i< number_of_cards; i++){
-			AndLog.i("x2 = "+label[category[i]-1].getHeight());
-			canvas.drawBitmap(label_cropped[i], label_x1[i], label_y1 + i * label_dy, null);
-		}
+		for(int i = 0; i< number_of_cards; i++)
+			canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + i * label_dy), null);
 		
 		paint.setColor(flag_text_c);
 		paint.setTextSize(25);	
