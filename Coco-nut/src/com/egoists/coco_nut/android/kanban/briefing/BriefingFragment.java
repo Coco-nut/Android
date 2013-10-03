@@ -18,6 +18,8 @@ public class BriefingFragment extends Fragment {
 	LinearLayout briefing_layout;
 	LinearLayout gantt_list;
 	LinearLayout wip_list;
+	LinearLayout parti_list;
+	LinearLayout peer_list;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -29,6 +31,14 @@ public class BriefingFragment extends Fragment {
 		wip_list = (LinearLayout) briefing_layout.findViewById(R.id.pager_kanban_briefing_wiplist);
 		WIPView wipview = new WIPView(getActivity());
 		wip_list.addView(wipview);
+
+		parti_list = (LinearLayout) briefing_layout.findViewById(R.id.pager_kanban_briefing_partilist);
+		ParticipationView partiview = new ParticipationView(getActivity());
+		parti_list.addView(partiview);
+		
+		peer_list = (LinearLayout) briefing_layout.findViewById(R.id.pager_kanban_briefing_peerlist);
+		PeerView peerview = new PeerView(getActivity());
+		peer_list.addView(peerview);
 		
 		return briefing_layout;
 	}

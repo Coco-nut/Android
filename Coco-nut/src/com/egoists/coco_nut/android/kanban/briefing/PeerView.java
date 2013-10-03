@@ -2,24 +2,18 @@ package com.egoists.coco_nut.android.kanban.briefing;
 
 import java.util.Calendar;
 
-import com.egoists.coco_nut.android.util.AndLog;
-
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
 
-public class WIPView extends View {
+public class PeerView extends View {
 	
 	//Dummy Dataset : will be achieved from server later
 	Calendar[] dateofchanges;
@@ -86,7 +80,7 @@ public class WIPView extends View {
 	Point resolution;
 	int nLines;
 	
-	public WIPView(Context context){
+	public PeerView(Context context){
 		super(context);
 		//instantiate dummy data
 		instantiatedummydates();
