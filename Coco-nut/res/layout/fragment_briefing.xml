@@ -39,7 +39,6 @@
             android:orientation="vertical"
             >
 	        <TextView
-	            android:id = "@+id/testest"
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
 	            android:gravity="center"
@@ -49,15 +48,22 @@
 	            android:focusable="true"
 	            />
         </LinearLayout>
-        <TextView
+        <LinearLayout
+            android:id="@+id/pager_kanban_briefing_wiplist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:background="#0a0"
-            android:text="Done and WIP Chart"
-            android:focusable="true"
-	        android:textColor = "#fff"
-            />
+            android:orientation="vertical"
+            >
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:gravity="center"
+	            android:background="#0a0"
+	            android:text="WIP Chart"
+	            android:focusable="true"
+		        android:textColor = "#fff"
+	            />
+        </LinearLayout>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

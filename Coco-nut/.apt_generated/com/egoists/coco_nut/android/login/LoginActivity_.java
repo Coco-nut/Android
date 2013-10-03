@@ -43,25 +43,10 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        laySignUpForm = ((LinearLayout) findViewById(id.laySignUpForm));
-        imgMainLogo = ((ImageView) findViewById(id.imgMainLogo));
-        laySubmmitForm = ((LinearLayout) findViewById(id.laySubmmitForm));
         txtSignUpPhoneNum = ((TextView) findViewById(id.txtSignUpPhoneNum));
-        {
-            View view = findViewById(id.btnSignUpSendSms);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        LoginActivity_.this.doSendSms();
-                    }
-
-                }
-                );
-            }
-        }
+        laySubmmitForm = ((LinearLayout) findViewById(id.laySubmmitForm));
+        imgMainLogo = ((ImageView) findViewById(id.imgMainLogo));
+        laySignUpForm = ((LinearLayout) findViewById(id.laySignUpForm));
         {
             View view = findViewById(id.btnSignUp);
             if (view!= null) {
@@ -71,6 +56,21 @@ public final class LoginActivity_
                     @Override
                     public void onClick(View view) {
                         LoginActivity_.this.doSignUp();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.btnSignUpSendSms);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        LoginActivity_.this.doSendSms();
                     }
 
                 }
@@ -100,6 +100,24 @@ public final class LoginActivity_
 
     public static LoginActivity_.IntentBuilder_ intent(Context context) {
         return new LoginActivity_.IntentBuilder_(context);
+    }
+
+    @Override
+    public void showSignUpForm() {
+        handler_.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.showSignUpForm();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        , 1000L);
     }
 
     @Override
@@ -154,24 +172,6 @@ public final class LoginActivity_
 
         }
         );
-    }
-
-    @Override
-    public void showSignUpForm() {
-        handler_.postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    LoginActivity_.super.showSignUpForm();
-                } catch (RuntimeException e) {
-                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        , 1000L);
     }
 
     @Override
