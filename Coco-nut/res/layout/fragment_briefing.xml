@@ -64,23 +64,37 @@
 		        android:textColor = "#fff"
 	            />
         </LinearLayout>
-        <TextView
+        <LinearLayout
+            android:id="@+id/pager_kanban_briefing_partilist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:background="#00a"
-            android:text="Participation Rate Chart"
-            android:focusable="true"
-            android:textColor = "#fff"
-            />
-        <TextView
+            android:orientation="vertical"
+            >
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:gravity="center"
+	            android:background="#00a"
+	            android:text="Participation Rating Chart"
+	            android:focusable="true"
+		        android:textColor = "#fff"
+	            />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pager_kanban_briefing_peerlist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:background="#a00"
-            android:text="Peer Rating Chart"
-            android:focusable="true"
-            android:textColor = "#fff"
-            />
+            android:orientation="vertical"
+            >
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:gravity="center"
+	            android:background="#a00"
+	            android:text="Peer Rating Chart"
+	            android:focusable="true"
+		        android:textColor = "#fff"
+	            />
+        </LinearLayout>
     </com.egoists.coco_nut.android.kanban.briefing.VerticalPager>
 </LinearLayout>
