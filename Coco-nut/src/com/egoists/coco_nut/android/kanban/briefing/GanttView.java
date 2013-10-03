@@ -38,14 +38,14 @@ public class GanttView extends View {
 	final int chart_height = 21 + 29*number_of_cards + 8;
 	
 	final int leftline_w = 4;
-	final int leftline_c = Color.argb(100, 167, 167, 167);
+	final int leftline_c = Color.argb(255, 217, 217, 217);
 	final int leftline_x = 31;
 	final int leftline_y1 = top_margin + 13;
 	final int leftline_y2 = top_margin + chart_height + 13;
 	Paint leftline_paint;
 	
 	final int bottomline_w = 1;
-	final int bottomline_c = Color.argb(100, 154, 154, 154);
+	final int bottomline_c = Color.argb(255, 203, 203, 203);
 	final int bottomline_x1 = leftline_x;
 	final int bottomline_x2 = 689;
 	final int bottomline_y = leftline_y2;
@@ -57,13 +57,13 @@ public class GanttView extends View {
 	final int flag_y1 = leftline_y1 + chart_height + 12;
 	final int flag_y2 = leftline_y1 + chart_height + 12 + 29;
 	final int flag_dy = 47;
-	final int flag_text_c = Color.argb(100, 50, 50, 50);
+	final int flag_text_c = Color.argb(255, 130, 130, 130);
 	final int flag_text_x = 88;
 	final int flag_text_y = top_margin + chart_height + 48;
 	Paint flagtext_paint;
 
 	final int centerline_w = 1;
-	final int centerline_c = Color.argb(100, 186, 186, 186);
+	final int centerline_c = Color.argb(255, 236, 236, 236);
 	final int centerline_x1 = leftline_x + 2;
 	final int centerline_x2 = 740;
 	final int centerline_y1 = leftline_y1;
@@ -72,7 +72,7 @@ public class GanttView extends View {
 	Paint centerline_paint;
 	
 	final int toptext_y = top_margin;
-	final int toptext_c = Color.argb(100, 186, 186, 186);
+	final int toptext_c = Color.argb(255, 217, 217, 217);
 	Paint toptext_paint;
 	
 	final int label_y1 = leftline_y1 + 21;
