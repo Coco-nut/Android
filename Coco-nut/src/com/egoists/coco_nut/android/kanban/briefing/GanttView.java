@@ -25,12 +25,12 @@ public class GanttView extends View {
 	int dday;
 	long dday_Millis;
 	int number_of_cards = 14;
-	int[] category = {1, 2, 2, 2, 2, 3, 5, 4, 5, 1, 4, 5, 6, 5};
+	int[] category = {0, 1, 1, 1, 1, 2, 4, 3, 4, 0, 3, 4, 5, 4};
 	
 	String[] category_name = {"고궁 리서치", "고궁 답사", "중간 보고서 작성", "추가 자료 조사", "팀 회의", "기말 보고서 작성"};
 	int number_of_categories = 6;
 	//맨 처음 가능한 레이블 순서대로 used_categories가 들어오고, category와 category_name은 used_categories의 순서로 배치됨
-	int[] used_categories = {1, 2, 3, 4, 5, 6};
+	int[] used_categories = {0, 1, 2, 3, 4, 5};
 	
 	
 	//x y cordinated of things: will be scaled by screen definitions
@@ -133,7 +133,7 @@ public class GanttView extends View {
 			int rightend = centerline_x1 + (centerline_x2 - centerline_x1)/(nLines+1)*nLines;
 			label_x1[i] = rightend - (int)(((day_of_end.getTimeInMillis() - startdates[i].getTimeInMillis())/24/3600/1000) * day_dx);
 			label_x2[i] = rightend - (int)(((day_of_end.getTimeInMillis() - enddates[i].getTimeInMillis())/24/3600/1000) * day_dx);
-			label_cropped[i] = Bitmap.createBitmap(label[category[i]-1],0,0, x(label_x2[i]-label_x1[i]), y(label_h));
+			label_cropped[i] = Bitmap.createBitmap(label[category[i]],0,0, x(label_x2[i]-label_x1[i]), y(label_h));
 		}
 		
 	}

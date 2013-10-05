@@ -34,12 +34,18 @@ public class ParticipationView extends View  {
 	final int circle_radius_outter = 200;
 	final int circle_radius_inner = 125;
 	final int circle_radius_center = 112;
-	final int[] outter_color={Color.argb(255, 120, 199, 153), Color.argb(255, 245, 141, 122),
-			Color.argb(255, 249, 174, 103), Color.argb(255, 114, 143, 175), 
-			Color.argb(255, 208, 185, 152), Color.argb(255, 158, 139, 176)};
-	final int[] inner_color={Color.argb(255, 105, 168, 132), Color.argb(255, 200, 114, 103),
-			Color.argb(255, 195, 133, 84), Color.argb(255, 94, 119, 142), 
-			Color.argb(255, 169, 152, 130), Color.argb(255, 124, 113, 138)};
+	final int[] outter_color={Color.parseColor("#F4C9C3"),Color.parseColor("#F58D7A"),
+			Color.parseColor("#AFCCE1"),Color.parseColor("#728FAF"),
+			Color.parseColor("#BCE0C7"),Color.parseColor("#79C799"),
+			Color.parseColor("#C7B8D7"),Color.parseColor("#9E8BB0"),
+			Color.parseColor("#F9AE68"),Color.parseColor("#D0B998"),
+			Color.parseColor("#BCBEC0"),Color.parseColor("#999999")};
+	final int[] inner_color={Color.parseColor("#F5958C"),Color.parseColor("#C67166"),
+			Color.parseColor("#6FAACE"),Color.parseColor("#5D768C"),
+			Color.parseColor("#84C992"),Color.parseColor("#69A883"),
+			Color.parseColor("#AD97C8"),Color.parseColor("#786F89"),
+			Color.parseColor("#E99754"),Color.parseColor("#A89780"),
+			Color.parseColor("#A2A6AA"),Color.parseColor("#787878")};
 	RectF circle_rect_outter;
 	Paint[] circle_outter_paint;
 	RectF circle_rect_inner;
