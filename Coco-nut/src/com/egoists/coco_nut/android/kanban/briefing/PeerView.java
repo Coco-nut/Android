@@ -92,7 +92,7 @@ public class PeerView extends View {
 		//Initializations
 		initializePaints();
 		setBackgroundColor(Color.WHITE);
-		setMinimumHeight(y(Math.max(1015, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
 		
 		//Calculate date difference
 		long tmp = (currentdate.getTimeInMillis()-dateofchanges[0].getTimeInMillis())/24/3600/1000;
@@ -116,7 +116,7 @@ public class PeerView extends View {
 				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(centerline_y1), 
 						x((int)(centerline_x1 + centerline_dx*i)), y(centerline_y2), centerline_paint);
 		
-		//Draw graphLine
+		/*//Draw graphLine
 		int[] pointstofill_x = new int[2*number_of_dates];
 		int[] pointstofill_y = new int[2*number_of_dates];
 		double day_dx = centerline_dx/ (double)dday;
@@ -157,7 +157,7 @@ public class PeerView extends View {
 			donepath.lineTo(pointstofill_x[number_of_dates + i], pointstofill_y[number_of_dates + i]);
 		donepath.lineTo(pointstofill_x[number_of_dates*2-1], graph_y2);
 		donepath.lineTo(pointstofill_x[number_of_dates-1], graph_y2);
-		canvas.drawPath(donepath, donepath_paint);
+		canvas.drawPath(donepath, donepath_paint);*/
 		
 		
 		//Draw topTexts

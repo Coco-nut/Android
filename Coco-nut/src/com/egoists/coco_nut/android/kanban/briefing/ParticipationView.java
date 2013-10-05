@@ -21,8 +21,8 @@ import android.view.WindowManager;
 public class ParticipationView extends View  {
 	
 	//Dummy Dataset : will be achieved from server later
-	final int number_of_people = 6;
-	final double[] participation_ratio = {0.22, 0.23, 0.19, 0.12, 0.14, 0.10};
+	final int number_of_people = 12;
+	final double[] participation_ratio = {0.09, 0.09, 0.09, 0.09, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08};
 	
 	//x y cordinated of things: will be scaled by screen definitions
 	final int top_margin = 137;
@@ -69,7 +69,7 @@ public class ParticipationView extends View  {
 	
 
 	
-	
+	Drawable face;
 	Point resolution;
 	int nLines;
 	
@@ -81,8 +81,9 @@ public class ParticipationView extends View  {
 		
 		//Initializations
 		initialize();
+		face = getResources().getDrawable(R.drawable.briefing_face);
 		setBackgroundColor(Color.WHITE);
-		setMinimumHeight(y(Math.max(1015, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
 		
 
 	}
@@ -93,6 +94,9 @@ public class ParticipationView extends View  {
 		{
 			canvas.drawLine(x(center_x), y(center_y), x(people_center_x[i]), y(people_center_y[i]), people_line_paint[i]);
 			canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), x(circle_radius_people), circle_outter_paint[i]);
+			face.setBounds(x(people_center_x[i] - circle_radius_people/2), y(people_center_y[i]) - x(circle_radius_people/2),
+					x(people_center_x[i] + circle_radius_people/2), y(people_center_y[i]) + x(circle_radius_people)/2 );
+			face.draw(canvas);
 			canvas.drawArc(circle_rect_outter, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_outter_paint[i]);
 			canvas.drawArc(circle_rect_inner, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_inner_paint[i]);
 			canvas.drawText((int)(participation_ratio[i]*100)+"%", x(ratio_text_x[i]), y(ratio_text_y[i]), ratio_text_paint);

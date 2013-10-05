@@ -106,7 +106,7 @@ public class GanttView extends View {
 		label_x1 = new int[number_of_cards];
 		label_x2 = new int[number_of_cards];
 		setBackgroundColor(Color.WHITE);
-		setMinimumHeight(y(Math.max(1015, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
 		
 		//load flags and labels
 		for (int i=0; i < number_of_categories; i++){

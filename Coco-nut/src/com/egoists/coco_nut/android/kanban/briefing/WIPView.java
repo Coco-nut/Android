@@ -124,7 +124,7 @@ public class WIPView extends View {
 		//Initializations
 		initialize();
 		setBackgroundColor(background_c);
-		setMinimumHeight(y(Math.max(1015, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
 
 	}
 	public void onDraw(Canvas canvas){
