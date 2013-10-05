@@ -85,14 +85,14 @@ public class ParticipationView extends View  {
 		double cumul_angle = start_angle;
 		for(int i=0; i<number_of_people; i++)
 		{
-			canvas.drawLine(center_x, center_y, people_center_x[i], people_center_y[i], people_line_paint[i]);
-			canvas.drawCircle(people_center_x[i], people_center_y[i], circle_radius_people, circle_outter_paint[i]);
+			canvas.drawLine(x(center_x), y(center_y), x(people_center_x[i]), y(people_center_y[i]), people_line_paint[i]);
+			canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), x(circle_radius_people), circle_outter_paint[i]);
 			canvas.drawArc(circle_rect_outter, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_outter_paint[i]);
 			canvas.drawArc(circle_rect_inner, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_inner_paint[i]);
-			canvas.drawText((int)(participation_ratio[i]*100)+"%", ratio_text_x[i], ratio_text_y[i], ratio_text_paint);
+			canvas.drawText((int)(participation_ratio[i]*100)+"%", x(ratio_text_x[i]), y(ratio_text_y[i]), ratio_text_paint);
 			cumul_angle = cumul_angle + participation_ratio[i] * 360;
 		}
-		canvas.drawCircle(center_x, center_y, circle_radius_center, circle_center_paint);
+		canvas.drawCircle(x(center_x), y(center_y), x(circle_radius_center), circle_center_paint);
 	}
 	
 	private int x(int x){
@@ -104,10 +104,10 @@ public class ParticipationView extends View  {
 
 	
 	private void initialize(){
-		circle_rect_outter = new RectF(center_x-circle_radius_outter, center_y-circle_radius_outter, 
-				center_x+circle_radius_outter, center_y+circle_radius_outter);
-		circle_rect_inner = new RectF(center_x-circle_radius_inner, center_y-circle_radius_inner, 
-				center_x+circle_radius_inner, center_y+circle_radius_inner);
+		circle_rect_outter = new RectF(x(center_x-circle_radius_outter), y(center_y)-x(circle_radius_outter), 
+				x(center_x+circle_radius_outter), y(center_y)+x(circle_radius_outter));
+		circle_rect_inner = new RectF(x(center_x-circle_radius_inner), y(center_y)-x(circle_radius_inner), 
+				x(center_x+circle_radius_inner), y(center_y)+x(circle_radius_inner));
 		circle_outter_paint = new Paint[number_of_people];
 		circle_inner_paint = new Paint[number_of_people];
 		for(int i = 0; i < number_of_people; i++)
