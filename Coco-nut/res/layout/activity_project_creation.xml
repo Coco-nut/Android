@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:layout_margin="10dp"
     android:orientation="vertical" >
     <EditText
         android:id="@+id/edTxtCreateProj"
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/create_project"
+        android:paddingTop="40dp"
         android:inputType="text" >
     </EditText>
     <requestFocus />
