@@ -90,6 +90,7 @@ public class CardView extends View {
 		setBackgroundColor(Color.WHITE);
 		resolution = new Point();
 		((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(resolution);
+		setMinimumHeight(y(258));
 		this.card = card;
 		initialize();
 	}
@@ -97,21 +98,21 @@ public class CardView extends View {
 		
 		//첫줄
 		canvas.drawRect(0, 0, x(label_x), y(label_y), label_paint);
-		canvas.drawText(card.title, titletext_x, titletext_y, titletext_paint);
-		canvas.drawText(card.sub_title, subtitletext_x, subtitletext_y, subtitletext_paint);
+		canvas.drawText(card.title, x(titletext_x), y(titletext_y), titletext_paint);
+		canvas.drawText(card.sub_title, x(subtitletext_x), y(subtitletext_y), subtitletext_paint);
 		for (int i = 0; i < card.importance; i++){
-			canvas.drawBitmap(star, stars_x1 + stars_dx * i, stars_y1, label_paint);
+			canvas.drawBitmap(star, x(stars_x1 + stars_dx * i), y(stars_y1), label_paint);
 		}
 		
 		//두번째 줄
 		clock.draw(canvas);
-		canvas.drawText(clocktext, clocktext_x, clock_comment_check_text_y, clock_comment_check_text_paint);
+		canvas.drawText(clocktext, x(clocktext_x), y(clock_comment_check_text_y), clock_comment_check_text_paint);
 		comment.draw(canvas);
 		canvas.drawText(Integer.toString(card.comments.size())
-				, commenttext_x, clock_comment_check_text_y, clock_comment_check_text_paint);
+				, x(commenttext_x), y(clock_comment_check_text_y), clock_comment_check_text_paint);
 		check.draw(canvas);
 		canvas.drawText(Integer.toString(card.checkboxes.size())
-				, checktext_x, clock_comment_check_text_y, clock_comment_check_text_paint);
+				, x(checktext_x), y(clock_comment_check_text_y), clock_comment_check_text_paint);
 		
 		//사람들 사진
 		for (int i = 0; i < card.participants.size(); i++)
@@ -120,8 +121,8 @@ public class CardView extends View {
 			if (photo == null){
 				photo = getResources().getDrawable(R.drawable.card_personphoto_default);
 			}
-			photo.setBounds(photos_x + i * photos_dx, photos_y, 
-					photos_x + i * photos_dx + photos_diameter, photos_y + photos_diameter);
+			photo.setBounds(x(photos_x + i * photos_dx), y(photos_y), 
+					x(photos_x + i * photos_dx + photos_diameter), y(photos_y + photos_diameter));
 			photo.draw(canvas);
 		}
 	}
@@ -145,14 +146,14 @@ public class CardView extends View {
 		titletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		titletext_paint.setStyle(Paint.Style.FILL);
 		titletext_paint.setColor(titletext_c);
-		titletext_paint.setTextSize(titletext_size);
+		titletext_paint.setTextSize(x(titletext_size));
 		
 		subtitletext_x = titletext_x + (int) titletext_paint.measureText(card.title) 
 				+ bet_title_and_subtitle_x;
 		subtitletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		subtitletext_paint.setStyle(Paint.Style.FILL);
 		subtitletext_paint.setColor(titletext_c);
-		subtitletext_paint.setTextSize(subtitletext_size);
+		subtitletext_paint.setTextSize(x(subtitletext_size));
 
 		stars_x1 = subtitletext_x + (int) subtitletext_paint.measureText(card.sub_title) 
 				+ bet_subtitle_and_stars_x;
@@ -162,23 +163,23 @@ public class CardView extends View {
 		
 		clock_comment_check_text_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		clock_comment_check_text_paint.setStyle(Paint.Style.FILL);
-		clock_comment_check_text_paint.setTextSize(clock_comment_check_text_size);
+		clock_comment_check_text_paint.setTextSize(x(clock_comment_check_text_size));
 		clock_comment_check_text_paint.setColor(titletext_c);
 		clock = getResources().getDrawable(R.drawable.card_clock);
-		clock.setBounds(clock_x1, clock_y1, clock_x2, clock_y2);
+		clock.setBounds(x(clock_x1), y(clock_y1), x(clock_x2), y(clock_y2));
 		clocktext = setClocktext();
 		
 		comment_x = clocktext_x + (int) clock_comment_check_text_paint.measureText(clocktext) 
 				+ bet_clocktext_and_comment_x;
 		comment = getResources().getDrawable(R.drawable.card_comment);
-		comment.setBounds(comment_x, comment_y1, comment_x + comment_width, comment_y2);
+		comment.setBounds(x(comment_x), y(comment_y1), x(comment_x + comment_width), y(comment_y2));
 		commenttext_x = comment_x + comment_width + bet_comment_and_commenttext_x;
 		
 		check_x = commenttext_x 
 				+ (int) clock_comment_check_text_paint.measureText(Integer.toString(card.comments.size())) 
 				+ bet_commenttext_and_check_x;
 		check = getResources().getDrawable(R.drawable.card_check);
-		check.setBounds(check_x, check_y1, check_x + check_width, check_y2);
+		check.setBounds(x(check_x), y(check_y1), x(check_x + check_width), y(check_y2));
 		checktext_x = check_x + check_width + bet_check_and_checktext_x;
 		
 	}

@@ -218,6 +218,62 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 				, 4, 3,
 			null, null, null, tempdate, tempcomments, tempcheckboxes,
 			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 5, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 6, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 7, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 8, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
 	}
 
 	/**

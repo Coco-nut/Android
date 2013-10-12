@@ -26,7 +26,7 @@ public class KanbanData {
 		switch(label)
 		{
 		case 1:
-			return Color.rgb(121, 199, 153);
+			return Color.parseColor("#F4C9C3");
 		case 2:
 			return Color.parseColor("#F58D7A");
 		case 3:
