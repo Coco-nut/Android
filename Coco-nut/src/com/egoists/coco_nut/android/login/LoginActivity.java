@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
+import com.egoists.coco_nut.android.util.LoginPreference;
 import com.egoists.coco_nut.android.util.MyAndroidInfo;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
@@ -41,17 +41,14 @@ public class LoginActivity extends Activity {
 	EditText edTxtLoginId;
 	@ViewById
 	EditText edTxtLoginPassword;
-	
-	String mId;
-	String mPasswd;
-	
 	@AnimationRes
-	Animation fadeIn;
+    Animation fadeIn;
 	
-	private final String PREF_ID = "id";
-	private final String PREF_PASSWD = "passwd";
-	private final String PREF_NAME = "LOGIN";
+	private String mId;
+	private String mPasswd;
+	private ProgressDialog mDialog;
 	
+	private LoginPreference mLoginPref;
 	private Context mContext;
 	
 	@AfterViews
@@ -59,29 +56,47 @@ public class LoginActivity extends Activity {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
 	    mContext = this;
-	    doPreLogin();
+	    mLoginPref = new LoginPreference(mContext);
+	    waitAndPreLogin();
 	}
 	
-	void saveLoginInfo(String id, String passwd) {
-	    super.onPause();
-	    SharedPreferences pref = getSharedPreferences(PREF_NAME, 0);
-	    SharedPreferences.Editor edit = pref.edit();
-	    edit.putString(PREF_ID, id);
-	    edit.putString(PREF_PASSWD, passwd);
-	    edit.commit();
+	@UiThread(delay=700)
+	void waitAndPreLogin() {
+	    // 그냥 0.7초 대기
+	    doAutoLogin();
+	}
+
+	
+	@Background
+	void doAutoLogin() {
+	    // 로그인 정보 가져오기
+	    mLoginPref.loadPreference();
+        String id = mLoginPref.mId;
+        String passwd = mLoginPref.mPasswd;
+
+        doAutoLogInByBaasio(id, passwd);
 	}
 	
 	@Background
-	void doPreLogin() {
-	    // 로그인 정보 가져오기
-        SharedPreferences pref = getSharedPreferences(PREF_NAME, 0);
-        String id = pref.getString(PREF_ID, ""); // 이름
-        String passwd = pref.getString(PREF_PASSWD, ""); // 이름
-        // TODO
-//        String id = "";
-//        String passwd = "";
-        doPreLogInByBaasio(id, passwd);
-	}
+    void doAutoLogInByBaasio(String userId, String passwd) {
+        BaasioUser user = null;
+        if (userId.length() != 0 || passwd.length() != 0) {
+            try {
+                user = BaasioUser.signIn(mContext, userId, passwd);
+            } catch (BaasioException e) {
+                AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                // DO NOTHING
+            }
+        }
+        
+        if (user == null) {
+            // 수동 로그인 이동
+            displayLoginLayout();
+        } else {
+            // 로그인 성공
+            moveToProjectSelectionActivity();
+        }  
+    }
 	
 	@UiThread
 	void displayLoginLayout() {
@@ -126,30 +141,6 @@ public class LoginActivity extends Activity {
 	    doLogInByBaasio(loginId, loginPw);
 	}
 	
-	@Background
-	void doPreLogInByBaasio(String userId, String passwd) {
-	    BaasioUser user = null;
-	    if (userId.length() != 0 || passwd.length() != 0) {
-	        try {
-	            user = BaasioUser.signIn(mContext, userId, passwd);
-	        } catch (BaasioException e) {
-	            AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
-	            // DO NOTHING
-	        }
-	    }
-	    
-	    if (user == null) {
-	        // 수동 로그인 이동
-	        displayLoginLayout();
-	    } else {
-	        // 로그인 성공
-            moveToProjectSelectionActivity();
-	    }
-	    
-	}
-
-	ProgressDialog mDialog;
-	
 	// BAAS.IO SDK를 이용한 로그인
     void doLogInByBaasio(String userId, String passwd) {
         mId = userId;
@@ -178,7 +169,7 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
-                    saveLoginInfo(mId, mPasswd);    // 로그인 정보 저장
+                    mLoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
                     moveToProjectSelectionActivity();
                 }
             }
