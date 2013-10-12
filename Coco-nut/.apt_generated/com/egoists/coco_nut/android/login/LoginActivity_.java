@@ -43,11 +43,11 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
-        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
-        txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
         layLoginForm = ((LinearLayout) findViewById(id.layLoginForm));
         layLoginLogo = ((LinearLayout) findViewById(id.layLoginLogo));
+        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
+        txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
+        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
         {
             View view = findViewById(id.btnLogin);
             if (view!= null) {
@@ -104,42 +104,6 @@ public final class LoginActivity_
     }
 
     @Override
-    public void displayLoginLayout() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    LoginActivity_.super.displayLoginLayout();
-                } catch (RuntimeException e) {
-                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void holdMainLogo() {
-        handler_.postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    LoginActivity_.super.holdMainLogo();
-                } catch (RuntimeException e) {
-                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        , 1500L);
-    }
-
-    @Override
     public void showLoginForm() {
         handler_.postDelayed(new Runnable() {
 
@@ -158,14 +122,68 @@ public final class LoginActivity_
     }
 
     @Override
-    public void checkUserToken() {
+    public void displayLoginLayout() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.displayLoginLayout();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void waitAndPreLogin() {
+        handler_.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.waitAndPreLogin();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        , 700L);
+    }
+
+    @Override
+    public void doAutoLogInByBaasio(final String userId, final String passwd) {
         BackgroundExecutor.execute(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    LoginActivity_.super.checkUserToken();
+                    LoginActivity_.super.doAutoLogInByBaasio(userId, passwd);
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void doAutoLogin() {
+        BackgroundExecutor.execute(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.doAutoLogin();
                 } catch (RuntimeException e) {
                     Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }

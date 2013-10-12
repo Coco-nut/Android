@@ -36,14 +36,14 @@ public final class ProjectSelectionActivity_
     private void afterSetContentView_() {
         mViewPager = ((ViewPager) findViewById(id.pager_project));
         {
-            View view = findViewById(id.btn_notices);
+            View view = findViewById(id.btn_setting);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
 
                     @Override
                     public void onClick(View view) {
-                        ProjectSelectionActivity_.this.goToKanban();
+                        ProjectSelectionActivity_.this.delLoginPreference();
                     }
 
                 }
@@ -51,7 +51,7 @@ public final class ProjectSelectionActivity_
             }
         }
         {
-            View view = findViewById(id.btn_setting);
+            View view = findViewById(id.btn_notices);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 

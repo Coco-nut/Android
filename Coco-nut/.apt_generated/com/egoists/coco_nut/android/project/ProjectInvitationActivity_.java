@@ -5,18 +5,26 @@
 
 package com.egoists.coco_nut.android.project;
 
+import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
+import com.egoists.coco_nut.android.R.id;
 import com.egoists.coco_nut.android.R.layout;
+import com.kth.baasio.entity.user.BaasioUser;
 
 public final class ProjectInvitationActivity_
     extends ProjectInvitationActivity
 {
 
+    private Handler handler_ = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,37 @@ public final class ProjectInvitationActivity_
     }
 
     private void afterSetContentView_() {
+        edTxtSearchPhone = ((EditText) findViewById(id.edTxtSearchPhone));
+        {
+            View view = findViewById(id.btnProjInvSearch);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        ProjectInvitationActivity_.this.getMyFriendsByBaasio();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.btnProjInvCofirm);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        ProjectInvitationActivity_.this.moveToProjectSelectionActivity();
+                    }
+
+                }
+                );
+            }
+        }
         showUserList();
     }
 
@@ -52,6 +91,24 @@ public final class ProjectInvitationActivity_
 
     public static ProjectInvitationActivity_.IntentBuilder_ intent(Context context) {
         return new ProjectInvitationActivity_.IntentBuilder_(context);
+    }
+
+    @Override
+    public void refreshUserList(final List<BaasioUser> users) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    ProjectInvitationActivity_.super.refreshUserList(users);
+                } catch (RuntimeException e) {
+                    Log.e("ProjectInvitationActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
     }
 
     public static class IntentBuilder_ {
