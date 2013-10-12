@@ -6,6 +6,7 @@ import com.egoists.coco_nut.android.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -130,8 +131,8 @@ public class GanttView extends View {
 			flag[i].setBounds( x(flag_x1 + i%3*flag_dx), y(flag_y1 + i/3*flag_dy), x(flag_x2 + i%3*flag_dx), y(flag_y2 + i/3*flag_dy));
 			
 			tid = getResources().getIdentifier("briefing_label_"+used_categories[i],"drawable",context.getPackageName());
-			BitmapDrawable temp = (BitmapDrawable)getResources().getDrawable(tid);
-			label[i] = Bitmap.createScaledBitmap(temp.getBitmap(), x(label_w), y(label_h), false);
+			label[i] = Bitmap.createScaledBitmap(
+					BitmapFactory.decodeResource(getResources(), tid), x(label_w), y(label_h), false);
 		}
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
 		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));

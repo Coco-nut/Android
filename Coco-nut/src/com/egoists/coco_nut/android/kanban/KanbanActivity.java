@@ -1,7 +1,11 @@
 package com.egoists.coco_nut.android.kanban;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +15,11 @@ import android.view.MenuItem;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.kanban.briefing.BriefingFragment;
+import com.egoists.coco_nut.android.kanban.card.Card;
+import com.egoists.coco_nut.android.kanban.card.KanbanData;
+import com.egoists.coco_nut.android.kanban.card.Person;
+import com.egoists.coco_nut.android.kanban.card.Checkbox;
+import com.egoists.coco_nut.android.kanban.card.Comment;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
@@ -23,6 +32,7 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 	 * 메모리 부담이 크다고 판단되면 FragmentStatePagerAdapter로 바꾸기.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
+	public KanbanData kanbanData;
 
 	@ViewById(R.id.pager_kanban)
 	ViewPager mViewPager;
@@ -112,6 +122,102 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		// 서버에서 participantList를 받아옴. 지금은 더미 데이터 생성 부분
+		getKanbanData();
+	}
+	
+	private void getKanbanData()
+	{
+		//서버에서 카드/참여자 정보 불러옴. 현재 더미 데이터 입력
+		kanbanData = new KanbanData();
+		
+		kanbanData.participants.put("준수", new Person("준수", getResources(), true));
+		kanbanData.participants.put("윤후", new Person("윤후", getResources(), false));
+		kanbanData.participants.put("지아", new Person("지아", getResources(), false));
+		kanbanData.participants.put("누군지", new Person("누군지", getResources(), false));
+		kanbanData.participants.put("몰라", new Person("몰라", getResources(), false));
+		kanbanData.participants.put("사실", new Person("사실", getResources(), false));
+		kanbanData.participants.put("누구든", new Person("누구든", getResources(), false));
+		kanbanData.participants.put("별로", new Person("별로", getResources(), false));
+		kanbanData.participants.put("상관", new Person("상관", getResources(), false));
+		kanbanData.participants.put("없지", new Person("없지", getResources(), false));
+		Calendar tempdate = Calendar.getInstance();
+		tempdate.set(Calendar.MONTH, 8);
+		tempdate.set(Calendar.DATE, 30);
+		ArrayList<Comment> tempcomments = new ArrayList<Comment>();
+		tempcomments.add(new Comment(kanbanData.participants.get("준수"), 
+				"다들 월요일에 만나요~"));
+		tempcomments.add(new Comment(kanbanData.participants.get("윤후"), 
+				"답사 화이팅 ^^!"));
+		tempcomments.add(new Comment(kanbanData.participants.get("지아"), 
+				"네넵!"));
+		
+		ArrayList<Checkbox> tempcheckboxes = new ArrayList<Checkbox>();
+		tempcheckboxes.add(new Checkbox("카메라 들고 오기", true));
+		tempcheckboxes.add(new Checkbox("창덕궁 자료조사 파일 가져오기", false));
+		
+		ArrayList<Person> tempparticipants = new ArrayList<Person>();
+		tempparticipants.add(kanbanData.participants.get("준수"));
+		tempparticipants.add(kanbanData.participants.get("윤후"));
+		tempparticipants.add(kanbanData.participants.get("지아"));
+		tempparticipants.add(kanbanData.participants.get("몰라"));
+		
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 1, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 2, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 3, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
+		kanbanData.Do.add(new Card("고궁 답사", "창덕궁", 
+				"창덕궁 답사 일정입니다.\n"
+				+ "안국역 3번 출구에서 9시까지 만나요 :D\n\n"
+				+ "윤후는 카메라 꼭 들고 와주고, \n"
+				+ "지아는 창덕궁 자료 조사했던 파일 꼭 들고 와줘요!\n\n"
+				+ "일반 관람 코스와 후원 관람 코스 두가지 코스를 다 돌아볼 거에요.\n\n"
+				+ "/일반 관람 코스\n"
+				+ "돈화문 - 궐내각사 - 금천교 - 인정문 - 희정당 - 내조전 - 낙선재\n\n"
+				+ "/후원 관람 코스\n"
+				+ "함양문 - 부용정 - 의두합 - 불로문 - 애련지권역 - 연경당\n"
+				+ "- 존덕정권역 - 옥류천 - 돈화문"
+				, 4, 3,
+			null, null, null, tempdate, tempcomments, tempcheckboxes,
+			tempparticipants, 0, true));
 	}
 
 	/**
