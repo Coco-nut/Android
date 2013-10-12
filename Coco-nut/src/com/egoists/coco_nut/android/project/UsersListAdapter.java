@@ -76,7 +76,8 @@ public class UsersListAdapter extends BaseAdapter {
 
             view.mRoot = (ViewGroup)convertView.findViewById(R.id.layoutRoot);
             view.mProfile = (ImageView)convertView.findViewById(R.id.imageProfile);
-            view.mName = (TextView)convertView.findViewById(R.id.textName);
+            view.mName = (TextView)convertView.findViewById(R.id.textUserName);
+            view.mBody = (TextView)convertView.findViewById(R.id.textUserPhone);
 
             if (view != null) {
                 convertView.setTag(view);
@@ -98,7 +99,10 @@ public class UsersListAdapter extends BaseAdapter {
             if (!ObjectUtils.isEmpty(entity.getUsername())) {
                 view.mName.setText(entity.getUsername());
             }
-
+            
+            if (!ObjectUtils.isEmpty(entity.getName())) {
+                view.mBody.setText(entity.getName());
+            }
         }
         
         if (view.mRoot != null) {

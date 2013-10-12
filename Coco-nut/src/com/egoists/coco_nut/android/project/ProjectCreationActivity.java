@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -30,6 +31,7 @@ public class ProjectCreationActivity extends Activity {
     
     private Context mContext;
     private LoginPreference mLoginPref;
+    private ProgressDialog mDialog;
     
     @AfterViews
     void initForm() {
@@ -74,6 +76,8 @@ public class ProjectCreationActivity extends Activity {
     void doCreateProjectByBaasio(String projectName) {
         String projectPath = UniqueString.generate();
         AndLog.d("Try to create project : " + projectName + ", " + projectPath);
+        
+        mDialog = ProgressDialog.show(ProjectCreationActivity.this, "", "그룹 생성 중", true);
         BaasioGroup group = new BaasioGroup();
         group.setTitle(projectName);    // 그룹 표시내용
         group.setPath(projectPath);     // 그룹 Unique한 Path 이름
@@ -81,6 +85,7 @@ public class ProjectCreationActivity extends Activity {
                 new BaasioCallback<BaasioGroup>() {
                     @Override
                     public void onException(BaasioException e) {
+                        mDialog.dismiss();
                         AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                         BaasioDialogFactory.createErrorDialog(mContext, e).show();
                     }
@@ -92,7 +97,6 @@ public class ProjectCreationActivity extends Activity {
                             String path = response.getPath();           // Group path
                             AndLog.d("Succeed : " + path + " project created.");
                             addMeIntoCreatedGroup(response.getUuid());
-                            
                         }
                     }
                 });
@@ -121,6 +125,7 @@ public class ProjectCreationActivity extends Activity {
 
                     @Override
                     public void onResponse(BaasioUser response) {
+                        mDialog.dismiss();
                         if (response != null) {
                             // 성공
                             String username = response.getUsername(); // ID(Username)

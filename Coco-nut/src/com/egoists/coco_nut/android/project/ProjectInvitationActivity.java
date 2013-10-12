@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class ProjectInvitationActivity extends Activity {
     private Context mContext;
     private LoginPreference mLoginPref;
     private String mGroupUuid;
+    private ProgressDialog mDialog;
     
     @AfterViews
     void showUserList() {
@@ -79,6 +81,8 @@ public class ProjectInvitationActivity extends Activity {
         String rawQuery = CoconutUrlEncoder.encode(fullQuery);
         AndLog.d(rawQuery);
         
+        mDialog = ProgressDialog.show(ProjectInvitationActivity.this, "", "검색중", true);
+        
         // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
         query.setRawString("users?ql=" + rawQuery);
@@ -88,7 +92,7 @@ public class ProjectInvitationActivity extends Activity {
             @Override
             public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
                 AndLog.d("Succeed : get userlist");
-                
+                mDialog.dismiss();
                 List<BaasioUser> users = BaasioBaseEntity.toType(entities, BaasioUser.class);
                 
                 refreshUserList(users);
@@ -96,6 +100,7 @@ public class ProjectInvitationActivity extends Activity {
 
             @Override
             public void onException(BaasioException e) {
+                mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                 BaasioDialogFactory.createErrorDialog(mContext, e).show();
             }
