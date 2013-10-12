@@ -23,12 +23,18 @@
         android:paddingLeft="10dp" >
 
         <TextView
-            android:id="@+id/textName"
+            android:id="@+id/textUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:textSize="10sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textUserPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textSize="10sp" />
     </LinearLayout>
 
 </LinearLayout>

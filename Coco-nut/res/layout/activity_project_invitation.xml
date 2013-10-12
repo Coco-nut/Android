@@ -3,10 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView 
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="2"/>
+        android:layout_weight="2"
+        android:orientation="vertical">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/edTxtSearchPhone"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="전화번호로 검색"
+                android:inputType="phone"
+                android:singleLine="true" >
+
+	        </EditText>
+	        <Button
+                android:id="@+id/btnProjInvSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="검색" />
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <Button
+                android:id="@+id/btnProjInvCofirm"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="그룹 생성 완료" />        
+        </LinearLayout>
+        
+    </LinearLayout>
     <FrameLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="0px"

@@ -1,6 +1,7 @@
 package com.egoists.coco_nut.android.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
+import com.egoists.coco_nut.android.util.LoginPreference;
 import com.egoists.coco_nut.android.util.MyAndroidInfo;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
@@ -39,10 +41,14 @@ public class LoginActivity extends Activity {
 	EditText edTxtLoginId;
 	@ViewById
 	EditText edTxtLoginPassword;
-	
 	@AnimationRes
-	Animation fadeIn;
+    Animation fadeIn;
 	
+	private String mId;
+	private String mPasswd;
+	private ProgressDialog mDialog;
+	
+	private LoginPreference mLoginPref;
 	private Context mContext;
 	
 	@AfterViews
@@ -50,23 +56,47 @@ public class LoginActivity extends Activity {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
 	    mContext = this;
-		holdMainLogo();
+	    mLoginPref = new LoginPreference(mContext);
+	    waitAndPreLogin();
 	}
 	
-	@UiThread(delay=1500)
-	void holdMainLogo() {
-	    // 그냥 1.5초 대기
-	    checkUserToken();
+	@UiThread(delay=700)
+	void waitAndPreLogin() {
+	    // 그냥 0.7초 대기
+	    doAutoLogin();
+	}
+
+	
+	@Background
+	void doAutoLogin() {
+	    // 로그인 정보 가져오기
+	    mLoginPref.loadPreference();
+        String id = mLoginPref.mId;
+        String passwd = mLoginPref.mPasswd;
+
+        doAutoLogInByBaasio(id, passwd);
 	}
 	
 	@Background
-	void checkUserToken() {
-		if (hasUserToken()) {
-			AndLog.i("User token is detected.");
-			moveToProjectSelectionActivity();
-		}
-		displayLoginLayout();
-	}
+    void doAutoLogInByBaasio(String userId, String passwd) {
+        BaasioUser user = null;
+        if (userId.length() != 0 || passwd.length() != 0) {
+            try {
+                user = BaasioUser.signIn(mContext, userId, passwd);
+            } catch (BaasioException e) {
+                AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                // DO NOTHING
+            }
+        }
+        
+        if (user == null) {
+            // 수동 로그인 이동
+            displayLoginLayout();
+        } else {
+            // 로그인 성공
+            moveToProjectSelectionActivity();
+        }  
+    }
 	
 	@UiThread
 	void displayLoginLayout() {
@@ -92,12 +122,6 @@ public class LoginActivity extends Activity {
 		edTxtLoginId.setText(MyAndroidInfo.getMyIdFromEmail(this));
 	}
 	
-	boolean hasUserToken() {
-		// TODO 사용자 로그인 되어 있는지의 여부
-		return false;
-	}
-	
-	
 	@Click(R.id.txtSignup)
 	void doSignUp() {
 		moveToSignupActivity();
@@ -115,20 +139,29 @@ public class LoginActivity extends Activity {
 	    }
 	    
 	    doLogInByBaasio(loginId, loginPw);
-	    
-	    
 	}
-
+	
 	// BAAS.IO SDK를 이용한 로그인
     void doLogInByBaasio(String userId, String passwd) {
+        mId = userId;
+        mPasswd = passwd;
+        mDialog = ProgressDialog.show(LoginActivity.this, "", "로그인 중", true);
+        
         BaasioUser.signInInBackground(mContext, userId, passwd, new BaasioSignInCallback() {
+            
             @Override
             public void onException(BaasioException e) {
+                mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                 if (e.getStatusCode() != null) {
                     if (e.getErrorCode() == 201) {
                         // username(ID) 또는 비밀번호 오류
                         BaasioDialogFactory.createErrorDialog(mContext, R.string.error_login_fail).show();
+                        return;
+                    }
+                    if (e.getErrorCode() == 210) {
+                        // 회원 가입이 필요
+                        BaasioDialogFactory.createErrorDialog(mContext, R.string.error_require_signup).show();
                         return;
                     }
                 }
@@ -138,8 +171,10 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onResponse(BaasioUser response) {
+                mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
+                    mLoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
                     moveToProjectSelectionActivity();
                 }
             }
@@ -153,9 +188,9 @@ public class LoginActivity extends Activity {
     }
 	
 	void moveToProjectSelectionActivity() {
-		// 로딩이 끝난후 이동할 Activity
-        startActivity(new Intent(getApplication(), 
-        		com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class)); 
+	    Intent intent = new Intent(getApplication(), 
+                com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class);
+        startActivity(intent); 
         LoginActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
 	}
 }
