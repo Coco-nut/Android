@@ -43,8 +43,8 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
         edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
+        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
         txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
         layLoginForm = ((LinearLayout) findViewById(id.layLoginForm));
         layLoginLogo = ((LinearLayout) findViewById(id.layLoginLogo));

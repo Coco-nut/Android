@@ -36,8 +36,8 @@ public final class SignupActivity_
 
     private void afterSetContentView_() {
         edTxtSignUpId = ((EditText) findViewById(id.edTxtSignUpId));
-        txtSignUpMessage = ((TextView) findViewById(id.txtSignUpMessage));
         edTxtSignUpConfirmPassword = ((EditText) findViewById(id.edTxtSignUpConfirmPassword));
+        txtSignUpMessage = ((TextView) findViewById(id.txtSignUpMessage));
         edTxtSignUpPassword = ((EditText) findViewById(id.edTxtSignUpPassword));
         {
             View view = findViewById(id.btnSignUp);
