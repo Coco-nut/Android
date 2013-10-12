@@ -1,8 +1,10 @@
 package com.egoists.coco_nut.android.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -40,8 +42,15 @@ public class LoginActivity extends Activity {
 	@ViewById
 	EditText edTxtLoginPassword;
 	
+	String mId;
+	String mPasswd;
+	
 	@AnimationRes
 	Animation fadeIn;
+	
+	private final String PREF_ID = "id";
+	private final String PREF_PASSWD = "passwd";
+	private final String PREF_NAME = "LOGIN";
 	
 	private Context mContext;
 	
@@ -50,22 +59,28 @@ public class LoginActivity extends Activity {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
 	    mContext = this;
-		holdMainLogo();
+	    doPreLogin();
 	}
 	
-	@UiThread(delay=1500)
-	void holdMainLogo() {
-	    // 그냥 1.5초 대기
-	    checkUserToken();
+	void saveLoginInfo(String id, String passwd) {
+	    super.onPause();
+	    SharedPreferences pref = getSharedPreferences(PREF_NAME, 0);
+	    SharedPreferences.Editor edit = pref.edit();
+	    edit.putString(PREF_ID, id);
+	    edit.putString(PREF_PASSWD, passwd);
+	    edit.commit();
 	}
 	
 	@Background
-	void checkUserToken() {
-		if (hasUserToken()) {
-			AndLog.i("User token is detected.");
-			moveToProjectSelectionActivity();
-		}
-		displayLoginLayout();
+	void doPreLogin() {
+	    // 로그인 정보 가져오기
+        SharedPreferences pref = getSharedPreferences(PREF_NAME, 0);
+        String id = pref.getString(PREF_ID, ""); // 이름
+        String passwd = pref.getString(PREF_PASSWD, ""); // 이름
+        // TODO
+//        String id = "";
+//        String passwd = "";
+        doPreLogInByBaasio(id, passwd);
 	}
 	
 	@UiThread
@@ -92,12 +107,6 @@ public class LoginActivity extends Activity {
 		edTxtLoginId.setText(MyAndroidInfo.getMyIdFromEmail(this));
 	}
 	
-	boolean hasUserToken() {
-		// TODO 사용자 로그인 되어 있는지의 여부
-		return false;
-	}
-	
-	
 	@Click(R.id.txtSignup)
 	void doSignUp() {
 		moveToSignupActivity();
@@ -115,15 +124,43 @@ public class LoginActivity extends Activity {
 	    }
 	    
 	    doLogInByBaasio(loginId, loginPw);
+	}
+	
+	@Background
+	void doPreLogInByBaasio(String userId, String passwd) {
+	    BaasioUser user = null;
+	    if (userId.length() != 0 || passwd.length() != 0) {
+	        try {
+	            user = BaasioUser.signIn(mContext, userId, passwd);
+	        } catch (BaasioException e) {
+	            AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+	            // DO NOTHING
+	        }
+	    }
 	    
+	    if (user == null) {
+	        // 수동 로그인 이동
+	        displayLoginLayout();
+	    } else {
+	        // 로그인 성공
+            moveToProjectSelectionActivity();
+	    }
 	    
 	}
 
+	ProgressDialog mDialog;
+	
 	// BAAS.IO SDK를 이용한 로그인
     void doLogInByBaasio(String userId, String passwd) {
+        mId = userId;
+        mPasswd = passwd;
+        mDialog = ProgressDialog.show(LoginActivity.this, "", "로그인 중", true);
+        
         BaasioUser.signInInBackground(mContext, userId, passwd, new BaasioSignInCallback() {
+            
             @Override
             public void onException(BaasioException e) {
+                mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                 if (e.getStatusCode() != null) {
                     if (e.getErrorCode() == 201) {
@@ -138,8 +175,10 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onResponse(BaasioUser response) {
+                mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
+                    saveLoginInfo(mId, mPasswd);    // 로그인 정보 저장
                     moveToProjectSelectionActivity();
                 }
             }

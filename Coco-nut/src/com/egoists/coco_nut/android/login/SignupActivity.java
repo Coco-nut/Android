@@ -35,6 +35,7 @@ public class SignupActivity extends Activity {
     @AfterViews
     void initSignupForm() {
         mContext = this;
+        edTxtSignUpId.setText(MyAndroidInfo.getMyIdFromEmail(this));
     }
     
     @Click(R.id.btnSignUp)
