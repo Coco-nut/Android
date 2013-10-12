@@ -43,26 +43,11 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
         layLoginLogo = ((LinearLayout) findViewById(id.layLoginLogo));
+        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
+        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
         txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
         layLoginForm = ((LinearLayout) findViewById(id.layLoginForm));
-        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
-        {
-            View view = findViewById(id.txtSignup);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        LoginActivity_.this.doSignUp();
-                    }
-
-                }
-                );
-            }
-        }
         {
             View view = findViewById(id.btnLogin);
             if (view!= null) {
@@ -72,6 +57,21 @@ public final class LoginActivity_
                     @Override
                     public void onClick(View view) {
                         LoginActivity_.this.doLogIn();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = findViewById(id.txtSignup);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        LoginActivity_.this.doSignUp();
                     }
 
                 }

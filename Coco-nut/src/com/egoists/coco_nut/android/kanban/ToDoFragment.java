@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.R.layout;
@@ -21,23 +23,28 @@ public class ToDoFragment extends Fragment {
 	
 	private KanbanData kanbanData;
 	
-	private RelativeLayout relative_layout;
-	private LinearLayout linear_layout;
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
-		relative_layout = (RelativeLayout) inflater.inflate(R.layout.fragment_to_do, container, false); 
+		RelativeLayout relative_layout = 
+				(RelativeLayout) inflater.inflate(R.layout.fragment_to_do, container, false); 
 		
 		kanbanData = ((KanbanActivity)getActivity()).kanbanData;
-		linear_layout = (LinearLayout) relative_layout.findViewById(R.id.todo_cardlist);
+		ScrollView sv = new ScrollView(getActivity());
+		sv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+        LinearLayout ll = new LinearLayout(getActivity());
+        ll.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+        ll.setOrientation(1);
+        sv.addView(ll);
 		for (int i = 0; i < kanbanData.Do.size(); i++)
 		{
 			AndLog.i("" + kanbanData.Do.size());
 			CardView cardview = new CardView(getActivity(), kanbanData.Do.get(i));
-			linear_layout.addView(cardview);
+			ll.addView(cardview);
 		}
+        relative_layout.addView(sv);
 		return relative_layout;
 	}
 }
