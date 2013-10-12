@@ -5,41 +5,35 @@
     android:gravity="center_horizontal" >
 
     <LinearLayout 
-        android:id="@+id/layLoginLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible" >
+        android:layout_marginTop="30dp" >
         <ImageView
-	        android:id="@+id/imgLoginLogo"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/ic_main_coconut" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_main_coconut" />
         <!-- 안내 메시지 -->
         <TextView
-            android:id="@+id/txtLoginNotice"
+            android:id="@+id/txtSignUpMessage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/font_common_coconut"
             android:textSize="@dimen/login_font_size"
             android:textStyle="normal|italic"
-            android:text="@string/login_message"
+            android:text="@string/signup_message"
             android:gravity="center"
-            android:visibility="invisible" />    
+            android:visibility="visible" />    
     </LinearLayout>
     
-
     <LinearLayout
-        android:id="@+id/layLoginForm"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:orientation="vertical"
-        android:visibility="invisible" >
+        android:orientation="vertical" >
         
         <!-- ID -->
         <LinearLayout
@@ -54,17 +48,39 @@
                 android:textSize="@dimen/login_id_font_size"
                 android:text="@string/login_id" />
             <EditText
-                android:id="@+id/edTxtLoginId"
+                android:id="@+id/edTxtSignUpId"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:ems="10"
                 android:inputType="textEmailAddress" >
             </EditText>
-            <requestFocus />
         </LinearLayout>
         
         <!-- Password -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView 
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/font_common_coconut"
+                android:textSize="@dimen/login_id_font_size"
+                android:text="@string/login_passwd" />
+            <EditText
+                android:id="@+id/edTxtSignUpPassword"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:ems="10"
+                android:inputType="textPassword" >
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+        
+        <!-- Password 확인-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,10 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/font_common_coconut"
-                android:textSize="@dimen/login_id_font_size"
-                android:text="@string/login_passwd" />
+                android:textSize="@dimen/login_id_font_size" />
             <EditText
-                android:id="@+id/edTxtLoginPassword"
+                android:id="@+id/edTxtSignUpConfirmPassword"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -87,38 +102,16 @@
             </EditText>
         </LinearLayout>
         
-        <!-- Login -->
+        <!-- 회원가입 -->
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/button_bg_coconut"
             android:textColor="@color/white_coconut"
-            android:text="@string/login"
+            android:text="@string/signup"
             android:layout_marginBottom="20dp"
             />
-        <!-- 회원가입 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right" >
-            <TextView
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textColor="@color/font_common_coconut"
-	            android:textSize="@dimen/login_font_size"
-	            android:textStyle="normal|italic"
-	            android:text="@string/signup_require" />
-            <TextView
-                android:id="@+id/txtSignup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:textColor="@color/font_common_coconut"
-                android:textSize="@dimen/signup_button_font_size"
-                android:textStyle="normal|italic"
-                android:text="@string/signup_with_underline" /> 
-        </LinearLayout>
+        
     </LinearLayout>
 </RelativeLayout>

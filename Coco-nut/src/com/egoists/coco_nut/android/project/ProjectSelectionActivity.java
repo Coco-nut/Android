@@ -27,8 +27,14 @@ public class ProjectSelectionActivity extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 	}
 	
-	@Click({R.id.btn_new_project, R.id.btn_notices, R.id.btn_setting})
-	void createNewProject() {
+	@Click({R.id.btnCreateProject})
+    void createNewProject() {
+        Intent intent = new Intent(this, com.egoists.coco_nut.android.project.ProjectCreationActivity_.class);
+        startActivity(intent);
+    }
+	
+	@Click({R.id.btn_notices, R.id.btn_setting})
+	void goToKanban() {
 		Intent intent = new Intent(this, com.egoists.coco_nut.android.kanban.KanbanActivity_.class);
 		startActivity(intent);
 	}

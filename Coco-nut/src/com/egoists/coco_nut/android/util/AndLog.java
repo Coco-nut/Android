@@ -13,6 +13,10 @@ public class AndLog {
 	public static final int ERROR 	= 5;
 	public static final int FATAL 	= 6;
 	
+	public static void setLevel(int level){
+        mLevel = level;
+    }
+	
 	protected static boolean checkLevel(int level) {
 		if ((mLevel<0) || ((level-mLevel) < 0))
 			return false;

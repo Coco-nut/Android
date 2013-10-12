@@ -17,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.egoists.coco_nut.android.R.id;
@@ -43,19 +43,20 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        txtSignUpPhoneNum = ((TextView) findViewById(id.txtSignUpPhoneNum));
-        imgMainLogo = ((ImageView) findViewById(id.imgMainLogo));
-        laySubmmitForm = ((LinearLayout) findViewById(id.laySubmmitForm));
-        laySignUpForm = ((LinearLayout) findViewById(id.laySignUpForm));
+        edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
+        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
+        txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
+        layLoginForm = ((LinearLayout) findViewById(id.layLoginForm));
+        layLoginLogo = ((LinearLayout) findViewById(id.layLoginLogo));
         {
-            View view = findViewById(id.btnSignUpSendSms);
+            View view = findViewById(id.btnLogin);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
 
                     @Override
                     public void onClick(View view) {
-                        LoginActivity_.this.doSendSms();
+                        LoginActivity_.this.doLogIn();
                     }
 
                 }
@@ -63,7 +64,7 @@ public final class LoginActivity_
             }
         }
         {
-            View view = findViewById(id.btnSignUp);
+            View view = findViewById(id.txtSignup);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
@@ -77,7 +78,7 @@ public final class LoginActivity_
                 );
             }
         }
-        signUp();
+        initLoginForm();
     }
 
     @Override
@@ -103,14 +104,14 @@ public final class LoginActivity_
     }
 
     @Override
-    public void displaySignUpLayout() {
+    public void displayLoginLayout() {
         handler_.post(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    LoginActivity_.super.displaySignUpLayout();
+                    LoginActivity_.super.displayLoginLayout();
                 } catch (RuntimeException e) {
                     Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
@@ -118,24 +119,6 @@ public final class LoginActivity_
 
         }
         );
-    }
-
-    @Override
-    public void showSignUpForm() {
-        handler_.postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    LoginActivity_.super.showSignUpForm();
-                } catch (RuntimeException e) {
-                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        , 1000L);
     }
 
     @Override
@@ -157,21 +140,21 @@ public final class LoginActivity_
     }
 
     @Override
-    public void showSubmmitForm() {
-        handler_.post(new Runnable() {
+    public void showLoginForm() {
+        handler_.postDelayed(new Runnable() {
 
 
             @Override
             public void run() {
                 try {
-                    LoginActivity_.super.showSubmmitForm();
+                    LoginActivity_.super.showLoginForm();
                 } catch (RuntimeException e) {
                     Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
                 }
             }
 
         }
-        );
+        , 1000L);
     }
 
     @Override

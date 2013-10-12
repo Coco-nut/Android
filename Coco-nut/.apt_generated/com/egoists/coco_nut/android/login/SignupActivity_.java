@@ -3,23 +3,23 @@
 //
 
 
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.login;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.widget.EditText;
+import android.widget.TextView;
 import com.egoists.coco_nut.android.R.id;
 import com.egoists.coco_nut.android.R.layout;
-import com.googlecode.androidannotations.api.SdkVersionHelper;
 
-public final class ProjectSelectionActivity_
-    extends ProjectSelectionActivity
+public final class SignupActivity_
+    extends SignupActivity
 {
 
 
@@ -27,60 +27,34 @@ public final class ProjectSelectionActivity_
     public void onCreate(Bundle savedInstanceState) {
         init_(savedInstanceState);
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_project_selection);
+        setContentView(layout.activity_signup);
     }
 
     private void init_(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
     private void afterSetContentView_() {
-        mViewPager = ((ViewPager) findViewById(id.pager_project));
+        edTxtSignUpId = ((EditText) findViewById(id.edTxtSignUpId));
+        txtSignUpMessage = ((TextView) findViewById(id.txtSignUpMessage));
+        edTxtSignUpConfirmPassword = ((EditText) findViewById(id.edTxtSignUpConfirmPassword));
+        edTxtSignUpPassword = ((EditText) findViewById(id.edTxtSignUpPassword));
         {
-            View view = findViewById(id.btnCreateProject);
+            View view = findViewById(id.btnSignUp);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
 
 
                     @Override
                     public void onClick(View view) {
-                        ProjectSelectionActivity_.this.createNewProject();
+                        SignupActivity_.this.doSignUp();
                     }
 
                 }
                 );
             }
         }
-        {
-            View view = findViewById(id.btn_notices);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        ProjectSelectionActivity_.this.goToKanban();
-                    }
-
-                }
-                );
-            }
-        }
-        {
-            View view = findViewById(id.btn_setting);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        ProjectSelectionActivity_.this.goToKanban();
-                    }
-
-                }
-                );
-            }
-        }
-        initViewPager();
+        initSignupForm();
     }
 
     @Override
@@ -101,16 +75,8 @@ public final class ProjectSelectionActivity_
         afterSetContentView_();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (((SdkVersionHelper.getSdkInt()< 5)&&(keyCode == KeyEvent.KEYCODE_BACK))&&(event.getRepeatCount() == 0)) {
-            onBackPressed();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    public static ProjectSelectionActivity_.IntentBuilder_ intent(Context context) {
-        return new ProjectSelectionActivity_.IntentBuilder_(context);
+    public static SignupActivity_.IntentBuilder_ intent(Context context) {
+        return new SignupActivity_.IntentBuilder_(context);
     }
 
     public static class IntentBuilder_ {
@@ -120,14 +86,14 @@ public final class ProjectSelectionActivity_
 
         public IntentBuilder_(Context context) {
             context_ = context;
-            intent_ = new Intent(context, ProjectSelectionActivity_.class);
+            intent_ = new Intent(context, SignupActivity_.class);
         }
 
         public Intent get() {
             return intent_;
         }
 
-        public ProjectSelectionActivity_.IntentBuilder_ flags(int flags) {
+        public SignupActivity_.IntentBuilder_ flags(int flags) {
             intent_.setFlags(flags);
             return this;
         }

@@ -19,6 +19,18 @@
 
 <resources>
     <color name="pressed_coconut">#CCA4B6CC</color>
-    <color name="button_bg_coconut">#728FAF</color>
-    <color name="font_white_coconut">#FFFFFF</color>
+    <color name="button_bg_coconut">#97ACC5</color>
+    <color name="font_common_coconut">#97ACC5</color>
+    <color name="white_coconut">#FFFFFF</color>
+    
+    <color name="category_1">#F4C9C3</color>
+    <color name="category_2">#F58D7A</color>
+    <color name="category_3">#BCE0C7</color>
+    <color name="category_4">#79C799</color>
+    <color name="category_5">#AFCCE1</color>
+    <color name="category_6">#728FAF</color>
+    <color name="category_7">#F9AE68</color>
+    <color name="category_8">#9E8BB0</color>
+    <color name="category_9">#BCBEC0</color>
+    <color name="category_0">#D0B998</color>
 </resources>

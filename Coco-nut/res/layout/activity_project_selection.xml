@@ -24,7 +24,7 @@
             android:orientation="horizontal"
             >
             <Button
-	            android:id="@+id/btn_new_project"
+	            android:id="@+id/btnCreateProject"
 	            style="?android:attr/buttonStyleSmall"
 	            android:layout_width="60dp"
                 android:layout_height="60dp"
