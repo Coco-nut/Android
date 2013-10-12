@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
             displayLoginLayout();
         } else {
             // 로그인 성공
-            moveToProjectSelectionActivity();
+            moveToProjectSelectionActivity(user);
         }  
     }
 	
@@ -159,6 +159,11 @@ public class LoginActivity extends Activity {
                         BaasioDialogFactory.createErrorDialog(mContext, R.string.error_login_fail).show();
                         return;
                     }
+                    if (e.getErrorCode() == 210) {
+                        // 회원 가입이 필요
+                        BaasioDialogFactory.createErrorDialog(mContext, R.string.error_require_signup).show();
+                        return;
+                    }
                 }
                 // 기타 오류
                 BaasioDialogFactory.createErrorDialog(mContext, e).show();
@@ -169,8 +174,8 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
-                    mLoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
-                    moveToProjectSelectionActivity();
+                    mLoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
+                    moveToProjectSelectionActivity(response);
                 }
             }
         });
@@ -182,10 +187,10 @@ public class LoginActivity extends Activity {
                 com.egoists.coco_nut.android.login.SignupActivity_.class));
     }
 	
-	void moveToProjectSelectionActivity() {
-		// 로딩이 끝난후 이동할 Activity
-        startActivity(new Intent(getApplication(), 
-        		com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class)); 
+	void moveToProjectSelectionActivity(BaasioUser response) {
+	    Intent intent = new Intent(getApplication(), 
+                com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class);
+        startActivity(intent); 
         LoginActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
 	}
 }

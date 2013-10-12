@@ -2,6 +2,7 @@ package com.egoists.coco_nut.android.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class SignupActivity extends Activity {
     void doSignUp() {
         String userId = edTxtSignUpId.getText().toString();
         String passwd = edTxtSignUpPassword.getText().toString();
-        String phoneNum = MyAndroidInfo.getMyPhoneNumber(this);
+        String phoneNum = PhoneNumberUtils.formatNumber(MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0"));
         String email = MyAndroidInfo.getMyEmail(this);
         
         AndLog.d("userId:" + userId + "-" + "name:" + phoneNum + "email:" + email);

@@ -23,7 +23,7 @@ public class ProjectSelectionActivity extends FragmentActivity {
     private Context mContext;
     
 	SectionsPagerAdapter mSectionsPagerAdapter;
-
+	
 	@ViewById(R.id.pager_project)
 	ViewPager mViewPager;
 
@@ -50,7 +50,7 @@ public class ProjectSelectionActivity extends FragmentActivity {
 	
 	@Click({R.id.btn_setting})
 	void delLoginPreference() {
-	    mLoginPref.savePreference("", "");
+	    mLoginPref.savePreference("", "", "");
 	    Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
 	    moveToLoginActivity();
 	}

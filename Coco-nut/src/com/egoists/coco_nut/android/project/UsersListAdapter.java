@@ -1,6 +1,7 @@
 package com.egoists.coco_nut.android.project;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,14 +31,14 @@ public class UsersListAdapter extends BaseAdapter {
         super();
 
         mContext = context;
-        
         mUserList = userList;
-
+        mImageFetcher = new ImageFetcher(mContext);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
+        AndLog.d("getCount");
         return mUserList.size();
     }
 
@@ -50,6 +51,13 @@ public class UsersListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    
+    public void update(List<BaasioUser> userList) {
+        AndLog.d("UserList is updated");
+        mUserList.clear();
+        mUserList.addAll(userList);
+        this.notifyDataSetChanged();
+    }
 
     /*
      * (non-Javadoc)
@@ -58,7 +66,7 @@ public class UsersListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        AndLog.i(position + "-view");
+        AndLog.d(position + "-view");
         UsersViewHolder view = null;
 
         if (convertView == null) {
