@@ -1,5 +1,7 @@
 package com.egoists.coco_nut.android.project;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +13,19 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.util.AndLog;
+import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.kth.baasio.callback.BaasioQueryCallback;
+import com.kth.baasio.entity.BaasioBaseEntity;
+import com.kth.baasio.entity.group.BaasioGroup;
+import com.kth.baasio.exception.BaasioException;
+import com.kth.baasio.query.BaasioQuery;
+import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_project_selection)
 public class ProjectSelectionActivity extends FragmentActivity {
@@ -34,6 +44,7 @@ public class ProjectSelectionActivity extends FragmentActivity {
 		
 		mContext = this;
 		mLoginPref = new LoginPreference(mContext);
+		getMyGroupsByBaasio();
 	}
 	
 	@Click({R.id.btnCreateProject})
@@ -81,4 +92,37 @@ public class ProjectSelectionActivity extends FragmentActivity {
         startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
         ProjectSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
     }
+	
+	void getMyGroups() {
+	    
+	}
+	
+	void getMyGroupsByBaasio() {
+    	// 로그인 정보 가져오기
+        mLoginPref.loadPreference();
+        
+	    // 쿼리 전송
+        BaasioQuery query = new BaasioQuery();
+        query.setRawString("users/" + mLoginPref.mUuid + "/groups");
+        query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
+        query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
+
+            @Override
+            public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
+                AndLog.d("Succeed : get my groups");
+                
+                List<BaasioGroup> groups = BaasioBaseEntity.toType(entities, BaasioGroup.class);
+                for (BaasioGroup group : groups) {
+                    AndLog.d(group.getTitle());
+                }
+                
+            }
+
+            @Override
+            public void onException(BaasioException e) {
+                AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                BaasioDialogFactory.createErrorDialog(mContext, e).show();
+            }
+        });
+	}
 }
