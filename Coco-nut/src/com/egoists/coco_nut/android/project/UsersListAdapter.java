@@ -18,7 +18,7 @@ import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.utils.ObjectUtils;
 
 public class UsersListAdapter extends BaseAdapter {
-
+    private ProjectInvitationActivity mActivity;
     private Context mContext;
 
     private LayoutInflater mInflater;
@@ -27,9 +27,9 @@ public class UsersListAdapter extends BaseAdapter {
     
     private ArrayList<BaasioUser> mUserList;
 
-    public UsersListAdapter(Context context, ArrayList<BaasioUser> userList) {
+    public UsersListAdapter(ProjectInvitationActivity activity, Context context, ArrayList<BaasioUser> userList) {
         super();
-
+        mActivity = activity;
         mContext = context;
         mUserList = userList;
         mImageFetcher = new ImageFetcher(mContext);
@@ -85,7 +85,7 @@ public class UsersListAdapter extends BaseAdapter {
             view = (UsersViewHolder)convertView.getTag();
         }
 
-        BaasioUser entity = mUserList.get(position);
+        final BaasioUser entity = mUserList.get(position);
 
         if (entity != null) {
             String imageUrl = entity.getPicture();
@@ -100,7 +100,16 @@ public class UsersListAdapter extends BaseAdapter {
             }
 
         }
+        
+        if (view.mRoot != null) {
+            view.mRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 사용자 그룹에 추가
+                    mActivity.addUserToGroup(entity.getUuid());
+                }
+            });
+        }
         return convertView;
     }
-
 }

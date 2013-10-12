@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
             displayLoginLayout();
         } else {
             // 로그인 성공
-            moveToProjectSelectionActivity(user);
+            moveToProjectSelectionActivity();
         }  
     }
 	
@@ -175,7 +175,7 @@ public class LoginActivity extends Activity {
                 if (response != null) {
                     // 로그인 성공
                     mLoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
-                    moveToProjectSelectionActivity(response);
+                    moveToProjectSelectionActivity();
                 }
             }
         });
@@ -187,7 +187,7 @@ public class LoginActivity extends Activity {
                 com.egoists.coco_nut.android.login.SignupActivity_.class));
     }
 	
-	void moveToProjectSelectionActivity(BaasioUser response) {
+	void moveToProjectSelectionActivity() {
 	    Intent intent = new Intent(getApplication(), 
                 com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class);
         startActivity(intent); 

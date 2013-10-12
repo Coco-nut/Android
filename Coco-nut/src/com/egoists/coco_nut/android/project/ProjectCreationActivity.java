@@ -98,7 +98,7 @@ public class ProjectCreationActivity extends Activity {
                 });
     }
     
-    void addMeIntoCreatedGroup(UUID groupUuid) {
+    void addMeIntoCreatedGroup(final UUID groupUuid) {
         // UUID 정보 가져오기
         mLoginPref.loadPreference();
         String myUuid = mLoginPref.mUuid;
@@ -125,16 +125,19 @@ public class ProjectCreationActivity extends Activity {
                             // 성공
                             String username = response.getUsername(); // ID(Username)
                             AndLog.d("Succeed : " + username + " is added");
-                            moveToProjectInvitationActivity();
+                            moveToProjectInvitationActivity(groupUuid);
                         }
                     }
                 });
     }
     
     // 그룹 회원 추가 activity로 이동
-    void moveToProjectInvitationActivity() {
-        startActivity(new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.ProjectInvitationActivity_.class));
+    void moveToProjectInvitationActivity(final UUID groupUuid) {
+        Intent i = new Intent(getApplication(), 
+                com.egoists.coco_nut.android.project.ProjectInvitationActivity_.class);
+        i.putExtra("created_group_uuid", groupUuid.toString());
+        startActivity(i);
+        
         ProjectCreationActivity.this.finish();
     }
 }

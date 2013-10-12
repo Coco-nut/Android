@@ -43,7 +43,7 @@ public class SignupActivity extends Activity {
     void doSignUp() {
         String userId = edTxtSignUpId.getText().toString();
         String passwd = edTxtSignUpPassword.getText().toString();
-        String phoneNum = PhoneNumberUtils.formatNumber(MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0"));
+        String phoneNum = MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0");
         String email = MyAndroidInfo.getMyEmail(this);
         
         AndLog.d("userId:" + userId + "-" + "name:" + phoneNum + "email:" + email);
