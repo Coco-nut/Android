@@ -43,8 +43,8 @@ public final class LoginActivity_
     }
 
     private void afterSetContentView_() {
-        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
         edTxtLoginPassword = ((EditText) findViewById(id.edTxtLoginPassword));
+        edTxtLoginId = ((EditText) findViewById(id.edTxtLoginId));
         txtLoginNotice = ((TextView) findViewById(id.txtLoginNotice));
         layLoginForm = ((LinearLayout) findViewById(id.layLoginForm));
         layLoginLogo = ((LinearLayout) findViewById(id.layLoginLogo));
@@ -104,24 +104,6 @@ public final class LoginActivity_
     }
 
     @Override
-    public void displayLoginLayout() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    LoginActivity_.super.displayLoginLayout();
-                } catch (RuntimeException e) {
-                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
     public void holdMainLogo() {
         handler_.postDelayed(new Runnable() {
 
@@ -137,6 +119,24 @@ public final class LoginActivity_
 
         }
         , 1500L);
+    }
+
+    @Override
+    public void displayLoginLayout() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                try {
+                    LoginActivity_.super.displayLoginLayout();
+                } catch (RuntimeException e) {
+                    Log.e("LoginActivity_", "A runtime exception was thrown while executing code in a runnable", e);
+                }
+            }
+
+        }
+        );
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.egoists.coco_nut.android.kanban.briefing;
 
 import java.util.Calendar;
 
+import com.egoists.coco_nut.android.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,12 +36,12 @@ public class GanttView extends View {
 	
 	
 	//x y cordinated of things: will be scaled by screen definitions
-	final int top_margin = 237;
+	final int top_margin = 267;
 	final int chart_height = 21 + 29*number_of_cards + 8;
 	
 	final int leftline_w = 4;
 	final int leftline_c = Color.argb(255, 217, 217, 217);
-	final int leftline_x = 31;
+	final int leftline_x = 50;
 	final int leftline_y1 = top_margin + 13;
 	final int leftline_y2 = top_margin + chart_height + 13;
 	Paint leftline_paint;
@@ -51,16 +53,18 @@ public class GanttView extends View {
 	final int bottomline_y = leftline_y2;
 	Paint bottomline_paint;
 	
-	final int flag_x1 = 59;
-	final int flag_x2 = 59 + 22;
+	final int flag_x1 = leftline_x + 28;
+	final int flag_x2 = leftline_x + 28 + 22;
 	final int flag_dx = 200;
 	final int flag_y1 = leftline_y1 + chart_height + 12;
 	final int flag_y2 = leftline_y1 + chart_height + 12 + 29;
 	final int flag_dy = 47;
 	final int flag_text_c = Color.argb(255, 130, 130, 130);
-	final int flag_text_x = 88;
+	final int flag_text_x = leftline_x + 28 + 29;
 	final int flag_text_y = top_margin + chart_height + 48;
+	final int flag_text_size = 25;
 	Paint flagtext_paint;
+	Drawable[] flag;
 
 	final int centerline_w = 1;
 	final int centerline_c = Color.argb(255, 236, 236, 236);
@@ -73,20 +77,31 @@ public class GanttView extends View {
 	
 	final int toptext_y = top_margin;
 	final int toptext_c = Color.argb(255, 217, 217, 217);
+	final int toptext_size = 20;
 	Paint toptext_paint;
 	
 	final int label_y1 = leftline_y1 + 21;
 	final int label_dy = 29;
 	final int label_h = 14;
 	final int label_w = 918;
+	Bitmap[] label;
+	Bitmap[] label_cropped;
+	
+	final int icon_y1 = top_margin / 3;
+	final int icon_y2 = icon_y1 + 40;
+	final int icon_x1 = leftline_x;
+	final int icon_x2 = icon_x1 + 28;
+	final int icon_text_c = Color.argb(255, 94, 119, 142);
+	final int icon_text_x = icon_x2 + 20;
+	final int icon_text_y = icon_y2;
+	final int icon_text_size = 33;
+	Paint icontext_paint;
+	Drawable icon;
+	
 	int[] label_x1;
 	int[] label_x2;
 	
 	Point resolution;
-
-	Drawable[] flag;
-	Bitmap[] label;
-	Bitmap[] label_cropped;
 	int nLines;
 	
 	public GanttView(Context context){
@@ -106,7 +121,7 @@ public class GanttView extends View {
 		label_x1 = new int[number_of_cards];
 		label_x2 = new int[number_of_cards];
 		setBackgroundColor(Color.WHITE);
-		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
 		
 		//load flags and labels
 		for (int i=0; i < number_of_categories; i++){
@@ -118,6 +133,8 @@ public class GanttView extends View {
 			BitmapDrawable temp = (BitmapDrawable)getResources().getDrawable(tid);
 			label[i] = Bitmap.createScaledBitmap(temp.getBitmap(), x(label_w), y(label_h), false);
 		}
+		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
+		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
 		
 		//Calculate date difference
 		long tmp = (day_of_end.getTimeInMillis()-day_of_start.getTimeInMillis())/24/3600/1000;
@@ -168,7 +185,9 @@ public class GanttView extends View {
 			flag[i].draw(canvas);
 			canvas.drawText(category_name[i], x(flag_text_x + i%3*flag_dx), y(flag_text_y + i/3*flag_dy), flagtext_paint);
 		}
-
+		
+		icon.draw(canvas);
+		canvas.drawText("간트 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 		
 	}
 	
@@ -230,14 +249,21 @@ public class GanttView extends View {
 		toptext_paint.setStyle(Paint.Style.FILL);
 		toptext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		toptext_paint.setColor(toptext_c);
-		toptext_paint.setTextSize(20);	
+		toptext_paint.setTextSize(y(toptext_size));	
 		toptext_paint.setTextAlign(Align.CENTER);
 		
 		flagtext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		flagtext_paint.setStyle(Paint.Style.FILL);
 		flagtext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		flagtext_paint.setColor(flag_text_c);
-		flagtext_paint.setTextSize(25);	
+		flagtext_paint.setTextSize(y(flag_text_size));	
 		flagtext_paint.setTextAlign(Align.LEFT);
+
+		icontext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		icontext_paint.setStyle(Paint.Style.FILL);
+		icontext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
+		icontext_paint.setColor(icon_text_c);
+		icontext_paint.setTextSize(y(icon_text_size));	
+		icontext_paint.setTextAlign(Align.LEFT);
 	}
 }

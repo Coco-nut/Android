@@ -36,12 +36,12 @@ public class WIPView extends View {
 	
 	//x y cordinated of things: will be scaled by screen definitions
 	final int background_c = Color.WHITE;
-	final int top_margin = 237;
+	final int top_margin = 267;
 	final int chart_height = 21 + 29*14 + 8;
 	
 	final int leftline_w = 4;
 	final int leftline_c = Color.argb(255, 217, 217, 217);
-	final int leftline_x = 31;
+	final int leftline_x = 50;
 	final int leftline_y1 = top_margin + 13;
 	final int leftline_y2 = top_margin + chart_height + 13;
 	Paint leftline_paint;
@@ -53,6 +53,19 @@ public class WIPView extends View {
 	final int bottomline_y = leftline_y2;
 	Paint bottomline_paint;
 	
+	final int flag_x1 = leftline_x + 28;
+	final int flag_x2 = leftline_x + 28 + 22;
+	final int flag_dx = 200;
+	final int flag_y1 = leftline_y1 + chart_height + 12 + 2;
+	final int flag_y2 = leftline_y1 + chart_height + 12 + 24;
+	final int flag_dy = 47;
+	RectF[] flags;
+	final int flag_text_c = Color.argb(255, 130, 130, 130);
+	final int flag_text_x = leftline_x + 28 + 29;
+	final int flag_text_y = top_margin + chart_height + 48;
+	final int flag_text_size = 25;
+	Paint flagtext_paint;
+	
 	final int centerline_w = 1;
 	final int centerline_c = Color.argb(255, 236, 236, 236);
 	final int centerline_x1 = leftline_x + 2;
@@ -61,18 +74,6 @@ public class WIPView extends View {
 	final int centerline_y2 = leftline_y2;
 	double centerline_dx;
 	Paint centerline_paint;
-	
-	final int flag_x1 = 59;
-	final int flag_x2 = 59 + 22;
-	final int flag_dx = 200;
-	final int flag_y1 = leftline_y1 + chart_height + 12 + 2;
-	final int flag_y2 = leftline_y1 + chart_height + 12 + 24;
-	final int flag_dy = 47;
-	RectF[] flags;
-	final int flag_text_c = Color.argb(255, 130, 130, 130);
-	final int flag_text_x = 88;
-	final int flag_text_y = top_margin + chart_height + 48;
-	Paint flagtext_paint;
 	
 	int graph_x2;
 	final int graph_y1 = leftline_y1 + 21;
@@ -91,10 +92,9 @@ public class WIPView extends View {
 	Path donepath;
 	Paint donepath_paint;
 	
-	final int toptext_x1 = 85;
-	final int toptext_x2 = 655;
 	final int toptext_y = top_margin;
 	final int toptext_c = Color.argb(255, 217, 217, 217);
+	final int toptext_size = 20;
 	Paint toptext_paint;
 	
 	Drawable alarm;
@@ -104,6 +104,17 @@ public class WIPView extends View {
 	int number_of_alarms = 0;
 	int[] alarm_center_x;
 	int[] alarm_center_y;
+
+	final int icon_y1 = top_margin / 3;
+	final int icon_y2 = icon_y1 + 40;
+	final int icon_x1 = leftline_x;
+	final int icon_x2 = icon_x1 + 28;
+	final int icon_text_c = Color.argb(255, 94, 119, 142);
+	final int icon_text_x = icon_x2 + 20;
+	final int icon_text_y = icon_y2;
+	final int icon_text_size = 33;
+	Paint icontext_paint;
+	Drawable icon;
 	
 	Point resolution;
 	int nLines;
@@ -124,7 +135,7 @@ public class WIPView extends View {
 		//Initializations
 		initialize();
 		setBackgroundColor(background_c);
-		setMinimumHeight(y(Math.max(1010, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
 
 	}
 	public void onDraw(Canvas canvas){
@@ -173,7 +184,9 @@ public class WIPView extends View {
 			canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
 					x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(toptext_y), toptext_paint);
 		}
-		
+
+		icon.draw(canvas);
+		canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 	}
 	
 	private int x(int x){
@@ -216,6 +229,13 @@ public class WIPView extends View {
 		leftline_paint.setStyle(Paint.Style.STROKE);
 		leftline_paint.setStrokeWidth(leftline_w);
 		leftline_paint.setColor(leftline_c);
+
+		icontext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		icontext_paint.setStyle(Paint.Style.FILL);
+		icontext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
+		icontext_paint.setColor(icon_text_c);
+		icontext_paint.setTextSize(y(icon_text_size));	
+		icontext_paint.setTextAlign(Align.LEFT);
 		
 		bottomline_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		bottomline_paint.setStyle(Paint.Style.STROKE);
@@ -291,6 +311,9 @@ public class WIPView extends View {
 		flags[0] = new RectF(x(flag_x1), y(flag_y1), x(flag_x2), y(flag_y2));
 		flags[1] = new RectF(x(flag_x1 + flag_dx), y(flag_y1), x(flag_x2 + flag_dx), y(flag_y2));
 		flags[2] = new RectF(x(flag_x1 + 2*flag_dx), y(flag_y1), x(flag_x2 + 2*flag_dx), y(flag_y2));
+		
+		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
+		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
 		
 		
 		int pathstart_x = (pointstofill_y[1] == pointstofill_y[0]) ? leftline_x :
