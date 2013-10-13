@@ -38,15 +38,6 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             >
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:gravity="center"
-	            android:background="#aaa"
-	            android:text="Gantt_Chart"
-	            android:textColor = "#fff"
-	            android:focusable="true"
-	            />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pager_kanban_briefing_wiplist"
@@ -54,15 +45,6 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             >
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:gravity="center"
-	            android:background="#0a0"
-	            android:text="WIP Chart"
-	            android:focusable="true"
-		        android:textColor = "#fff"
-	            />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pager_kanban_briefing_partilist"
@@ -70,15 +52,6 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             >
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:gravity="center"
-	            android:background="#00a"
-	            android:text="Participation Rating Chart"
-	            android:focusable="true"
-		        android:textColor = "#fff"
-	            />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/pager_kanban_briefing_peerlist"
@@ -86,15 +59,6 @@
             android:layout_height="fill_parent"
             android:orientation="vertical"
             >
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
-	            android:gravity="center"
-	            android:background="#a00"
-	            android:text="Peer Rating Chart"
-	            android:focusable="true"
-		        android:textColor = "#fff"
-	            />
         </LinearLayout>
     </com.egoists.coco_nut.android.kanban.briefing.VerticalPager>
 </LinearLayout>
