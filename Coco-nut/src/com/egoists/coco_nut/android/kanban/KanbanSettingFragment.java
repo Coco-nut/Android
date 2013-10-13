@@ -48,7 +48,7 @@ public class KanbanSettingFragment extends PreferenceFragment {
 		
 		logout.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 				public boolean onPreferenceClick(Preference arg0){
-					KanbanSettingActivity.LoginPref.savePreference("", "", "");
+					KanbanSettingActivity.LoginPref.savePreference("", "");
 				    Toast.makeText(getActivity(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
 				    Intent logout = new Intent(getActivity().getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class);
 				    logout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -177,7 +177,7 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
-                	KanbanSettingActivity.LoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
+                	KanbanSettingActivity.LoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
                 	
                 	// 사용자 폰번호가 없으면 업데이트한다
                 	JsonNode node = response.getProperty("phone");
@@ -209,7 +209,7 @@ public class LoginActivity extends Activity {
 
                 @Override
                 public void onResponse(BaasioUser response) {
-                    mDialog.dismiss();
+                    
                     if (response != null) {
                         moveToProjectSelectionActivity();
                     }

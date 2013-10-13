@@ -20,9 +20,11 @@ import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.kth.baasio.Baas;
 import com.kth.baasio.callback.BaasioQueryCallback;
 import com.kth.baasio.entity.BaasioBaseEntity;
 import com.kth.baasio.entity.group.BaasioGroup;
+import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 import com.kth.baasio.query.BaasioQuery;
 import com.kth.baasio.query.BaasioQuery.ORDER_BY;
@@ -96,10 +98,11 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    KanbanSettingActivity.LoginPref.loadPreference();
         
         mDialog = ProgressDialog.show(GroupSelectionActivity.this, "", "내 그룹 가져오는 중", true);
-        
+        final BaasioUser user = Baas.io().getSignedInUser();
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
-        query.setRawString("users/" + KanbanSettingActivity.LoginPref.mUuid + "/groups");
+//        query.setRawString("users/" + KanbanSettingActivity.LoginPref.mUuid + "/groups");
+        query.setRawString("users/" + user.getUuid().toString() + "/groups");
         query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
         query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
 
