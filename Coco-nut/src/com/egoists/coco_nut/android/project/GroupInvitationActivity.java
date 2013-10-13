@@ -75,6 +75,19 @@ public class GroupInvitationActivity extends Activity {
         });
     }
     
+    // 전화번호인지 판단
+    boolean isPhoneNumer(String query) {
+        try {
+            // 전화번호에 '-'가 있으면 없애고 판단
+            String num = query.replaceAll("-", "");
+            AndLog.d(num + " is phone number?");
+            Long.parseLong(num);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
     void getMyFriendsByBaasio() {
         // 사용자 검색시 나온 키보드 내려놓기
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -86,13 +99,18 @@ public class GroupInvitationActivity extends Activity {
         // 검색에서 무조건 본인은 제외
         String exceptMeQuery = " not username='" + mLoginPref.mId + "'";
         
-        // 사용자 이름 검색
-        String nameQuery = "";
-        String name = edTxtSearchUser.getText().toString();
-        if (name.length() != 0) {
-            nameQuery = " name='" + name + "'";
+        // 사용자 이름으로 검색인지, 폰번호로 검색인지 판단
+        String userQuery = edTxtSearchUser.getText().toString();
+        String additionalQuery = "";
+        if (userQuery.length() != 0) {
+            if (isPhoneNumer(userQuery)) {
+                additionalQuery = " phone='" + userQuery.replaceAll("-", "") + "'";
+            } else {
+                additionalQuery = " name='" + userQuery + "'";
+            }
         }
-        String fullQuery = "select * where" + nameQuery + exceptMeQuery;
+
+        String fullQuery = "select * where" + additionalQuery + exceptMeQuery;
         String rawQuery = CoconutUrlEncoder.encode(fullQuery);
         AndLog.d(rawQuery);
         

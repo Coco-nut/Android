@@ -101,7 +101,6 @@ public class GroupSelectionActivity extends FragmentActivity {
         final BaasioUser user = Baas.io().getSignedInUser();
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
-//        query.setRawString("users/" + KanbanSettingActivity.LoginPref.mUuid + "/groups");
         query.setRawString("users/" + user.getUuid().toString() + "/groups");
         query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
         query.queryInBackground(new BaasioQueryCallback() { // 질의 요청

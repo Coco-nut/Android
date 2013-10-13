@@ -197,7 +197,6 @@ public class LoginActivity extends Activity {
         String phoneNum = MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0");
         
         mDialog = ProgressDialog.show(LoginActivity.this, "", "전화번호 업데이트 중", true);
-//        final BaasioUser user = Baas.io().getSignedInUser();
         user.setProperty("phone", phoneNum);    //추가 정보
         user.updateInBackground(mContext,
             new BaasioCallback<BaasioUser>() {

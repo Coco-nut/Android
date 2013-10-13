@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
-import com.egoists.coco_nut.android.util.LoginPreference;
 import com.egoists.coco_nut.android.util.UniqueString;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
@@ -37,17 +36,12 @@ public class GroupCreationActivity extends Activity {
     public static final String EXTRA_CREATED_GROUP_UUID = "created_group_uuid";
     
     private Context mContext;
-//    private LoginPreference mLoginPref;
     private ProgressDialog mDialog;
     private int mTemplete;
     
     @AfterViews
     void initForm() {
         mContext = this;
-        // TODO del
-//        mLoginPref = new LoginPreference(mContext);
-//        // UUID 정보 가져오기
-//        mLoginPref.loadPreference();
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -110,12 +104,7 @@ public class GroupCreationActivity extends Activity {
     
     // 그룹을 생성한 다음 무조건 본인을 추가한다
     void addMeIntoCreatedGroup(final UUID groupUuid) {
-        final BaasioUser user = Baas.io().getSignedInUser();
-//      TODO del  
-//        String myUuid = mLoginPref.mUuid;
-//        
-//        BaasioUser user = new BaasioUser();
-//        user.setUuid(UUID.fromString(myUuid));         // 추가하려는 회원의 uuid   
+        final BaasioUser user = Baas.io().getSignedInUser(); 
 
         BaasioGroup entity = new BaasioGroup();
         entity.setUuid(groupUuid);                   // Group의 uuid
