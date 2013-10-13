@@ -1,5 +1,7 @@
 package com.egoists.coco_nut.android.login;
 
+import org.codehaus.jackson.JsonNode;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,6 +27,7 @@ import com.googlecode.androidannotations.annotations.NoTitle;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.res.AnimationRes;
+import com.kth.baasio.callback.BaasioCallback;
 import com.kth.baasio.callback.BaasioSignInCallback;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
@@ -175,10 +178,43 @@ public class LoginActivity extends Activity {
                 if (response != null) {
                     // 로그인 성공
                 	KanbanSettingActivity.LoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
-                    moveToProjectSelectionActivity();
+                	
+                	// 사용자 폰번호가 없으면 업데이트한다
+                	JsonNode node = response.getProperty("phone");
+                	if (node == null || node.toString().length() == 0) {
+                	    doUserUpdateByBaasio(response);
+                	    return;
+                	}
+                	moveToProjectSelectionActivity();
                 }
             }
         });
+    }
+    
+ // 사용자 정보 추가 (핸드폰 번호)
+    void doUserUpdateByBaasio(final BaasioUser user) {
+        AndLog.d("Update phone number");
+        String phoneNum = MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0");
+        
+        mDialog = ProgressDialog.show(LoginActivity.this, "", "전화번호 업데이트 중", true);
+//        final BaasioUser user = Baas.io().getSignedInUser();
+        user.setProperty("phone", phoneNum);    //추가 정보
+        user.updateInBackground(mContext,
+            new BaasioCallback<BaasioUser>() {
+                @Override
+                public void onException(BaasioException e) {
+                    mDialog.dismiss();
+                    BaasioDialogFactory.createErrorDialog(mContext, e).show();
+                }
+
+                @Override
+                public void onResponse(BaasioUser response) {
+                    mDialog.dismiss();
+                    if (response != null) {
+                        moveToProjectSelectionActivity();
+                    }
+                }
+            });
     }
     
 	void moveToSignupActivity() {
