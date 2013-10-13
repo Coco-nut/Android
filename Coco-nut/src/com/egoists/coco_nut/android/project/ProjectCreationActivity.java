@@ -17,6 +17,7 @@ import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
 import com.egoists.coco_nut.android.util.UniqueString;
 import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.kth.baasio.callback.BaasioCallback;
@@ -43,11 +44,11 @@ public class ProjectCreationActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.creation_project_coconut, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.creation_project_coconut, menu);
+//        return true;
+//    }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -55,13 +56,14 @@ public class ProjectCreationActivity extends Activity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.menu_create_project:
-                createProject();
-                return true;
+//            case R.id.menu_create_project:
+//                createProject();
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
     
+    @Click({R.id.btnCreateGroup})
     void createProject() {
         // 프로젝트 이름 폼 체크
         String projectName = edTxtCreateProj.getText().toString();

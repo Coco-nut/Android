@@ -12,6 +12,7 @@
     <string name="title_confirm">확인</string>
     <string name="title_succeed">성공</string>
     <string name="title_error">오류</string>
+    <string name="title_create">만들기</string>
     
     <string name="err_empty_login_form">아이디 혹은 패스워드를 입력해주십시오.</string>
     <string name="error_equaled_password">패쓰워드가 일치하지 않습니다. 다시 입력하세요.</string>
@@ -31,7 +32,8 @@
     <string name="signup_message">코코넛의 회원가입을 환영합니다.\n회원님의 이메일 주소, 변환된 핸드폰 번호 서버에 저장합니다.</string>
     <string name="signup_succeed">회원가입에 성공하였습니다. @userid 님</string>
     
-    <string name="create_project">생성할 프로젝트의 이름</string>
-    <string name="create_project_succeed">프로젝트 생성에 성공하였습니다.</string>
+    <string name="create_group">그룹 이름을 입력해 주세요</string>
+    <string name="create_group_select">그룹 템플릿을 선택해 주세요</string>
+    <string name="create_group_succeed">프로젝트 생성에 성공하였습니다.</string>
     
 </resources>

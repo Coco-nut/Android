@@ -18,7 +18,19 @@
 -->
 
 <resources>
-    <style name="Theme.NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar"/> 
+    <style name="Theme.NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <item name="android:editTextStyle">@style/EditTextcoconut_2</item>
+        <item name="android:checkboxStyle">@style/CheckBoxcoconut_2</item>
+        <item name="android:buttonStyle">@style/Buttoncoconut_2</item>
+        <item name="android:imageButtonStyle">@style/ImageButtoncoconut_2</item>
+        <item name="android:ratingBarStyle">@style/RatingBarcoconut_2</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigcoconut_2</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallcoconut_2</item>
+        <item name="android:buttonStyleToggle">@style/Togglecoconut_2</item>
+        <item name="android:listViewStyle">@style/ListViewcoconut_2</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewcoconut_2.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemcoconut_2</item>
+    </style> 
     <style name="Theme.Coconut" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_coconut</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Coconut</item>
@@ -30,6 +42,18 @@
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_coconut</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Coconut</item>
         <item name="android:actionBarSize">40dp</item>
+        
+        <item name="android:editTextStyle">@style/EditTextcoconut_2</item>
+        <item name="android:checkboxStyle">@style/CheckBoxcoconut_2</item>
+        <item name="android:buttonStyle">@style/Buttoncoconut_2</item>
+        <item name="android:imageButtonStyle">@style/ImageButtoncoconut_2</item>
+        <item name="android:ratingBarStyle">@style/RatingBarcoconut_2</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigcoconut_2</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallcoconut_2</item>
+        <item name="android:buttonStyleToggle">@style/Togglecoconut_2</item>
+        <item name="android:listViewStyle">@style/ListViewcoconut_2</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewcoconut_2.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemcoconut_2</item>
         
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Coconut.Widget</item>
@@ -79,5 +103,4 @@
         <item name="android:popupMenuStyle">@style/PopupMenu.Coconut</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Coconut</item>
     </style>
-
 </resources>

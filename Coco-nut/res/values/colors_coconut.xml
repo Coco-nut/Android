@@ -21,7 +21,9 @@
     <color name="pressed_coconut">#CCA4B6CC</color>
     <color name="button_bg_coconut">#97ACC5</color>
     <color name="font_common_coconut">#97ACC5</color>
+    <color name="font_bold_coconut">#5F778D</color>
     <color name="white_coconut">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
     
     <color name="category_1">#F4C9C3</color>
     <color name="category_2">#F58D7A</color>

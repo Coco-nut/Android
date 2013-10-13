@@ -2,16 +2,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:orientation="vertical" >
-    <EditText
-        android:id="@+id/edTxtCreateProj"
+    android:orientation="vertical"
+    android:background="@color/white_coconut" >
+    <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/create_project"
-        android:paddingTop="40dp"
-        android:inputType="text" >
-    </EditText>
-    <requestFocus />
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        >
+        <EditText
+	        android:id="@+id/edTxtCreateProj"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:gravity="center"
+	        android:hint="@string/create_group"
+	        android:inputType="text" >
+	    </EditText>
+	    <requestFocus />    
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="2.5"
+        android:orientation="horizontal"
+        android:gravity="center" >
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_project_templete_1" />
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:gravity="center" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_common_coconut"
+            android:text="@string/create_group_select"
+            android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@android:drawable/ic_media_previous" />
+            <HorizontalScrollView
+	            android:id="@+id/label_scroll"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="none" >
+	            <LinearLayout
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:orientation="horizontal">
+	                <ImageView
+	                    android:id="@+id/imgProjTemplete1"
+	                    android:layout_width="50dp"
+		                android:layout_height="50dp"
+		                android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete4"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete5"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete6"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete7"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete8"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	                <ImageView
+                        android:id="@+id/imgProjTemplete9"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_project_templete_1" />
+	            </LinearLayout>
+            </HorizontalScrollView>
+	        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_media_next" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        >
+	    <!-- 회원가입 -->
+        <Button
+            android:id="@+id/btnCreateGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_create"
+            />
+    </LinearLayout>
 </LinearLayout>
