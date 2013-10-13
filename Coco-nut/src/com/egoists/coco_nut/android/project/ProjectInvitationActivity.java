@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +21,7 @@ import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.kth.baasio.callback.BaasioCallback;
@@ -37,22 +37,20 @@ import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 public class ProjectInvitationActivity extends Activity {
     @ViewById
     EditText edTxtSearchPhone;
+    @Extra("created_group_uuid")
+    String mCreatedGroupUuid;
     
     private UsersListAdapter mListAdapter;
     private Context mContext;
     private LoginPreference mLoginPref;
-    private String mGroupUuid;
     private ProgressDialog mDialog;
     
     @AfterViews
     void showUserList() {
         mContext = this;
         mLoginPref = new LoginPreference(mContext);
-        
-        Bundle extras = getIntent().getExtras(); 
-        if (extras != null) {
-            mGroupUuid = extras.getString("created_group_uuid");
-        }
+                
+        AndLog.d("created group uuid : " + mCreatedGroupUuid);
         
         mListAdapter = new UsersListAdapter(this, mContext, new ArrayList<BaasioUser>());
         ListView list = (ListView)findViewById(R.id.list);  
@@ -118,7 +116,7 @@ public class ProjectInvitationActivity extends Activity {
         user.setUuid(UUID.fromString(userUuid.toString()));         // 추가하려는 회원의 uuid   
 
         BaasioGroup entity = new BaasioGroup();
-        entity.setUuid(UUID.fromString(mGroupUuid));                   // Group의 uuid
+        entity.setUuid(UUID.fromString(mCreatedGroupUuid));                   // Group의 uuid
         entity.addInBackground(
                 user
                 , new BaasioCallback<BaasioUser>() {

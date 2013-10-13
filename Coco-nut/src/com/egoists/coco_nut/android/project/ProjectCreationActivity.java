@@ -7,9 +7,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
@@ -29,26 +30,27 @@ import com.kth.baasio.exception.BaasioException;
 public class ProjectCreationActivity extends Activity {
     @ViewById
     EditText edTxtCreateProj;
+    @ViewById
+    ImageView imgSelectedGroupTemplete;
     
     private Context mContext;
     private LoginPreference mLoginPref;
     private ProgressDialog mDialog;
+    private int mTemplete;
     
     @AfterViews
     void initForm() {
         mContext = this;
         mLoginPref = new LoginPreference(mContext);
+        // UUID 정보 가져오기
+        mLoginPref.loadPreference();
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        
+        mTemplete = 0;  // 그룹 탬플릿 (default=0)
     }
-    
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.creation_project_coconut, menu);
-//        return true;
-//    }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -56,9 +58,6 @@ public class ProjectCreationActivity extends Activity {
             case android.R.id.home:
                 finish();
                 return true;
-//            case R.id.menu_create_project:
-//                createProject();
-//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,6 +82,7 @@ public class ProjectCreationActivity extends Activity {
         BaasioGroup group = new BaasioGroup();
         group.setTitle(projectName);    // 그룹 표시내용
         group.setPath(projectPath);     // 그룹 Unique한 Path 이름
+        group.setProperty("templete", mTemplete);   // 그룹 탬플릿 넘버
         group.saveInBackground(
                 new BaasioCallback<BaasioGroup>() {
                     @Override
@@ -104,9 +104,8 @@ public class ProjectCreationActivity extends Activity {
                 });
     }
     
+    // 그룹을 생성한 다음 무조건 본인을 추가한다
     void addMeIntoCreatedGroup(final UUID groupUuid) {
-        // UUID 정보 가져오기
-        mLoginPref.loadPreference();
         String myUuid = mLoginPref.mUuid;
         
         BaasioUser user = new BaasioUser();
@@ -146,5 +145,19 @@ public class ProjectCreationActivity extends Activity {
         startActivity(i);
         
         ProjectCreationActivity.this.finish();
+    }
+    
+    // 그룹 탬플릿 선택
+    @Click({
+        R.id.imgGroupTemplete0, R.id.imgGroupTemplete1, R.id.imgGroupTemplete2, R.id.imgGroupTemplete3, R.id.imgGroupTemplete4, 
+        R.id.imgGroupTemplete5, R.id.imgGroupTemplete6, R.id.imgGroupTemplete7, R.id.imgGroupTemplete8})
+    void changeGroupTemplete(View clickedView) {
+        // 그룹 탬플릿 저장
+        int selectedGroupTemplete = Integer.parseInt((String)clickedView.getTag());
+        AndLog.d("Chang group templete : " + selectedGroupTemplete);
+        mTemplete = selectedGroupTemplete;
+        
+        // 선택 이미지로 교체
+        imgSelectedGroupTemplete.setImageDrawable(((ImageView)clickedView).getDrawable());
     }
 }
