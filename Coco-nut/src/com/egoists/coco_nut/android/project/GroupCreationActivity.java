@@ -26,7 +26,7 @@ import com.kth.baasio.entity.group.BaasioGroup;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 
-@EActivity(R.layout.activity_project_creation)
+@EActivity(R.layout.activity_group_creation)
 public class GroupCreationActivity extends Activity {
     @ViewById
     EditText edTxtCreateProj;
@@ -149,8 +149,10 @@ public class GroupCreationActivity extends Activity {
     
     // 그룹 탬플릿 선택
     @Click({
-        R.id.imgGroupTemplete0, R.id.imgGroupTemplete1, R.id.imgGroupTemplete2, R.id.imgGroupTemplete3, R.id.imgGroupTemplete4, 
-        R.id.imgGroupTemplete5, R.id.imgGroupTemplete6, R.id.imgGroupTemplete7, R.id.imgGroupTemplete8})
+        R.id.imgGroupTemplete0, R.id.imgGroupTemplete1, R.id.imgGroupTemplete2, 
+        R.id.imgGroupTemplete3, R.id.imgGroupTemplete4, R.id.imgGroupTemplete5, 
+        R.id.imgGroupTemplete6, R.id.imgGroupTemplete7, R.id.imgGroupTemplete8,
+        R.id.imgGroupTemplete9, R.id.imgGroupTemplete10, R.id.imgGroupTemplete11})
     void changeGroupTemplete(View clickedView) {
         // 그룹 탬플릿 저장
         int selectedGroupTemplete = Integer.parseInt((String)clickedView.getTag());

@@ -1,9 +1,10 @@
 package com.egoists.coco_nut.android.kanban.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Card {
+public class Card implements Serializable {
 	public String title;
 	public String sub_title;
 	public String discription;

@@ -26,25 +26,25 @@ public class KanbanData {
 		switch(label)
 		{
 		case 1:
-			return Color.parseColor("#F4C9C3");
+			return Color.rgb(245, 140, 126);
 		case 2:
-			return Color.parseColor("#F58D7A");
+			return Color.rgb(119, 199, 157);
 		case 3:
-			return Color.parseColor("#BCE0C7");
+			return Color.rgb(114, 144, 173);
 		case 4:
-			return Color.parseColor("#79C799");
+			return Color.rgb(249, 173, 115);
 		case 5:
-			return Color.parseColor("#AFCCE1");
+			return Color.rgb(158, 140, 173);
 		case 6:
-			return Color.parseColor("#728FAF");
+			return Color.rgb(246, 201, 197);
 		case 7:
-			return Color.parseColor("#F9AE68");
+			return Color.rgb(187, 224, 201);
 		case 8:
-			return Color.parseColor("#9E8BB0");
+			return Color.rgb(195, 217, 231);
 		case 9:
-			return Color.parseColor("#BCBEC0");
+			return Color.rgb(208, 185, 156);
 		case 0:
-			return Color.parseColor("#D0B998");
+			return Color.rgb(189, 190, 192);
 		default:
 			return -1;
 		}

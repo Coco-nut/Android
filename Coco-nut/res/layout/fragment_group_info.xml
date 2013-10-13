@@ -12,8 +12,8 @@
         android:gravity="center" >
         <ImageView
 	        android:id="@+id/imgGroupSelection"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="200dp"
+	        android:layout_height="200dp"
 	        android:src="@drawable/ic_group_templete_1" />    
     </LinearLayout>
     <TextView
@@ -23,4 +23,12 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/font_bold_coconut"
         android:textSize="@dimen/card_title_size" />
+    <TextView
+        android:id="@+id/txtFragGroupMembers"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textColor="@color/font_common_coconut"
+        android:textSize="@dimen/login_font_size" />
 </LinearLayout>

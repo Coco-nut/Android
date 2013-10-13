@@ -26,8 +26,13 @@ public class GroupSelectionPagerAdapter extends FragmentPagerAdapter {
         
         Bundle args = new Bundle();
         args.putString(GroupSelectionFragment_.ARG_GROUP_NAME, group.getTitle());
-        args.putString(GroupSelectionFragment_.ARG_GROUP_UUID, group.getUuid().toString());
-        args.putString(GroupSelectionFragment_.ARG_GROUP_TEMPLETE, group.getProperty("templete").toString());
+        
+        // 마지막 item은 더미
+        if (position + 1 != getCount()) {
+            args.putString(GroupSelectionFragment_.ARG_GROUP_UUID, group.getUuid().toString());
+            args.putString(GroupSelectionFragment_.ARG_GROUP_TEMPLETE, group.getProperty("templete").toString());
+        }
+        
         fragment.setArguments(args);
         return fragment;
     }

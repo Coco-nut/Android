@@ -34,7 +34,7 @@
             android:id="@+id/imgSelectedGroupTemplete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_group_templete_1" />
+            android:src="@drawable/ic_group_templete_0" />
     </LinearLayout>
     <LinearLayout 
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             <ImageView
                 android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:src="@android:drawable/ic_media_previous" />
+	            android:src="@drawable/ic_arrow_left" />
             <HorizontalScrollView
 	            android:id="@+id/label_scroll"
                 android:layout_width="0px"
@@ -73,61 +73,91 @@
 	                    android:layout_width="50dp"
 		                android:layout_height="50dp"
 		                android:tag="0"
-		                android:src="@drawable/ic_group_templete_1" />
+		                android:padding="3dp"
+		                android:src="@drawable/ic_group_templete_0" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete1"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="1"
                         android:src="@drawable/ic_group_templete_1" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete2"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="2"
                         android:src="@drawable/ic_group_templete_2" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete3"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="3"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_3" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete4"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="4"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_4" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete5"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="5"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_5" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete6"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="6"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_6" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete7"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="7"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_7" />
 	                <ImageView
                         android:id="@+id/imgGroupTemplete8"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:padding="3dp"
                         android:tag="8"
-                        android:src="@drawable/ic_group_templete_1" />
+                        android:src="@drawable/ic_group_templete_8" />
+	                <ImageView
+                        android:id="@+id/imgGroupTemplete9"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="3dp"
+                        android:tag="9"
+                        android:src="@drawable/ic_group_templete_9" />
+	                <ImageView
+                        android:id="@+id/imgGroupTemplete10"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="3dp"
+                        android:tag="10"
+                        android:src="@drawable/ic_group_templete_10" />
+	                <ImageView
+                        android:id="@+id/imgGroupTemplete11"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="3dp"
+                        android:tag="11"
+                        android:src="@drawable/ic_group_templete_11" />
 	            </LinearLayout>
             </HorizontalScrollView>
 	        <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_media_next" />
+                android:src="@drawable/ic_arrow_right" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout 
