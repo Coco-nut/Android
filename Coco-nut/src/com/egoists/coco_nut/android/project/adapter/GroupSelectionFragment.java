@@ -126,7 +126,7 @@ public class GroupSelectionFragment extends Fragment {
 	    String groupMembers = "";
 	    
 	    for (BaasioUser user : users) {
-	        groupMembers += user.getUsername() + ", ";
+	        groupMembers += user.getName() + ", ";
 	    }
 	    groupMembers = groupMembers.substring(0, groupMembers.lastIndexOf(", "));
 	    txtFragGroupMembers.setText(groupMembers);

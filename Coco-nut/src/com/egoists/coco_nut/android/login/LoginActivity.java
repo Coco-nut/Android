@@ -60,9 +60,9 @@ public class LoginActivity extends Activity {
 	    waitAndPreLogin();
 	}
 	
-	@UiThread(delay=700)
+	@UiThread(delay=500)
 	void waitAndPreLogin() {
-	    // 그냥 0.7초 대기
+	    // 그냥 0.5초 대기
 	    doAutoLogin();
 	}
 

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical" >
         
         <!-- ID -->
@@ -40,21 +40,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
+            <!-- 
             <TextView 
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/font_common_coconut"
                 android:textSize="@dimen/login_id_font_size"
-                android:text="@string/login_id" />
+                android:text="@string/login_id"
+                />
+                 -->
             <EditText
                 android:id="@+id/edTxtSignUpId"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:ems="10"
-                android:inputType="textEmailAddress" >
+                android:inputType="text"
+                android:hint="ID" >
             </EditText>
+            <requestFocus />
+        </LinearLayout>
+        
+        <!-- ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <!-- 
+            <TextView 
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/font_common_coconut"
+                android:textSize="@dimen/login_id_font_size"
+                android:text="@string/login_id"
+                />
+                 -->
+            <EditText
+                android:id="@+id/edTxtSignUpName"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="이름(예:홍길동)" >
+            </EditText>
+            <requestFocus />
         </LinearLayout>
         
         <!-- Password -->
@@ -62,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
+            <!-- 
             <TextView 
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
@@ -69,14 +102,15 @@
                 android:textColor="@color/font_common_coconut"
                 android:textSize="@dimen/login_id_font_size"
                 android:text="@string/login_passwd" />
+                 -->
             <EditText
                 android:id="@+id/edTxtSignUpPassword"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:ems="10"
-                android:inputType="textPassword" >
-                <requestFocus />
+                android:inputType="textPassword"
+                android:hint="비밀번호" >
             </EditText>
         </LinearLayout>
         
@@ -86,19 +120,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp" >
+            <!-- 
             <TextView 
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/font_common_coconut"
                 android:textSize="@dimen/login_id_font_size" />
+                 -->
             <EditText
                 android:id="@+id/edTxtSignUpConfirmPassword"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:ems="10"
-                android:inputType="textPassword" >
+                android:inputType="textPassword"
+                android:hint="비밀번호 확인" >
             </EditText>
         </LinearLayout>
         
@@ -108,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/signup"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             />
         
     </LinearLayout>

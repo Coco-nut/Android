@@ -14,14 +14,14 @@
             android:orientation="horizontal"
             android:padding="10dp">
             <EditText
-                android:id="@+id/edTxtSearchPhone"
+                android:id="@+id/edTxtSearchUser"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="전화번호로 검색"
+                android:hint="이름으로 검색"
                 android:imeOptions="actionSearch"
-                android:inputType="phone"
+                android:inputType="text"
                 android:singleLine="true" >
 	        </EditText>
         </LinearLayout>

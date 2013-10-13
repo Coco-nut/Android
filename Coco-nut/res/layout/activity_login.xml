@@ -117,7 +117,8 @@
                 android:textColor="@color/font_common_coconut"
                 android:textSize="@dimen/signup_button_font_size"
                 android:textStyle="normal|italic"
-                android:text="@string/signup_with_underline" /> 
+                android:text="@string/signup_with_underline"
+                android:clickable="true" /> 
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

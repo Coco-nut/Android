@@ -43,7 +43,7 @@ public class GroupInvitationActivity extends Activity {
     String mCreatedGroupUuid;
     
     @ViewById
-    EditText edTxtSearchPhone;
+    EditText edTxtSearchUser;
     
     private UsersListAdapter mListAdapter;
     private Context mContext;
@@ -63,7 +63,7 @@ public class GroupInvitationActivity extends Activity {
         list.setAdapter(mListAdapter);
         
         // 검색창에서 바로 검색
-        edTxtSearchPhone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        edTxtSearchUser.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -76,9 +76,9 @@ public class GroupInvitationActivity extends Activity {
     }
     
     void getMyFriendsByBaasio() {
-        // 휴대폰 검색시 나온 키보드 내려놓기
+        // 사용자 검색시 나온 키보드 내려놓기
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(edTxtSearchPhone.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(edTxtSearchUser.getWindowToken(), 0);
         
         // 로그인 정보 가져오기
         mLoginPref.loadPreference();
@@ -86,13 +86,13 @@ public class GroupInvitationActivity extends Activity {
         // 검색에서 무조건 본인은 제외
         String exceptMeQuery = " not username='" + mLoginPref.mId + "'";
         
-        // 전화번호 검색
-        String phoneQuery = "";
-        String phone = edTxtSearchPhone.getText().toString();
-        if (phone.length() != 0) {
-            phoneQuery = " name='" + phone + "'";
+        // 사용자 이름 검색
+        String nameQuery = "";
+        String name = edTxtSearchUser.getText().toString();
+        if (name.length() != 0) {
+            nameQuery = " name='" + name + "'";
         }
-        String fullQuery = "select * where" + phoneQuery + exceptMeQuery;
+        String fullQuery = "select * where" + nameQuery + exceptMeQuery;
         String rawQuery = CoconutUrlEncoder.encode(fullQuery);
         AndLog.d(rawQuery);
         
