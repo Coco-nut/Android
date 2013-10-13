@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.kanban.KanbanSettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
@@ -29,7 +30,6 @@ import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_project_selection)
 public class ProjectSelectionActivity extends FragmentActivity {
-    private LoginPreference mLoginPref;
     private Context mContext;
     
 	SectionsPagerAdapter mSectionsPagerAdapter;
@@ -43,7 +43,7 @@ public class ProjectSelectionActivity extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		mContext = this;
-		mLoginPref = new LoginPreference(mContext);
+		KanbanSettingActivity.LoginPref = new LoginPreference(mContext);
 		getMyGroupsByBaasio();
 	}
 	
@@ -60,10 +60,9 @@ public class ProjectSelectionActivity extends FragmentActivity {
 	}
 	
 	@Click({R.id.btn_setting})
-	void delLoginPreference() {
-	    mLoginPref.savePreference("", "", "");
-	    Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-	    moveToLoginActivity();
+	void moveToSettingActivity() {
+        startActivity(new Intent(getApplication(), 
+        		com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));
 	}
 	
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -87,11 +86,7 @@ public class ProjectSelectionActivity extends FragmentActivity {
 		}
 	}
 	
-	void moveToLoginActivity() {
-        // 로딩이 끝난후 이동할 Activity
-        startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
-        ProjectSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
-    }
+
 	
 	void getMyGroups() {
 	    
@@ -99,11 +94,11 @@ public class ProjectSelectionActivity extends FragmentActivity {
 	
 	void getMyGroupsByBaasio() {
     	// 로그인 정보 가져오기
-        mLoginPref.loadPreference();
+		KanbanSettingActivity.LoginPref.loadPreference();
         
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
-        query.setRawString("users/" + mLoginPref.mUuid + "/groups");
+        query.setRawString("users/" + KanbanSettingActivity.LoginPref.mUuid + "/groups");
         query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
         query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
 

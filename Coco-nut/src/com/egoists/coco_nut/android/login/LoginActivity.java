@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.kanban.KanbanSettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
@@ -48,7 +49,6 @@ public class LoginActivity extends Activity {
 	private String mPasswd;
 	private ProgressDialog mDialog;
 	
-	private LoginPreference mLoginPref;
 	private Context mContext;
 	
 	@AfterViews
@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
 	    mContext = this;
-	    mLoginPref = new LoginPreference(mContext);
+	    KanbanSettingActivity.LoginPref = new LoginPreference(mContext);
 	    waitAndPreLogin();
 	}
 	
@@ -70,9 +70,9 @@ public class LoginActivity extends Activity {
 	@Background
 	void doAutoLogin() {
 	    // 로그인 정보 가져오기
-	    mLoginPref.loadPreference();
-        String id = mLoginPref.mId;
-        String passwd = mLoginPref.mPasswd;
+		KanbanSettingActivity.LoginPref.loadPreference();
+        String id = KanbanSettingActivity.LoginPref.mId;
+        String passwd = KanbanSettingActivity.LoginPref.mPasswd;
 
         doAutoLogInByBaasio(id, passwd);
 	}
@@ -174,7 +174,7 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
-                    mLoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
+                	KanbanSettingActivity.LoginPref.savePreference(mId, mPasswd, response.getUuid().toString());    // 로그인 정보 저장
                     moveToProjectSelectionActivity();
                 }
             }

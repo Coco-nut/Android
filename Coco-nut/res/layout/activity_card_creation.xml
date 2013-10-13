@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/edTextCreateCardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="타이틀"
+        android:inputType="text"
+        android:paddingTop="40dp" />
+
+    <EditText
+        android:id="@+id/edTextCreateCardSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="서브타이틀"
+        android:inputType="text"
+        android:paddingTop="40dp" />
+
+    <EditText
+        android:id="@+id/edTextCreateCardLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="라벨"
+        android:paddingTop="40dp"
+        android:inputType="text" />
+   
+    <EditText
+        android:id="@+id/edTextCreateCardLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="중요도"
+        android:paddingTop="40dp"
+        android:inputType="text" />
+    
+    <EditText
+        android:id="@+id/edTextCreateCardParticipant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="구성원"
+        android:paddingTop="40dp"
+        android:inputType="text" />
+    <requestFocus />
+</LinearLayout>

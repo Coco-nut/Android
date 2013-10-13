@@ -6,6 +6,7 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 
 public class CardView extends View {
 
@@ -85,7 +87,7 @@ public class CardView extends View {
 	
 	Card card;
 	Point resolution;
-	public CardView(Context context, Card card) {
+	public CardView(final Context context, Card card) {
 		super(context);
 		setBackgroundColor(Color.WHITE);
 		resolution = new Point();
@@ -93,6 +95,14 @@ public class CardView extends View {
 		setMinimumHeight(y(258));
 		this.card = card;
 		initialize();
+		
+		setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				context.startActivity(new Intent(context, 
+						com.egoists.coco_nut.android.kanban.card.CardCreationActivity_.class));
+			}
+		});
 	}
 	public void onDraw(Canvas canvas){
 		
@@ -126,8 +136,6 @@ public class CardView extends View {
 			photo.draw(canvas);
 		}
 	}
-	
-	
 	
 	private int x(int x){
 		return x * resolution.x / 720;

@@ -1,9 +1,13 @@
 package com.egoists.coco_nut.android.kanban;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -25,20 +29,27 @@ public class ToDoFragment extends Fragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		setHasOptionsMenu(true);
 		
 		sv = (ScrollView) inflater.inflate(R.layout.fragment_to_do, container, false); 
 		
 		kanbanData = ((KanbanActivity)getActivity()).kanbanData;
 		linear_layout = (LinearLayout) sv.findViewById(R.id.todo_cardlist);
 		for (int i = 0; i < kanbanData.Do.size(); i++)
-		{
-			AndLog.i("" + kanbanData.Do.size());
+		{ 
+			if (i != 0){
+				LinearLayout space = new LinearLayout(getActivity());
+				space.setMinimumHeight(14);
+				linear_layout.addView(space);
+			}
 			CardView cardview = new CardView(getActivity(), kanbanData.Do.get(i));
 			linear_layout.addView(cardview);
-			LinearLayout space = new LinearLayout(getActivity());
-			space.setMinimumHeight(14);
-			linear_layout.addView(space);
 		}
 		return sv;
+	}
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		menu.findItem(R.id.menu_add).setVisible(true);
 	}
 }

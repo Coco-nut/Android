@@ -5,12 +5,15 @@ import java.util.Calendar;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.egoists.coco_nut.android.R;
@@ -38,37 +41,31 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 	ViewPager mViewPager;
 
 	
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.kanban_menu_coconut, menu);
+		return true;
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case android.R.id.home:
-	            // This is called when the Home (Up) button is pressed in the action bar.
-	            // Create a simple intent that starts the hierarchical parent activity and
-	            // use NavUtils in the Support Package to ensure proper handling of Up.
-//	            Intent upIntent = new Intent(this, ProjectSelectionActivity_.class);
-//	            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-//	                // This activity is not part of the application's task, so create a new task
-//	                // with a synthesized back stack.
-//	                TaskStackBuilder.from(this)
-//	                        // If there are ancestor activities, they should be added here.
-//	                        .addNextIntent(upIntent)
-//	                        .startActivities();
-//	                finish();
-//	            } else {
-//	                // This activity is part of the application's task, so simply
-//	                // navigate up to the hierarchical parent activity.
-//	                NavUtils.navigateUpTo(this, upIntent);
-//	            }
 	        	finish();
 	            return true;
-	    }
+            case R.id.menu_add:
+				startActivity(new Intent(this, 
+						com.egoists.coco_nut.android.kanban.card.CardCreationActivity_.class));
+                return true;
+            case R.id.menu_notification:
+            	//노티.. 고민좀 해봐야할듯
+                return true;
+            case R.id.menu_setting:
+				startActivity(new Intent(this, 
+						com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));
+                return true;
+        }
 	    return super.onOptionsItemSelected(item);
 	}
 
@@ -274,6 +271,8 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 				, 8, 3,
 			null, null, null, tempdate, tempcomments, tempcheckboxes,
 			tempparticipants, 0, true));
+		kanbanData.Doing = kanbanData.Do;
+		kanbanData.Done = kanbanData.Do;
 	}
 
 	/**
