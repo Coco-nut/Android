@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Card implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5481307423078697497L;
 	public String title;
 	public String sub_title;
 	public String discription;

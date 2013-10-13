@@ -105,16 +105,16 @@ public class ParticipationView extends View  {
 		for(int i=0; i<number_of_people; i++)
 		{
 			canvas.drawLine(x(center_x), y(center_y), x(people_center_x[i]), y(people_center_y[i]), people_line_paint[i]);
-			canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), x(circle_radius_people), circle_outter_paint[i]);
-			face.setBounds(x(people_center_x[i] - circle_radius_people/2), y(people_center_y[i]) - x(circle_radius_people/2),
-					x(people_center_x[i] + circle_radius_people/2), y(people_center_y[i]) + x(circle_radius_people)/2 );
+			canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), xy(circle_radius_people), circle_outter_paint[i]);
+			face.setBounds(x(people_center_x[i]) - xy(circle_radius_people)/2, y(people_center_y[i]) - xy(circle_radius_people)/2,
+					x(people_center_x[i]) + xy(circle_radius_people)/2, y(people_center_y[i]) + xy(circle_radius_people)/2 );
 			face.draw(canvas);
 			canvas.drawArc(circle_rect_outter, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_outter_paint[i]);
 			canvas.drawArc(circle_rect_inner, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_inner_paint[i]);
-			canvas.drawText((int)(participation_ratio[i]*100)+"%", x(ratio_text_x[i]), y(ratio_text_y[i]), ratio_text_paint);
+			canvas.drawText((int)(participation_ratio[i]*100)+"%", xy(ratio_text_x[i]), xy(ratio_text_y[i]), ratio_text_paint);
 			cumul_angle = cumul_angle + participation_ratio[i] * 360;
 		}
-		canvas.drawCircle(x(center_x), y(center_y), x(circle_radius_center), circle_center_paint);
+		canvas.drawCircle(x(center_x), y(center_y), xy(circle_radius_center), circle_center_paint);
 
 	}
 	
@@ -124,15 +124,21 @@ public class ParticipationView extends View  {
 	private int y(int y){
 		return y * resolution.y / 1280;
 	}
+	private int xy(int xy){
+		return x(xy) > y(xy) ? y(xy) : x(xy);
+	}
+	private int ixy(int xy){
+		return x(xy) > y(xy) ? xy * 1280 / resolution.y : xy * 720 / resolution.x;
+	}
 
 	
 	private void initialize(){
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
 		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
-		circle_rect_outter = new RectF(x(center_x-circle_radius_outter), y(center_y)-x(circle_radius_outter), 
-				x(center_x+circle_radius_outter), y(center_y)+x(circle_radius_outter));
-		circle_rect_inner = new RectF(x(center_x-circle_radius_inner), y(center_y)-x(circle_radius_inner), 
-				x(center_x+circle_radius_inner), y(center_y)+x(circle_radius_inner));
+		circle_rect_outter = new RectF(x(center_x)-xy(circle_radius_outter), y(center_y)-xy(circle_radius_outter), 
+				x(center_x)+xy(circle_radius_outter), y(center_y)+xy(circle_radius_outter));
+		circle_rect_inner = new RectF(x(center_x)-xy(circle_radius_inner), y(center_y)-xy(circle_radius_inner), 
+				x(center_x)+xy(circle_radius_inner), y(center_y)+xy(circle_radius_inner));
 		circle_outter_paint = new Paint[number_of_people];
 		circle_inner_paint = new Paint[number_of_people];
 		for(int i = 0; i < number_of_people; i++)
@@ -177,14 +183,14 @@ public class ParticipationView extends View  {
 		ratio_text_paint.setStyle(Paint.Style.FILL);
 		ratio_text_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		ratio_text_paint.setColor(ratio_text_color);
-		ratio_text_paint.setTextSize(ratio_text_size);	
+		ratio_text_paint.setTextSize(xy(ratio_text_size));	
 		ratio_text_paint.setTextAlign(Align.CENTER);
 
 		icontext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		icontext_paint.setStyle(Paint.Style.FILL);
 		icontext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		icontext_paint.setColor(icon_text_c);
-		icontext_paint.setTextSize(y(icon_text_size));	
+		icontext_paint.setTextSize(xy(icon_text_size));	
 		icontext_paint.setTextAlign(Align.LEFT);
 	}
 }

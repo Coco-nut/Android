@@ -56,6 +56,7 @@ public class PeerView extends View {
 	final int toptext_x2 = 655;
 	final int toptext_y = top_margin;
 	final int toptext_c = Color.argb(100, 186, 186, 186);
+	final int toptext_size = 25;
 	Paint toptext_paint;
 	
 	final int icon_y1 = top_margin / 3;
@@ -131,6 +132,12 @@ public class PeerView extends View {
 	private int y(int y){
 		return y * resolution.y / 1280;
 	}
+	private int xy(int xy){
+		return x(xy) > y(xy) ? y(xy) : x(xy);
+	}
+	private int ixy(int xy){
+		return x(xy) > y(xy) ? xy * 1280 / resolution.y : xy * 720 / resolution.x;
+	}
 	
 	private int numberofLinestoDraw(int days){
 		return days / (days/10 + 1) + 1;
@@ -170,14 +177,14 @@ public class PeerView extends View {
 		toptext_paint.setStyle(Paint.Style.FILL);
 		toptext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		toptext_paint.setColor(toptext_c);
-		toptext_paint.setTextSize(20);	
+		toptext_paint.setTextSize(xy(toptext_size));	
 		toptext_paint.setTextAlign(Align.CENTER);
 
 		icontext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		icontext_paint.setStyle(Paint.Style.FILL);
 		icontext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		icontext_paint.setColor(icon_text_c);
-		icontext_paint.setTextSize(y(icon_text_size));	
+		icontext_paint.setTextSize(xy(icon_text_size));	
 		icontext_paint.setTextAlign(Align.LEFT);
 	}
 }

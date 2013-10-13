@@ -128,16 +128,16 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 		//서버에서 카드/참여자 정보 불러옴. 현재 더미 데이터 입력
 		kanbanData = new KanbanData();
 		
-		kanbanData.participants.put("준수", new Person("준수", getResources(), true));
-		kanbanData.participants.put("윤후", new Person("윤후", getResources(), false));
-		kanbanData.participants.put("지아", new Person("지아", getResources(), false));
-		kanbanData.participants.put("누군지", new Person("누군지", getResources(), false));
-		kanbanData.participants.put("몰라", new Person("몰라", getResources(), false));
-		kanbanData.participants.put("사실", new Person("사실", getResources(), false));
-		kanbanData.participants.put("누구든", new Person("누구든", getResources(), false));
-		kanbanData.participants.put("별로", new Person("별로", getResources(), false));
-		kanbanData.participants.put("상관", new Person("상관", getResources(), false));
-		kanbanData.participants.put("없지", new Person("없지", getResources(), false));
+		kanbanData.participants.put("준수", new Person("준수", true));
+		kanbanData.participants.put("윤후", new Person("윤후", false));
+		kanbanData.participants.put("지아", new Person("지아", false));
+		kanbanData.participants.put("누군지", new Person("누군지",false));
+		kanbanData.participants.put("몰라", new Person("몰라",false));
+		kanbanData.participants.put("사실", new Person("사실",false));
+		kanbanData.participants.put("누구든", new Person("누구든",false));
+		kanbanData.participants.put("별로", new Person("별로", false));
+		kanbanData.participants.put("상관", new Person("상관", false));
+		kanbanData.participants.put("없지", new Person("없지", false));
 		Calendar tempdate = Calendar.getInstance();
 		tempdate.set(Calendar.MONTH, 8);
 		tempdate.set(Calendar.DATE, 30);

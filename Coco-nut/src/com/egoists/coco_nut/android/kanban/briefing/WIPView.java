@@ -195,6 +195,12 @@ public class WIPView extends View {
 	private int y(int y){
 		return y * resolution.y / 1280;
 	}
+	private int xy(int xy){
+		return x(xy) > y(xy) ? y(xy) : x(xy);
+	}
+	private int ixy(int xy){
+		return x(xy) > y(xy) ? xy * 1280 / resolution.y : xy * 720 / resolution.x;
+	}
 	
 	private int numberofLinestoDraw(int days){
 		return days / (days/10 + 1) + 1;
@@ -234,7 +240,7 @@ public class WIPView extends View {
 		icontext_paint.setStyle(Paint.Style.FILL);
 		icontext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		icontext_paint.setColor(icon_text_c);
-		icontext_paint.setTextSize(y(icon_text_size));	
+		icontext_paint.setTextSize(xy(icon_text_size));	
 		icontext_paint.setTextAlign(Align.LEFT);
 		
 		bottomline_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -251,7 +257,7 @@ public class WIPView extends View {
 		flagtext_paint.setStyle(Paint.Style.FILL);
 		flagtext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		flagtext_paint.setColor(flag_text_c);
-		flagtext_paint.setTextSize(25);	
+		flagtext_paint.setTextSize(xy(flag_text_size));	
 		flagtext_paint.setTextAlign(Align.LEFT);
 		
 		donewippath_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -268,7 +274,7 @@ public class WIPView extends View {
 		toptext_paint.setStyle(Paint.Style.FILL);
 		toptext_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));
 		toptext_paint.setColor(toptext_c);
-		toptext_paint.setTextSize(20);
+		toptext_paint.setTextSize(xy(toptext_size));
 		toptext_paint.setTextAlign(Align.CENTER);
 
 		overwippath_paint = new Paint(Paint.ANTI_ALIAS_FLAG);

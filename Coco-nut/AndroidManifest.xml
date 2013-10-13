@@ -24,11 +24,6 @@
             android:name="com.egoists.coco_nut.android.login.LoginActivity_"
             android:label="@string/app_name_locale"
             android:theme="@style/Theme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.egoists.coco_nut.android.login.SignupActivity_"
@@ -51,6 +46,11 @@
         <activity
             android:name="com.egoists.coco_nut.android.kanban.KanbanActivity_"
             android:label="@string/app_name_locale" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.egoists.coco_nut.android.kanban.KanbanSettingActivity"
@@ -58,6 +58,10 @@
         </activity>
         <activity
             android:name="com.egoists.coco_nut.android.kanban.card.CardCreationActivity_"
+            android:label="@string/app_name_locale" >
+        </activity>
+        <activity
+            android:name="com.egoists.coco_nut.android.kanban.card.detail.CardDetailActivity_"
             android:label="@string/app_name_locale" >
         </activity>
     </application>

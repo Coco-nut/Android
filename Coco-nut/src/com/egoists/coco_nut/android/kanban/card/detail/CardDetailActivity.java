@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,27 +46,16 @@ public class CardDetailActivity extends Activity {
         HeaderView header = new HeaderView(this, card);
         TextView content = new TextView(this);
         content.setText(card.discription);
-        FooterView footer = new FooterView(this, card);
+        int padding = (int)(getResources().getDisplayMetrics().density * 30 + 0.5);
+        content.setPadding(padding, 0, padding, 0);
+        content.setBackgroundColor(Color.WHITE);
+        FooterView footer = new FooterView(this, card, showComments);
         
         linear_layout = (LinearLayout) findViewById(R.id.card_detail);
         
         linear_layout.addView(header);
         linear_layout.addView(content);
         linear_layout.addView(footer);
-        
-        LinearLayout buttons = new LinearLayout(this);
-        buttons.setOrientation(LinearLayout.HORIZONTAL);
-        CheckListButtonView checkbutton = new CheckListButtonView(this);
-        buttons.addView(checkbutton);
-        LinearLayout space = new LinearLayout(this);
-		space.setMinimumWidth((int)(getResources().getDisplayMetrics().density * 1 + 0.5));
-        space.setOrientation(LinearLayout.HORIZONTAL);
-		buttons.addView(space);
-		CommentButtonView commentbutton = new CommentButtonView(this);
-        buttons.addView(commentbutton);
-        
-        linear_layout.addView(buttons);
-        
         add_commentcheck();
         
         // Set up the action bar.
@@ -77,18 +67,18 @@ public class CardDetailActivity extends Activity {
     	showComments = !showComments;
     	if (showComments)
     		linear_layout.removeView(checklist);
-    	if (showComments)
+    	else
     		linear_layout.removeView(comment);
     	add_commentcheck();
     }
     private void add_commentcheck()
     {
         if (showComments){
-            CommentView comment = new CommentView(this, card.comments);
+            comment = new CommentView(this, card.comments);
         	linear_layout.addView(comment);
         }
         else{
-            CheckListView checklist = new CheckListView(this, card.checkboxes);
+            checklist = new CheckListView(this, card.checkboxes);
         	linear_layout.addView(checklist);
         }
     }

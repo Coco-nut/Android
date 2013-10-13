@@ -129,7 +129,7 @@ public class CardView extends View {
 		//사람들 사진
 		for (int i = 0; i < card.participants.size(); i++)
 		{
-			Drawable photo = card.participants.get(i).photo;
+			Drawable photo = card.participants.get(i).getPhoto(getResources());
 			if (photo == null){
 				photo = getResources().getDrawable(R.drawable.card_personphoto_default);
 			}
@@ -142,11 +142,14 @@ public class CardView extends View {
 	private int x(int x){
 		return x * resolution.x / 720;
 	}
-	private int ix(int x){
-		return x * 720 / resolution.x ;
-	}
 	private int y(int y){
 		return y * resolution.y / 1280;
+	}
+	private int xy(int xy){
+		return x(xy) > y(xy) ? y(xy) : x(xy);
+	}
+	private int ixy(int xy){
+		return x(xy) > y(xy) ? xy * 1280 / resolution.y : xy * 720 / resolution.x;
 	}
 	private void initialize(){
 		
@@ -159,16 +162,16 @@ public class CardView extends View {
 		titletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		titletext_paint.setStyle(Paint.Style.FILL);
 		titletext_paint.setColor(titletext_c);
-		titletext_paint.setTextSize(x(titletext_size));
+		titletext_paint.setTextSize(xy(titletext_size));
 		
-		subtitletext_x = titletext_x + ix((int) titletext_paint.measureText(card.title)) 
+		subtitletext_x = titletext_x + ixy((int) titletext_paint.measureText(card.title)) 
 				+ bet_title_and_subtitle_x;
 		subtitletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		subtitletext_paint.setStyle(Paint.Style.FILL);
 		subtitletext_paint.setColor(titletext_c);
-		subtitletext_paint.setTextSize(x(subtitletext_size));
+		subtitletext_paint.setTextSize(xy(subtitletext_size));
 
-		stars_x1 = subtitletext_x + ix((int) subtitletext_paint.measureText(card.sub_title)) 
+		stars_x1 = subtitletext_x + ixy((int) subtitletext_paint.measureText(card.sub_title)) 
 				+ bet_subtitle_and_stars_x;
 		star = Bitmap.createScaledBitmap(
 				BitmapFactory.decodeResource(getResources(), R.drawable.card_star), 
@@ -176,20 +179,20 @@ public class CardView extends View {
 		
 		clock_comment_check_text_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		clock_comment_check_text_paint.setStyle(Paint.Style.FILL);
-		clock_comment_check_text_paint.setTextSize(x(clock_comment_check_text_size));
+		clock_comment_check_text_paint.setTextSize(xy(clock_comment_check_text_size));
 		clock_comment_check_text_paint.setColor(titletext_c);
 		clock = getResources().getDrawable(R.drawable.card_clock);
 		clock.setBounds(x(clock_x1), y(clock_y1), x(clock_x2), y(clock_y2));
 		clocktext = setClocktext();
 		
-		comment_x = clocktext_x + ix((int) clock_comment_check_text_paint.measureText(clocktext)) 
+		comment_x = clocktext_x + ixy((int) clock_comment_check_text_paint.measureText(clocktext)) 
 				+ bet_clocktext_and_comment_x;
 		comment = getResources().getDrawable(R.drawable.card_comment);
 		comment.setBounds(x(comment_x), y(comment_y1), x(comment_x + comment_width), y(comment_y2));
 		commenttext_x = comment_x + comment_width + bet_comment_and_commenttext_x;
 		
 		check_x = commenttext_x 
-				+ ix((int) clock_comment_check_text_paint.measureText(Integer.toString(card.comments.size()))) 
+				+ ixy((int) clock_comment_check_text_paint.measureText(Integer.toString(card.comments.size()))) 
 				+ bet_commenttext_and_check_x;
 		check = getResources().getDrawable(R.drawable.card_check);
 		check.setBounds(x(check_x), y(check_y1), x(check_x + check_width), y(check_y2));
