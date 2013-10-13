@@ -8,9 +8,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
@@ -34,12 +37,13 @@ import com.kth.baasio.exception.BaasioException;
 import com.kth.baasio.query.BaasioQuery;
 import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
-@EActivity(R.layout.activity_project_invitation)
+@EActivity(R.layout.activity_group_invitation)
 public class GroupInvitationActivity extends Activity {
-    @ViewById
-    EditText edTxtSearchPhone;
     @Extra("created_group_uuid")
     String mCreatedGroupUuid;
+    
+    @ViewById
+    EditText edTxtSearchPhone;
     
     private UsersListAdapter mListAdapter;
     private Context mContext;
@@ -53,12 +57,24 @@ public class GroupInvitationActivity extends Activity {
                 
         AndLog.d("created group uuid : " + mCreatedGroupUuid);
         
+        // 사용자 검색 결과 리스트
         mListAdapter = new UsersListAdapter(this, mContext, new ArrayList<BaasioUser>());
         ListView list = (ListView)findViewById(R.id.list);  
         list.setAdapter(mListAdapter);
+        
+        // 검색창에서 바로 검색
+        edTxtSearchPhone.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    getMyFriendsByBaasio();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
-
-    @Click({R.id.btnProjInvSearch})
+    
     void getMyFriendsByBaasio() {
         // 휴대폰 검색시 나온 키보드 내려놓기
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -91,12 +91,6 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    mGroupSelectionPagerAdapter.update(groups);
     }
 	
-//	void moveToLoginActivity() {
-//        // 로딩이 끝난후 이동할 Activity
-//        startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
-//        GroupSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
-//    }
-	
 	void getMyGroupsByBaasio() {
     	// 로그인 정보 가져오기
 	    KanbanSettingActivity.LoginPref.loadPreference();
