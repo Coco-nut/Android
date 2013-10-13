@@ -1,32 +1,12 @@
 package com.egoists.coco_nut.android.kanban;
 
-import java.util.UUID;
-
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.util.AndLog;
-import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
-import com.egoists.coco_nut.android.util.UniqueString;
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.ViewById;
-import com.kth.baasio.callback.BaasioCallback;
-import com.kth.baasio.entity.group.BaasioGroup;
-import com.kth.baasio.entity.user.BaasioUser;
-import com.kth.baasio.exception.BaasioException;
 
 
 public class KanbanSettingActivity extends Activity {

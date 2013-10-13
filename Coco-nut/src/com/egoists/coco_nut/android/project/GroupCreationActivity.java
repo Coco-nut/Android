@@ -33,6 +33,8 @@ public class GroupCreationActivity extends Activity {
     @ViewById
     ImageView imgSelectedGroupTemplete;
     
+    public static final String EXTRA_CREATED_GROUP_UUID = "created_group_uuid";
+    
     private Context mContext;
     private LoginPreference mLoginPref;
     private ProgressDialog mDialog;
@@ -141,9 +143,12 @@ public class GroupCreationActivity extends Activity {
     void moveToProjectInvitationActivity(final UUID groupUuid) {
         Intent i = new Intent(getApplication(), 
                 com.egoists.coco_nut.android.project.GroupInvitationActivity_.class);
-        i.putExtra("created_group_uuid", groupUuid.toString());
+        i.putExtra(EXTRA_CREATED_GROUP_UUID, groupUuid.toString());
         startActivity(i);
         
+        // 이전 Activity(GroupSelectionActivity)도 없앤다.
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK, returnIntent);
         GroupCreationActivity.this.finish();
     }
     

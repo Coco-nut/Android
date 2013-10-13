@@ -2,7 +2,6 @@ package com.egoists.coco_nut.android.project;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,6 +29,8 @@ import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_group_selection)
 public class GroupSelectionActivity extends FragmentActivity {
+    public static final int MY_ACTIVITY_RESULT = 1;
+    public static final String DUMMY_GROUP_TITLE = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
     private Context mContext;
     private ProgressDialog mDialog;
     
@@ -44,7 +45,7 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    // 실제 그룹이 아닌 놈.
 	    // Adapter는 얘를 만나면 실제 그룹이 아니라 그룹 생성을 표시한다.
 	    mDummyGroup = new BaasioGroup();
-	    mDummyGroup.setTitle("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
+	    mDummyGroup.setTitle(DUMMY_GROUP_TITLE);
 	    
 	    // 아답터 셋팅
 	    mGroupSelectionPagerAdapter = new GroupSelectionPagerAdapter(
@@ -53,18 +54,24 @@ public class GroupSelectionActivity extends FragmentActivity {
 		
 		mContext = this;
 		KanbanSettingActivity.LoginPref = new LoginPreference(mContext);
-	}
-	
-	@Override
-	protected void onResume() {
-	    getMyGroupsByBaasio();
-	    super.onResume();
+		getMyGroupsByBaasio();
 	}
 	
 	@Click({R.id.btnCreateProject})
-    void createNewProject() {
+    public void createNewGroup() {
         Intent intent = new Intent(this, com.egoists.coco_nut.android.project.GroupCreationActivity_.class);
-        startActivity(intent);
+        startActivityForResult(intent, MY_ACTIVITY_RESULT);
+    }
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            // 프로젝트 생성이 성공하면 Activity를 없앤다.
+            if (requestCode == MY_ACTIVITY_RESULT) {    
+                this.finish();
+            }
+        }
     }
 	
 	@Click({R.id.btn_notices})
@@ -84,15 +91,11 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    mGroupSelectionPagerAdapter.update(groups);
     }
 	
-	void moveToLoginActivity() {
-        // 로딩이 끝난후 이동할 Activity
-        startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
-        GroupSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
-    }
-	
-	void getMyGroups() {
-	    
-	}
+//	void moveToLoginActivity() {
+//        // 로딩이 끝난후 이동할 Activity
+//        startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
+//        GroupSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
+//    }
 	
 	void getMyGroupsByBaasio() {
     	// 로그인 정보 가져오기

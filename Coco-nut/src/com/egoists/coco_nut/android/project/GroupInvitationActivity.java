@@ -111,6 +111,12 @@ public class GroupInvitationActivity extends Activity {
         mListAdapter.update(users);
     }
     
+    // 폰의 back 버튼 누를 경우
+    @Override
+    public void onBackPressed() {
+        backToProjectSelectionActivity();
+    }
+    
     // 사용자 추가
     public void addUserToGroup(UUID userUuid) {
         BaasioUser user = new BaasioUser();
@@ -142,7 +148,10 @@ public class GroupInvitationActivity extends Activity {
     }
     
     @Click({R.id.btnProjInvCofirm})
-    void moveToProjectSelectionActivity() {
-        GroupInvitationActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
+    void backToProjectSelectionActivity() {
+        Intent intent = new Intent(getApplication(), 
+                com.egoists.coco_nut.android.project.GroupSelectionActivity_.class);
+        startActivity(intent);
+        GroupInvitationActivity.this.finish();
     }
 }

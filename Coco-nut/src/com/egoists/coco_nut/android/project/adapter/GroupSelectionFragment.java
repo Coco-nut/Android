@@ -2,6 +2,8 @@ package com.egoists.coco_nut.android.project.adapter;
 
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.project.GroupSelectionActivity_;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EFragment;
@@ -37,8 +40,8 @@ public class GroupSelectionFragment extends Fragment {
 	@ViewById
 	TextView txtFragGroupMembers;
 	
-	
-    static int[] mImages = new int[MAX_GROUP_TEMPLETE];
+	static int[] mImages = new int[MAX_GROUP_TEMPLETE];
+	public Context mContext;
 	
 	@AfterViews
 	void calledAfterViewInjection() {
@@ -52,8 +55,7 @@ public class GroupSelectionFragment extends Fragment {
 	    final String groupName = bundle.getString(ARG_GROUP_NAME);
 	    
 	    // 실제 그룹 정보가 아닌 그룹 생성 정보를 표시한다.
-//	    if (groupUuid.equals("01485242-33b9-11e3-85fc-06f4fe0000b5")) {
-	    if (groupName.equals("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF")) {
+	    if (groupName.equals(GroupSelectionActivity_.DUMMY_GROUP_TITLE)) {
 	        txtFragGroupName.setText("그룹 생성");
 	        imgGroupSelection.setImageResource(mImages[MAX_GROUP_TEMPLETE-1]);
 	        txtFragGroupMembers.setText("그룹을 새로 생성합니다");
@@ -61,9 +63,7 @@ public class GroupSelectionFragment extends Fragment {
 	        imgGroupSelection.setOnClickListener(new View.OnClickListener() {
 	                @Override
 	                public void onClick(View v) {
-	                    Intent intent = new Intent(getActivity(), 
-	                            com.egoists.coco_nut.android.project.GroupCreationActivity_.class);
-	                    startActivity(intent);
+	                    ((GroupSelectionActivity_)mContext).createNewGroup();
 	                }
 	        });
 	        return;
@@ -84,13 +84,20 @@ public class GroupSelectionFragment extends Fragment {
 	    imgGroupSelection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), 
+                    Intent intent = new Intent(mContext, 
                             com.egoists.coco_nut.android.kanban.KanbanActivity_.class);
                     intent.putExtra(ARG_GROUP_UUID, groupUuid);
                     startActivity(intent);
                 }
 	    });
 	}
+	
+	// 호출한 Activity와의 통신을 위함
+	@Override
+    public void onAttach(Activity activity) {
+	    super.onAttach(activity);
+        mContext = activity;
+    }
 	
 	void getMyFriendsByBaasio(String groupUuid) {
         // 쿼리 전송
