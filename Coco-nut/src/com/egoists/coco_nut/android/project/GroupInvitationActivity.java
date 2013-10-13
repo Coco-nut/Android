@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.project.adapter.UsersListAdapter;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.CoconutUrlEncoder;
@@ -34,7 +35,7 @@ import com.kth.baasio.query.BaasioQuery;
 import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_project_invitation)
-public class ProjectInvitationActivity extends Activity {
+public class GroupInvitationActivity extends Activity {
     @ViewById
     EditText edTxtSearchPhone;
     @Extra("created_group_uuid")
@@ -79,7 +80,7 @@ public class ProjectInvitationActivity extends Activity {
         String rawQuery = CoconutUrlEncoder.encode(fullQuery);
         AndLog.d(rawQuery);
         
-        mDialog = ProgressDialog.show(ProjectInvitationActivity.this, "", "검색중", true);
+        mDialog = ProgressDialog.show(GroupInvitationActivity.this, "", "검색중", true);
         
         // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
@@ -142,9 +143,6 @@ public class ProjectInvitationActivity extends Activity {
     
     @Click({R.id.btnProjInvCofirm})
     void moveToProjectSelectionActivity() {
-        Intent intent = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class);
-        startActivity(intent); 
-        ProjectInvitationActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
+        GroupInvitationActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
     }
 }

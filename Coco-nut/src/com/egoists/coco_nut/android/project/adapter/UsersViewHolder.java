@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.project.adapter;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;

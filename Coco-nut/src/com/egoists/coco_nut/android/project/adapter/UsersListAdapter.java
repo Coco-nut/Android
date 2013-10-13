@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.project.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,13 @@ import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
+import com.egoists.coco_nut.android.project.GroupInvitationActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.utils.ObjectUtils;
 
 public class UsersListAdapter extends BaseAdapter {
-    private ProjectInvitationActivity mActivity;
+    private GroupInvitationActivity mActivity;
     private Context mContext;
 
     private LayoutInflater mInflater;
@@ -27,7 +28,7 @@ public class UsersListAdapter extends BaseAdapter {
     
     private ArrayList<BaasioUser> mUserList;
 
-    public UsersListAdapter(ProjectInvitationActivity activity, Context context, ArrayList<BaasioUser> userList) {
+    public UsersListAdapter(GroupInvitationActivity activity, Context context, ArrayList<BaasioUser> userList) {
         super();
         mActivity = activity;
         mContext = context;

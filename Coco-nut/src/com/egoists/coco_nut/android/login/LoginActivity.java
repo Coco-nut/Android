@@ -189,7 +189,7 @@ public class LoginActivity extends Activity {
 	
 	void moveToProjectSelectionActivity() {
 	    Intent intent = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.ProjectSelectionActivity_.class);
+                com.egoists.coco_nut.android.project.GroupSelectionActivity_.class);
         startActivity(intent); 
         LoginActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
 	}

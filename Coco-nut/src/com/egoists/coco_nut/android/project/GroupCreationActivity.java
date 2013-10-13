@@ -27,7 +27,7 @@ import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 
 @EActivity(R.layout.activity_project_creation)
-public class ProjectCreationActivity extends Activity {
+public class GroupCreationActivity extends Activity {
     @ViewById
     EditText edTxtCreateProj;
     @ViewById
@@ -78,7 +78,7 @@ public class ProjectCreationActivity extends Activity {
         String projectPath = UniqueString.generate();
         AndLog.d("Try to create project : " + projectName + ", " + projectPath);
         
-        mDialog = ProgressDialog.show(ProjectCreationActivity.this, "", "그룹 생성 중", true);
+        mDialog = ProgressDialog.show(GroupCreationActivity.this, "", "그룹 생성 중", true);
         BaasioGroup group = new BaasioGroup();
         group.setTitle(projectName);    // 그룹 표시내용
         group.setPath(projectPath);     // 그룹 Unique한 Path 이름
@@ -140,11 +140,11 @@ public class ProjectCreationActivity extends Activity {
     // 그룹 회원 추가 activity로 이동
     void moveToProjectInvitationActivity(final UUID groupUuid) {
         Intent i = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.ProjectInvitationActivity_.class);
+                com.egoists.coco_nut.android.project.GroupInvitationActivity_.class);
         i.putExtra("created_group_uuid", groupUuid.toString());
         startActivity(i);
         
-        ProjectCreationActivity.this.finish();
+        GroupCreationActivity.this.finish();
     }
     
     // 그룹 탬플릿 선택

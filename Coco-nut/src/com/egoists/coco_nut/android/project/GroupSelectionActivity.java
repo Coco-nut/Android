@@ -1,24 +1,24 @@
 package com.egoists.coco_nut.android.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.project.adapter.GroupSelectionPagerAdapter;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.kth.baasio.callback.BaasioQueryCallback;
 import com.kth.baasio.entity.BaasioBaseEntity;
@@ -28,28 +28,35 @@ import com.kth.baasio.query.BaasioQuery;
 import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_project_selection)
-public class ProjectSelectionActivity extends FragmentActivity {
+public class GroupSelectionActivity extends FragmentActivity {
     private LoginPreference mLoginPref;
     private Context mContext;
+    private ProgressDialog mDialog;
     
-	SectionsPagerAdapter mSectionsPagerAdapter;
+    GroupSelectionPagerAdapter mGroupSelectionPagerAdapter;
 	
 	@ViewById(R.id.pager_project)
 	ViewPager mViewPager;
 
 	@AfterViews
 	void initViewPager() {
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+	    mGroupSelectionPagerAdapter = new GroupSelectionPagerAdapter(
+		        getSupportFragmentManager(), new ArrayList<BaasioGroup>());
+		mViewPager.setAdapter(mGroupSelectionPagerAdapter);
 		
 		mContext = this;
 		mLoginPref = new LoginPreference(mContext);
-		getMyGroupsByBaasio();
+	}
+	
+	@Override
+	protected void onResume() {
+	    getMyGroupsByBaasio();
+	    super.onResume();
 	}
 	
 	@Click({R.id.btnCreateProject})
     void createNewProject() {
-        Intent intent = new Intent(this, com.egoists.coco_nut.android.project.ProjectCreationActivity_.class);
+        Intent intent = new Intent(this, com.egoists.coco_nut.android.project.GroupCreationActivity_.class);
         startActivity(intent);
     }
 	
@@ -66,31 +73,15 @@ public class ProjectSelectionActivity extends FragmentActivity {
 	    moveToLoginActivity();
 	}
 	
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			Fragment fragment = new ProjectSelectionFragment_();
-			Bundle args = new Bundle();
-			args.putInt(ProjectSelectionFragment_.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		@Override
-		public int getCount() {
-			// Show 3 total pages.
-			return 3;
-		}
-	}
+	@UiThread
+    void refreshGroupList(List<BaasioGroup> groups) {
+	    mGroupSelectionPagerAdapter.update(groups);
+    }
 	
 	void moveToLoginActivity() {
         // 로딩이 끝난후 이동할 Activity
         startActivity(new Intent(getApplication(), com.egoists.coco_nut.android.login.LoginActivity_.class)); 
-        ProjectSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
+        GroupSelectionActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
     }
 	
 	void getMyGroups() {
@@ -101,6 +92,8 @@ public class ProjectSelectionActivity extends FragmentActivity {
     	// 로그인 정보 가져오기
         mLoginPref.loadPreference();
         
+        mDialog = ProgressDialog.show(GroupSelectionActivity.this, "", "내 그룹 가져오는 중", true);
+        
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
         query.setRawString("users/" + mLoginPref.mUuid + "/groups");
@@ -110,16 +103,14 @@ public class ProjectSelectionActivity extends FragmentActivity {
             @Override
             public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
                 AndLog.d("Succeed : get my groups");
-                
+                mDialog.dismiss();
                 List<BaasioGroup> groups = BaasioBaseEntity.toType(entities, BaasioGroup.class);
-                for (BaasioGroup group : groups) {
-                    AndLog.d(group.getTitle());
-                }
-                
+                refreshGroupList(groups);
             }
 
             @Override
             public void onException(BaasioException e) {
+                mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                 BaasioDialogFactory.createErrorDialog(mContext, e).show();
             }
