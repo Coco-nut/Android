@@ -3,6 +3,7 @@ package com.egoists.coco_nut.android.kanban;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +40,7 @@ public class ToDoFragment extends Fragment {
 		{ 
 			if (i != 0){
 				LinearLayout space = new LinearLayout(getActivity());
-				space.setMinimumHeight(14);
+				space.setMinimumHeight((int)(getResources().getDisplayMetrics().density * 8 + 0.5));
 				linear_layout.addView(space);
 			}
 			CardView cardview = new CardView(getActivity(), kanbanData.Do.get(i));

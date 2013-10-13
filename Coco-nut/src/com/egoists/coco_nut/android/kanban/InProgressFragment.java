@@ -39,7 +39,7 @@ public class InProgressFragment extends Fragment {
 		{
 			if (i != 0){
 				LinearLayout space = new LinearLayout(getActivity());
-				space.setMinimumHeight(14);
+				space.setMinimumHeight((int)(getResources().getDisplayMetrics().density * 8 + 0.5));
 				linear_layout.addView(space);
 			}
 			CardView cardview = new CardView(getActivity(), kanbanData.Doing.get(i));
