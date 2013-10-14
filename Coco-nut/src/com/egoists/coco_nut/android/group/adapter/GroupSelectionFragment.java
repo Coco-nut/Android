@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project.adapter;
+package com.egoists.coco_nut.android.group.adapter;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.project.GroupSelectionActivity_;
+import com.egoists.coco_nut.android.group.GroupSelectionActivity_;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EFragment;

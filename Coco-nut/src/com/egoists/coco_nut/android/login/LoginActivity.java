@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.kanban.KanbanSettingActivity;
+import com.egoists.coco_nut.android.group.SettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
 	    mContext = this;
-	    KanbanSettingActivity.LoginPref = new LoginPreference(mContext);
+	    SettingActivity.LoginPref = new LoginPreference(mContext);
 	    waitAndPreLogin();
 	}
 	
@@ -73,9 +73,9 @@ public class LoginActivity extends Activity {
 	@Background
 	void doAutoLogin() {
 	    // 로그인 정보 가져오기
-		KanbanSettingActivity.LoginPref.loadPreference();
-        String id = KanbanSettingActivity.LoginPref.mId;
-        String passwd = KanbanSettingActivity.LoginPref.mPasswd;
+	    SettingActivity.LoginPref.loadPreference();
+        String id = SettingActivity.LoginPref.mId;
+        String passwd = SettingActivity.LoginPref.mPasswd;
 
         doAutoLogInByBaasio(id, passwd);
 	}
@@ -177,7 +177,7 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 if (response != null) {
                     // 로그인 성공
-                	KanbanSettingActivity.LoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
+                    SettingActivity.LoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
                 	
                 	// 사용자 폰번호가 없으면 업데이트한다
                 	JsonNode node = response.getProperty("phone");
@@ -224,7 +224,7 @@ public class LoginActivity extends Activity {
 	
 	void moveToProjectSelectionActivity() {
 	    Intent intent = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.GroupSelectionActivity_.class);
+                com.egoists.coco_nut.android.group.GroupSelectionActivity_.class);
         startActivity(intent); 
         LoginActivity.this.finish(); // 로딩페이지 Activity Stack에서 제거
 	}

@@ -59,7 +59,7 @@ public class CardCreationActivity extends Activity {
     // 그룹 회원 추가 activity로 이동
     void moveToProjectInvitationActivity(final UUID groupUuid) {
         Intent i = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.GroupInvitationActivity_.class);
+                com.egoists.coco_nut.android.group.GroupInvitationActivity_.class);
         i.putExtra("created_group_uuid", groupUuid.toString());
         startActivity(i);
         

@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.project.adapter.UsersListAdapter;
+import com.egoists.coco_nut.android.group.adapter.UsersListAdapter;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.CoconutUrlEncoder;
@@ -184,7 +184,7 @@ public class GroupInvitationActivity extends Activity {
     @Click({R.id.btnProjInvCofirm})
     void backToProjectSelectionActivity() {
         Intent intent = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.GroupSelectionActivity_.class);
+                com.egoists.coco_nut.android.group.GroupSelectionActivity_.class);
         startActivity(intent);
         GroupInvitationActivity.this.finish();
     }

@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.group;
 
 import java.util.UUID;
 
@@ -135,7 +135,7 @@ public class GroupCreationActivity extends Activity {
     // 그룹 회원 추가 activity로 이동
     void moveToProjectInvitationActivity(final UUID groupUuid) {
         Intent i = new Intent(getApplication(), 
-                com.egoists.coco_nut.android.project.GroupInvitationActivity_.class);
+                com.egoists.coco_nut.android.group.GroupInvitationActivity_.class);
         i.putExtra(EXTRA_CREATED_GROUP_UUID, groupUuid.toString());
         startActivity(i);
         

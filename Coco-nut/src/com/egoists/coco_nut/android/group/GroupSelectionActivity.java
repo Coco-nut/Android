@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project;
+package com.egoists.coco_nut.android.group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.group.adapter.GroupSelectionPagerAdapter;
 import com.egoists.coco_nut.android.kanban.KanbanSettingActivity;
-import com.egoists.coco_nut.android.project.adapter.GroupSelectionPagerAdapter;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.LoginPreference;
@@ -61,7 +61,7 @@ public class GroupSelectionActivity extends FragmentActivity {
 	
 	@Click({R.id.btnCreateProject})
     public void createNewGroup() {
-        Intent intent = new Intent(this, com.egoists.coco_nut.android.project.GroupCreationActivity_.class);
+        Intent intent = new Intent(this, com.egoists.coco_nut.android.group.GroupCreationActivity_.class);
         startActivityForResult(intent, MY_ACTIVITY_RESULT);
     }
 	
@@ -85,7 +85,7 @@ public class GroupSelectionActivity extends FragmentActivity {
 	@Click({R.id.btn_setting})
 	void moveToSettingActivity() {
         startActivity(new Intent(getApplication(), 
-                com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));
+                com.egoists.coco_nut.android.group.SettingActivity.class));
     }
 	
 	@UiThread
@@ -102,7 +102,7 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
         query.setRawString("users/" + user.getUuid().toString() + "/groups");
-        query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
+        query.setOrderBy(BaasioBaseEntity.PROPERTY_NAME, ORDER_BY.ASCENDING);
         query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
 
             @Override

@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project.adapter;
+package com.egoists.coco_nut.android.group.adapter;
 
 import java.util.List;
 

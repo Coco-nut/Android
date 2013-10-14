@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.project.adapter;
+package com.egoists.coco_nut.android.group.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
-import com.egoists.coco_nut.android.project.GroupInvitationActivity;
+import com.egoists.coco_nut.android.group.GroupInvitationActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.utils.ObjectUtils;
