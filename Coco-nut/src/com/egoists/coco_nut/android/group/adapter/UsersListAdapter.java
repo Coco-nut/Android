@@ -105,12 +105,12 @@ public class UsersListAdapter extends BaseAdapter {
                 view.mProfile.setImageResource(R.drawable.person_image_empty);
             }
 
-            if (!ObjectUtils.isEmpty(entity.getUsername())) {
-                view.mName.setText(entity.getUsername());
+            if (!ObjectUtils.isEmpty(entity.getName())) {
+                view.mName.setText(entity.getName());
             }
             
-            if (!ObjectUtils.isEmpty(entity.getName())) {
-                view.mBody.setText(entity.getName());
+            if (!ObjectUtils.isEmpty(entity.getEmail())) {
+                view.mBody.setText(entity.getEmail());
             }
         }
         

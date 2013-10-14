@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white" >
+    android:orientation="vertical" >
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" 
+        android:background="@android:color/white" >
         <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,20 +43,24 @@
 	        android:id="@+id/list"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
+	        android:divider="@android:color/white"
+            android:dividerHeight="2dp"
 	        android:background="@android:color/transparent"
 	        android:cacheColorHint="@android:color/transparent" />
-	
 	</FrameLayout>
+	<!-- 
 	<LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="15dp" >
+            android:padding="15dp"
+            android:background="@android:color/white" >
             <Button
                 android:id="@+id/btnProjInvCofirm"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="그룹 생성 완료" />        
         </LinearLayout>
+         -->
 </LinearLayout>

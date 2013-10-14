@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:title="생성" 
-        android:id="@+id/menu_create_project"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:id="@+id/menu_create_group"
+        android:icon="@drawable/ic_action_add_group"
         android:showAsAction="always|withText"        
         />
 </menu>

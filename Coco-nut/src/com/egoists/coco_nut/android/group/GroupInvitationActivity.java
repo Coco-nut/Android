@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -57,6 +60,10 @@ public class GroupInvitationActivity extends Activity {
                 
         AndLog.d("created group uuid : " + mCreatedGroupUuid);
         
+        // 액션바
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        
         // 사용자 검색 결과 리스트
         mListAdapter = new UsersListAdapter(this, mContext, new ArrayList<BaasioUser>());
         ListView list = (ListView)findViewById(R.id.list);  
@@ -67,12 +74,34 @@ public class GroupInvitationActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    getMyFriendsByBaasio();
+                    getMyFriends();
                     return true;
                 }
                 return false;
             }
         });
+        
+        getMyFriendsByBaasio();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.create_group_coconut, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.menu_create_group:
+                backToProjectSelectionActivity();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     
     // 전화번호인지 판단
@@ -88,11 +117,18 @@ public class GroupInvitationActivity extends Activity {
         }
     }
     
-    void getMyFriendsByBaasio() {
+    void getMyFriends() {
         // 사용자 검색시 나온 키보드 내려놓기
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edTxtSearchUser.getWindowToken(), 0);
         
+        getMyFriendsByBaasio();
+    }
+    
+    /**
+     * 사용자 검색
+     */
+    void getMyFriendsByBaasio() {
         // 로그인 정보 가져오기
         mLoginPref.loadPreference();
         
@@ -157,7 +193,7 @@ public class GroupInvitationActivity extends Activity {
         user.setUuid(UUID.fromString(userUuid.toString()));         // 추가하려는 회원의 uuid   
 
         BaasioGroup entity = new BaasioGroup();
-        entity.setUuid(UUID.fromString(mCreatedGroupUuid));                   // Group의 uuid
+        entity.setUuid(UUID.fromString(mCreatedGroupUuid));         // Group의 uuid
         entity.addInBackground(
                 user
                 , new BaasioCallback<BaasioUser>() {
@@ -181,7 +217,7 @@ public class GroupInvitationActivity extends Activity {
                 });
     }
     
-    @Click({R.id.btnProjInvCofirm})
+//    @Click({R.id.btnProjInvCofirm})
     void backToProjectSelectionActivity() {
         Intent intent = new Intent(getApplication(), 
                 com.egoists.coco_nut.android.group.GroupSelectionActivity_.class);
