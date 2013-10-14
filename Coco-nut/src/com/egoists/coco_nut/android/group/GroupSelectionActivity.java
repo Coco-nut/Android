@@ -11,10 +11,8 @@ import android.support.v4.view.ViewPager;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.group.adapter.GroupSelectionPagerAdapter;
-import com.egoists.coco_nut.android.kanban.KanbanSettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
-import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -31,7 +29,7 @@ import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 @EActivity(R.layout.activity_group_selection)
 public class GroupSelectionActivity extends FragmentActivity {
-    public static final int MY_ACTIVITY_RESULT = 1;
+    public static final int ACTIVITY_RESULT_REFRESH = 1;
     public static final String DUMMY_GROUP_TITLE = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF";
     private Context mContext;
     private ProgressDialog mDialog;
@@ -55,25 +53,18 @@ public class GroupSelectionActivity extends FragmentActivity {
 		mViewPager.setAdapter(mGroupSelectionPagerAdapter);
 		
 		mContext = this;
-		KanbanSettingActivity.LoginPref = new LoginPreference(mContext);
 		getMyGroupsByBaasio();
+	}
+	
+	@Override
+	protected void onResume() {
+	    super.onResume();
 	}
 	
 	@Click({R.id.btnCreateProject})
     public void createNewGroup() {
         Intent intent = new Intent(this, com.egoists.coco_nut.android.group.GroupCreationActivity_.class);
-        startActivityForResult(intent, MY_ACTIVITY_RESULT);
-    }
-	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            // 프로젝트 생성이 성공하면 Activity를 없앤다.
-            if (requestCode == MY_ACTIVITY_RESULT) {    
-                this.finish();
-            }
-        }
+        startActivity(intent);
     }
 	
 	@Click({R.id.btn_notices})
@@ -94,15 +85,13 @@ public class GroupSelectionActivity extends FragmentActivity {
     }
 	
 	void getMyGroupsByBaasio() {
-    	// 로그인 정보 가져오기
-	    KanbanSettingActivity.LoginPref.loadPreference();
-        
-        mDialog = ProgressDialog.show(GroupSelectionActivity.this, "", "내 그룹 가져오는 중", true);
+    	mDialog = ProgressDialog.show(GroupSelectionActivity.this, "", "내 그룹 가져오는 중", true);
         final BaasioUser user = Baas.io().getSignedInUser();
 	    // 쿼리 전송
         BaasioQuery query = new BaasioQuery();
         query.setRawString("users/" + user.getUuid().toString() + "/groups");
-        query.setOrderBy(BaasioBaseEntity.PROPERTY_NAME, ORDER_BY.ASCENDING);
+        query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.ASCENDING);
+        query.setLimit(30);
         query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
 
             @Override
@@ -110,6 +99,7 @@ public class GroupSelectionActivity extends FragmentActivity {
                 AndLog.d("Succeed : get my groups");
                 mDialog.dismiss();
                 List<BaasioGroup> groups = BaasioBaseEntity.toType(entities, BaasioGroup.class);
+                
                 groups.add(mDummyGroup);
                 refreshGroupList(groups);
             }

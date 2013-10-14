@@ -21,6 +21,7 @@ public class KanbanData {
 		Doing = new ArrayList<Card>();
 		Done = new ArrayList<Card>();
 	}
+	
 	public static int getLabelColor(int label)
 	{
 		switch(label)

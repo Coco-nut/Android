@@ -139,10 +139,7 @@ public class GroupCreationActivity extends Activity {
         i.putExtra(EXTRA_CREATED_GROUP_UUID, groupUuid.toString());
         startActivity(i);
         
-        // 이전 Activity(GroupSelectionActivity)도 없앤다.
-        Intent returnIntent = new Intent();
-        setResult(RESULT_OK, returnIntent);
-        GroupCreationActivity.this.finish();
+        finish();
     }
     
     // 그룹 탬플릿 선택

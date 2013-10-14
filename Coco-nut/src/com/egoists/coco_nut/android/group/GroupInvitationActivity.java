@@ -185,6 +185,7 @@ public class GroupInvitationActivity extends Activity {
     void backToProjectSelectionActivity() {
         Intent intent = new Intent(getApplication(), 
                 com.egoists.coco_nut.android.group.GroupSelectionActivity_.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         GroupInvitationActivity.this.finish();
     }
