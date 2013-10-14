@@ -129,7 +129,7 @@ public class CardView extends View {
 		//사람들 사진
 		for (int i = 0; i < card.participants.size(); i++)
 		{
-			Drawable photo = card.participants.get(i).photo;
+			Drawable photo = card.participants.get(i).getPhoto(getResources());
 			if (photo == null){
 				photo = getResources().getDrawable(R.drawable.card_personphoto_default);
 			}

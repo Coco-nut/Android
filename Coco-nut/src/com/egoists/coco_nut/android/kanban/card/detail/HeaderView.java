@@ -60,7 +60,7 @@ public class HeaderView extends View {
 		setBackgroundColor(Color.WHITE);
 		resolution = new Point();
 		((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(resolution);
-		setMinimumHeight(y(258));
+		setMinimumHeight(y(165));
 		this.card = card;
 		initialize();
 
@@ -83,22 +83,28 @@ public class HeaderView extends View {
 	private int y(int y){
 		return y * resolution.y / 1280;
 	}
+	private int xy(int xy){
+		return x(xy) > y(xy) ? y(xy) : x(xy);
+	}
+	private int ixy(int xy){
+		return x(xy) > y(xy) ? xy * 1280 / resolution.y : xy * 720 / resolution.x;
+	}
 	private void initialize(){
 		titletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		titletext_paint.setStyle(Paint.Style.FILL);
 		titletext_paint.setColor(titletext_c);
-		titletext_paint.setTextSize(x(titletext_size));
+		titletext_paint.setTextSize(xy(titletext_size));
 		
-		subtitletext_x = titletext_x + (int) titletext_paint.measureText(card.title) 
+		subtitletext_x = titletext_x + ixy( (int) titletext_paint.measureText(card.title) ) 
 				+ bet_title_and_subtitle_x;
 		subtitletext_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		subtitletext_paint.setStyle(Paint.Style.FILL);
 		subtitletext_paint.setColor(titletext_c);
-		subtitletext_paint.setTextSize(x(subtitletext_size));
+		subtitletext_paint.setTextSize(xy(subtitletext_size));
 		
 		clock_text_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		clock_text_paint.setStyle(Paint.Style.FILL);
-		clock_text_paint.setTextSize(x(clock_text_size));
+		clock_text_paint.setTextSize(xy(clock_text_size));
 		clock_text_paint.setColor(titletext_c);
 		clock = getResources().getDrawable(R.drawable.card_clock);
 		clock.setBounds(x(clock_x1), y(clock_y1), x(clock_x2), y(clock_y2));
