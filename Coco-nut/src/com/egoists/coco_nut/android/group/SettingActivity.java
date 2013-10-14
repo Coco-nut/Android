@@ -1,13 +1,12 @@
 package com.egoists.coco_nut.android.group;
 
-import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.kanban.KanbanSettingFragment;
-import com.egoists.coco_nut.android.util.LoginPreference;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.util.LoginPreference;
 
 public class SettingActivity extends Activity {
     public static LoginPreference LoginPref;
@@ -31,6 +30,6 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
          
         getFragmentManager().beginTransaction().replace(android.R.id.content,
-                       new KanbanSettingFragment()).commit();
+                       new SettingFragment()).commit();
     }
 }

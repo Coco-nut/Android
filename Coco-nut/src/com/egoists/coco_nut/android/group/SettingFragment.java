@@ -8,7 +8,6 @@ import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.login.LoginActivity_;
 
 public class SettingFragment extends PreferenceFragment {
 

@@ -8,4 +8,6 @@
     <dimen name="login_id_font_size">20dp</dimen>
     <dimen name="signup_button_font_size">16dp</dimen>
     <dimen name="card_title_size">20dp</dimen>
+    <dimen name="card_creation_font_size">18sp</dimen>
+    <dimen name="card_creation_padding">30dp</dimen>
 </resources>

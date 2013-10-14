@@ -3,6 +3,7 @@ package com.egoists.coco_nut.android.group.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.CardCreationActivity;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.group.GroupInvitationActivity;
 import com.egoists.coco_nut.android.util.AndLog;
@@ -19,22 +21,28 @@ import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.utils.ObjectUtils;
 
 public class UsersListAdapter extends BaseAdapter {
-    private GroupInvitationActivity mActivity;
-    private Context mContext;
-
-    private LayoutInflater mInflater;
-
-    private ImageFetcher mImageFetcher;
+    private Activity mActivity;
     
+    private Context mContext;
+    private LayoutInflater mInflater;
+    private ImageFetcher mImageFetcher;
     private ArrayList<BaasioUser> mUserList;
 
-    public UsersListAdapter(GroupInvitationActivity activity, Context context, ArrayList<BaasioUser> userList) {
+    public UsersListAdapter(Context context, ArrayList<BaasioUser> userList) {
         super();
-        mActivity = activity;
         mContext = context;
         mUserList = userList;
         mImageFetcher = new ImageFetcher(mContext);
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+    
+    public UsersListAdapter(GroupInvitationActivity activity, Context context, ArrayList<BaasioUser> userList) {
+        this(context, userList);
+        mActivity = activity;
+    }
+    
+    public UsersListAdapter(CardCreationActivity activity, Context context, ArrayList<BaasioUser> userList) {
+        this(context, userList);
     }
 
     @Override
@@ -113,8 +121,9 @@ public class UsersListAdapter extends BaseAdapter {
                     // 리스트에서 본인 삭제
                     mUserList.remove(position);
                     UsersListAdapter.this.notifyDataSetChanged();
+                    
                     // 사용자 그룹에 추가
-                    mActivity.addUserToGroup(entity.getUuid());
+                    ((GroupInvitationActivity)mActivity).addUserToGroup(entity.getUuid());
                 }
             });
         }

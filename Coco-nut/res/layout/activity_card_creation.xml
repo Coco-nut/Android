@@ -2,52 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/edTextCreateCardTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="타이틀"
-        android:inputType="text"
-        android:paddingTop="40dp" />
-
-    <EditText
-        android:id="@+id/edTextCreateCardSubTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="서브타이틀"
-        android:inputType="text"
-        android:paddingTop="40dp" />
-
-    <EditText
-        android:id="@+id/edTextCreateCardLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="라벨"
-        android:paddingTop="40dp"
-        android:inputType="text" />
-   
-    <EditText
-        android:id="@+id/edTextCreateCardLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="중요도"
-        android:paddingTop="40dp"
-        android:inputType="text" />
-    
-    <EditText
-        android:id="@+id/edTextCreateCardParticipant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="구성원"
-        android:paddingTop="40dp"
-        android:inputType="text" />
-    <requestFocus />
+        android:layout_margin="40dp"
+        android:orientation="vertical" >
+        <EditText
+	        android:id="@+id/edTextCreateCardTitle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="타이틀 (필수)"
+	        android:inputType="text" />
+	    <requestFocus />
+	    <EditText
+	        android:id="@+id/edTextCreateCardSubTitle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="서브타이틀"
+	        android:inputType="text"
+	        android:paddingTop="@dimen/card_creation_padding" />
+	    <EditText
+	        android:id="@+id/edTextCreateCardLabel"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="라벨"
+	        android:paddingTop="@dimen/card_creation_padding"
+	        android:inputType="text" />
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="@dimen/card_creation_padding"
+	        >
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingLeft="12dp"
+	            android:textSize="@dimen/card_creation_font_size"
+	            android:textColor="@color/font_common_coconut"
+	            android:text="중요도"
+	            />
+	    </LinearLayout>
+	    <RatingBar
+	        android:id="@+id/ratingCreateCard"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:paddingBottom="@dimen/card_creation_padding"
+	        android:numStars="5"
+	        android:stepSize="1" />
+        <Button 
+            android:id="@+id/btnDoCreateCard"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_create" >
+        </Button>
+    </LinearLayout>
 </LinearLayout>

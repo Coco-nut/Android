@@ -85,7 +85,7 @@ public class GroupSelectionFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, 
-                            com.egoists.coco_nut.android.kanban.KanbanActivity_.class);
+                            com.egoists.coco_nut.android.board.BoardTabActivity_.class);
                     intent.putExtra(ARG_GROUP_UUID, groupUuid);
                     startActivity(intent);
                 }

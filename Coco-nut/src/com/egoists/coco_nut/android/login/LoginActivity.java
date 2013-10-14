@@ -208,7 +208,6 @@ public class LoginActivity extends Activity {
 
                 @Override
                 public void onResponse(BaasioUser response) {
-                    
                     if (response != null) {
                         moveToProjectSelectionActivity();
                     }
