@@ -15,7 +15,6 @@ import android.widget.ListView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.adapter.CardListAdapter;
-import com.egoists.coco_nut.android.login.LoginActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -25,7 +24,6 @@ import com.kth.baasio.callback.BaasioQueryCallback;
 import com.kth.baasio.entity.BaasioBaseEntity;
 import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.group.BaasioGroup;
-import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 import com.kth.baasio.query.BaasioQuery;
 

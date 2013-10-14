@@ -78,7 +78,7 @@ public class CardListAdapter extends BaseAdapter {
             view = (CardViewHolder)convertView.getTag();
         }
         
-        
+        // 검색 결과 출력
         final BaasioEntity entity = mCardList.get(position);
 
         if (entity != null) {
