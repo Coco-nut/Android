@@ -26,7 +26,6 @@ import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.CoconutUrlEncoder;
 import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -95,7 +94,7 @@ public class GroupInvitationActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                backToProjectSelectionActivity();
                 return true;
             case R.id.menu_create_group:
                 backToProjectSelectionActivity();
@@ -217,7 +216,6 @@ public class GroupInvitationActivity extends Activity {
                 });
     }
     
-//    @Click({R.id.btnProjInvCofirm})
     void backToProjectSelectionActivity() {
         Intent intent = new Intent(getApplication(), 
                 com.egoists.coco_nut.android.group.GroupSelectionActivity_.class);

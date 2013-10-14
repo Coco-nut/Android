@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutCardRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white_coconut"
@@ -22,33 +23,54 @@
         <!-- 카드 제목 부 -->
         <LinearLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp" >
 	        <TextView
+	            android:id="@+id/txtCardListTitle"
 	            android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="10dp"
                 android:textSize="@dimen/card_title_size"
                 android:textStyle="bold"
-                android:text="고궁 답사"
-	            >
-	            
-	        </TextView>
+                android:text="고궁 답사" />
+	        <TextView
+                android:id="@+id/txtCardListSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:textSize="@dimen/card_subtitle_size"
+                android:text="창덕궁" />
+
+            <RatingBar
+                android:id="@+id/ratingListCard"
+                style="@style/RatingBarSmallcoconut_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5" />
+
 	    </LinearLayout>
 	    <!-- 시간, 댓글, 체크 리스트 부 -->
 	    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical" >
             <ImageView 
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_clock_coconut"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_clock_coconut"/>
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/card_subtitle_size"
+                android:text="~09:00 AM 2013/09/12/THU" />
         </LinearLayout>
         <!-- 참가자 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-            
         </LinearLayout>
     </LinearLayout>
-    
-
 </LinearLayout>

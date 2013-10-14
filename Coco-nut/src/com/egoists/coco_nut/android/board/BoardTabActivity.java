@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.kanban.briefing.BriefingFragment;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
@@ -128,27 +128,26 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
 
         @Override
         public Fragment getItem(int position) {
-//            // NOTE : AndroidAnnotation을 사용한 Fragments 는 끝에 '_' 처리.
-//            switch (position) {
-//            case 0:
-//                return new MyWorksFragment_();
-//            case 1:
-//                return new BriefingFragment();
-//            case 2:
-//                return new ToDoFragment_();
-//            case 3:
-//                return new InProgressFragment_();
-//            case 4:
-//            default:
-//                return new DoneFragment_();
-//            }
-            return null;
+            // NOTE : AndroidAnnotation을 사용한 Fragments 는 끝에 '_' 처리.
+            switch (position) {
+            case 0:
+                Fragment myCardFragment = new MyCardsFragment_();
+                
+                // 그룹 UUID 삽입
+                Bundle args = new Bundle();
+                args.putString(ARG_GROUP_UUID, mExtraGroupUuid);
+                myCardFragment.setArguments(args);
+                
+                return myCardFragment;
+            default:
+                return new MyCardsFragment_();
+            }
         }
 
         @Override
         public int getCount() {
             // Show 5 total pages.
-            return 0;
+            return 1;
         }
 
         @Override

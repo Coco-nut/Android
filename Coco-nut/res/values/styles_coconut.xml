@@ -41,7 +41,7 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_coconut</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_coconut</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Coconut</item>
-        <item name="android:actionBarSize">40dp</item>
+        <item name="android:actionBarSize">45dp</item>
         
         <item name="android:editTextStyle">@style/EditTextcoconut_2</item>
         <item name="android:checkboxStyle">@style/CheckBoxcoconut_2</item>
@@ -73,7 +73,7 @@
     </style>
 
     <style name="PopupMenu.Coconut" parent="@android:style/Widget.Holo.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_coconut</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_coconut</item>   
     </style>
 
     <style name="DropDownListView.Coconut" parent="@android:style/Widget.Holo.ListView.DropDown">

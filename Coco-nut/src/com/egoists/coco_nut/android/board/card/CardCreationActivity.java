@@ -6,6 +6,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -14,6 +16,7 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
+import com.egoists.coco_nut.android.util.DialogFactory;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -35,13 +38,13 @@ public class CardCreationActivity extends Activity {
     @ViewById
     RatingBar ratingCreateCard;
         
-    private final String RELATION_NAME          = "group_card";
-    private final String ENTITY = "card";
-    private final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
-    private final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목
-    private final String ENTITY_NAME_RATING     = "rating";     // 중요도
-    private final String ENTITY_NAME_STATE      = "state";      // 카드 상태
-    private final String ENTITY_VAL_STATE_TODO       = "todo";       // 카드의 기본 상태는 todo 이다
+    public static final String RELATION_NAME          = "group_card";
+    public static final String ENTITY                 = "card";
+    public static final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
+    public static final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목
+    public static final String ENTITY_NAME_RATING     = "rating";     // 중요도
+    public static final String ENTITY_NAME_STATE      = "state";      // 카드 상태
+    public static final String ENTITY_VAL_STATE_TODO       = "todo";       // 카드의 기본 상태는 todo 이다
     
     private int mCardRating = 0;    // 중요도 (기본 0)
     
@@ -73,6 +76,14 @@ public class CardCreationActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    void backToBoardTabActivity() {
+//        Intent intent = new Intent(getApplication(), 
+//                com.egoists.coco_nut.android.board.BoardTabActivity_.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+        this.finish();
     }
     
     // 카드 생성
@@ -126,7 +137,7 @@ public class CardCreationActivity extends Activity {
                             group.connectInBackground(
                                     RELATION_NAME, 
                                     response
-                                    , BaasioEntity.class        // 댓글 Entity의 Class
+                                    , BaasioEntity.class
                                     , new BaasioCallback<BaasioEntity>() {
                                         @Override
                                         public void onException(BaasioException e) {
@@ -137,10 +148,22 @@ public class CardCreationActivity extends Activity {
                                         public void onResponse(BaasioEntity response) {
                                             mDialog.dismiss();
                                             if (response != null) {
-                                                BaasioDialogFactory.createFinishButtonDialog(
-                                                        CardCreationActivity.this, 
-                                                        R.string.title_succeed, 
-                                                        R.string.create_card_succeed).show();
+                                                backToBoardTabActivity();
+                                                DialogFactory
+                                                    .createNoButton(CardCreationActivity.this,R.string.title_succeed, "")
+                                                    .setPositiveButton(
+                                                            R.string.create_card_succeed,
+                                                            new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    backToBoardTabActivity();
+                                                                    }
+                                                                })
+                                                    .setCancelable(false)
+                                                    .show();
+//                                                BaasioDialogFactory.createFinishButtonDialog(
+//                                                        CardCreationActivity.this, 
+//                                                        R.string.title_succeed, 
+//                                                        R.string.create_card_succeed).show();
                                             }
                                         }
                                     });
