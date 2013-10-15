@@ -100,9 +100,9 @@ public class UsersListAdapter extends BaseAdapter {
         if (entity != null) {
             String imageUrl = entity.getPicture();
             if (imageUrl != null) {
-                mImageFetcher.loadImage(imageUrl, view.mProfile, R.drawable.person_image_empty);
+                mImageFetcher.loadImage(imageUrl, view.mProfile, R.drawable.card_personphoto_default);
             } else {
-                view.mProfile.setImageResource(R.drawable.person_image_empty);
+                view.mProfile.setImageResource(R.drawable.card_personphoto_default);
             }
 
             if (!ObjectUtils.isEmpty(entity.getName())) {

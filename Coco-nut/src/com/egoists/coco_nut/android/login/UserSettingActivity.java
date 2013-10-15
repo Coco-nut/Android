@@ -112,11 +112,11 @@ public class UserSettingActivity extends Activity {
     ///////////////////////////////////////////////////////
     
     void doUserUpdateByBaasio(String userName, String phone, String profileImgUuid) {
-        mDialog = ProgressDialog.show(mContext, "", "전화번호 업데이트 중", true);
+        mDialog = ProgressDialog.show(mContext, "", "업데이트 중", true);
         final BaasioUser user = Baas.io().getSignedInUser();
         
         if (userName != null && userName.length() != 0) {
-            user.setUsername(userName);
+            user.setName(userName);
         }
         if (phone != null && phone.length() != 0) {
             user.setProperty(Person.ENTITY_NAME_PHONE, phone);
