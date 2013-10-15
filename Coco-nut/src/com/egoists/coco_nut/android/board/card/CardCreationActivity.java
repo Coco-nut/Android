@@ -7,13 +7,13 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.DialogFactory;
@@ -26,6 +26,8 @@ import com.kth.baasio.callback.BaasioCallback;
 import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.group.BaasioGroup;
 import com.kth.baasio.exception.BaasioException;
+
+import de.greenrobot.event.EventBus;
 
 @EActivity(R.layout.activity_card_creation)
 public class CardCreationActivity extends Activity {
@@ -74,10 +76,8 @@ public class CardCreationActivity extends Activity {
     }
     
     void backToBoardTabActivity() {
-//        Intent intent = new Intent(getApplication(), 
-//                com.egoists.coco_nut.android.board.BoardTabActivity_.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
+        // BoadTabActivity가 카드를 다시 리로드
+        EventBus.getDefault().post(new ReloadEvent());
         this.finish();
     }
     
@@ -143,7 +143,6 @@ public class CardCreationActivity extends Activity {
                                         public void onResponse(BaasioEntity response) {
                                             mDialog.dismiss();
                                             if (response != null) {
-                                                backToBoardTabActivity();
                                                 DialogFactory
                                                     .createNoButton(CardCreationActivity.this,R.string.title_succeed, "")
                                                     .setPositiveButton(
@@ -155,10 +154,6 @@ public class CardCreationActivity extends Activity {
                                                                 })
                                                     .setCancelable(false)
                                                     .show();
-//                                                BaasioDialogFactory.createFinishButtonDialog(
-//                                                        CardCreationActivity.this, 
-//                                                        R.string.title_succeed, 
-//                                                        R.string.create_card_succeed).show();
                                             }
                                         }
                                     });

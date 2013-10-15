@@ -14,8 +14,8 @@ import android.widget.ListView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.adapter.CardListAdapter;
 import com.egoists.coco_nut.android.board.card.Card;
-import com.egoists.coco_nut.android.board.event.MyCardsEvent;
-import com.egoists.coco_nut.android.board.event.RequestMyCardsEvent;
+import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
+import com.egoists.coco_nut.android.board.event.TodoCardsEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -23,18 +23,17 @@ import com.googlecode.androidannotations.annotations.UiThread;
 import de.greenrobot.event.EventBus;
 
 @EFragment
-public class MyCardsFragment extends Fragment {
+public class ToDoFragment extends Fragment {
     private CardListAdapter mListAdapter;
-    private ArrayList<Card> mMyCards;
+    private ArrayList<Card> mTodoCards;
     Activity mContext;
     
     String mGroupUuid = null;
     
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AndLog.d("onCreateView");
-        // GROUP UUID 추출
-        View view = inflater.inflate(R.layout.fragment_my_cards, container, false);
         
+        View view = inflater.inflate(R.layout.fragment_my_cards, container, false);
         ListView list = (ListView)view.findViewById(R.id.list);  
         list.setAdapter(mListAdapter);
         
@@ -50,13 +49,13 @@ public class MyCardsFragment extends Fragment {
         EventBus.getDefault().register(this);
         
         // 카드 리스트
-        mMyCards = new ArrayList<Card>();
-        mListAdapter = new CardListAdapter(mContext, mMyCards);
+        mTodoCards = new ArrayList<Card>();
+        mListAdapter = new CardListAdapter(mContext, mTodoCards);
     }
-
+    
     @Override
     public void onDestroy() {
-        AndLog.d("Unegister");
+        AndLog.d("Unregister");
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -80,7 +79,7 @@ public class MyCardsFragment extends Fragment {
     
     // BoadTabActivity로부터 카드를 요청한다
     void requestCards() {
-        EventBus.getDefault().post(new RequestMyCardsEvent());
+        EventBus.getDefault().post(new RequestTodoCardsEvent());
     }
     
     /**
@@ -88,9 +87,9 @@ public class MyCardsFragment extends Fragment {
      * 리스트에 뿌려준다
      * @param event
      */
-    public void onEvent(MyCardsEvent event) {
+    public void onEvent(TodoCardsEvent event) {
         AndLog.d("Get event");
-        mMyCards = (ArrayList<Card>) event.myCards;
-        refreshCardList(mMyCards);
+        mTodoCards = (ArrayList<Card>) event.cards;
+        refreshCardList(mTodoCards);
     }
 }
