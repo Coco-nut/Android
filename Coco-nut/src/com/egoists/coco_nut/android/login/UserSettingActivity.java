@@ -1,6 +1,9 @@
 package com.egoists.coco_nut.android.login;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
@@ -8,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -17,9 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
-import com.egoists.coco_nut.android.util.MyAndroidInfo;
 import com.egoists.coco_nut.android.util.RoundedImage;
 import com.egoists.coco_nut.android.util.UniqueString;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -27,18 +31,19 @@ import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.kth.baasio.Baas;
 import com.kth.baasio.callback.BaasioUploadAsyncTask;
 import com.kth.baasio.callback.BaasioUploadCallback;
 import com.kth.baasio.entity.file.BaasioFile;
+import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 
 @EActivity(R.layout.activity_user_setting)
 public class UserSettingActivity extends Activity {
-
-    @ViewById
-    EditText edTxtUserSettingId;
     @ViewById
     EditText edTxtUserSettingName;
+    @ViewById
+    EditText edTxtUserSettingPhone;
     @ViewById
     EditText edTxtUserSettingPassword;
     @ViewById
@@ -59,36 +64,56 @@ public class UserSettingActivity extends Activity {
     @AfterViews
     void initUserSettingForm() {
         mContext = this;
-        edTxtUserSettingId.setText(MyAndroidInfo.getMyIdFromEmail(this));
+        
+        BaasioUser user = Baas.io().getSignedInUser(); 
+        edTxtUserSettingName.setText(user.getName());
+        edTxtUserSettingPhone.setText(user.getProperty(Person.ENTITY_NAME_PHONE).asText());
     }
     
     @UiThread
     void refreshMyIcon(Bitmap bitmap) {
-        RoundedImage roundedImg = new RoundedImage();
-        Bitmap bm = roundedImg.getRoundedShape(bitmap);
-        imgUserSettingPhoto.setImageBitmap(bm);
+        imgUserSettingPhoto.setImageBitmap(bitmap);
     }
     
     @Click(R.id.btnUserSetting)
-    void doUserSetting() {
-        String userId = edTxtUserSettingId.getText().toString();
-        String passwd = edTxtUserSettingPassword.getText().toString();
+    void doUpdateUser() {
         String userName = edTxtUserSettingName.getText().toString();
+        String phone = edTxtUserSettingPhone.getText().toString();
+        String passwd = edTxtUserSettingPassword.getText().toString();
         
-        if (userId == null || userId.length() == 0
-                || passwd == null || passwd.length() == 0
+        if (phone == null || phone.length() == 0
                 || userName == null || userName.length() == 0) {
-            AndLog.e("Empty Id or Password");
             BaasioDialogFactory.createErrorDialog(this, R.string.err_empty_login_form).show();
             return;
         }
         
-        // Passwd 체크
-        if (false == passwd.equals(edTxtUserSettingConfirmPassword.getText().toString())) {
-            AndLog.e("password is not equal.");
-            BaasioDialogFactory.createErrorDialog(mContext, R.string.error_equaled_password).show();
+        // 패쓰워드를 입력하면 수정됨
+        if (passwd != null && passwd.length() != 0) {
+            // Passwd 체크
+            if (false == passwd.equals(edTxtUserSettingConfirmPassword.getText().toString())) {
+                AndLog.e("password is not equal.");
+                BaasioDialogFactory.createErrorDialog(mContext, R.string.error_equaled_password).show();
+                return;
+            }
+        }
+        
+        if (mTempIconFile != null) {
+            // 사진 수정했으면 파일 업로드부터 수행
+            doUploadMyIconfileByBaasio();
             return;
         }
+//        doUpdateUserByBaasio();
+    }
+    
+    ///////////////////////////////////////////////////////
+    //  BaasIO 관련 통신 처리부
+    ///////////////////////////////////////////////////////
+    
+    void doUpdateUserByBaasio(String profileImgUrl) {
+        if (profileImgUrl != null) {
+            
+        }
+        
     }
     
 
@@ -96,9 +121,10 @@ public class UserSettingActivity extends Activity {
      * 사진 업로드는 회원 정보 수정에서...
      */
     void doUploadMyIconfileByBaasio() {
+        mDialog = ProgressDialog.show(mContext, "", "프로필 업데이트 중", true);
+        
         // TODO
         BaasioFile uploadFile = new BaasioFile();
-
         BaasioUploadAsyncTask mUploadFileAsyncTask = uploadFile.fileUploadInBackground(
                 mTempIconFile.getPath()             // 업로드하려는 파일 경로
                 , UniqueString.generate()           // 설정하려는 파일 이름
@@ -107,6 +133,8 @@ public class UserSettingActivity extends Activity {
                     @Override
                     public void onResponse(BaasioFile response) {
                         // 성공
+                        mDialog.dismiss();
+                        BaasioDialogFactory.createOneButtonDialog(mContext, R.string.title_succeed, response.getUuid().toString()).show();
                     }
 
                     @Override
@@ -116,7 +144,7 @@ public class UserSettingActivity extends Activity {
 
                     @Override
                     public void onException(BaasioException e) {
-                        // 실패
+                        mDialog.dismiss();
                         BaasioDialogFactory.createErrorDialog(mContext, e).show();
                     }
                 });
@@ -125,7 +153,7 @@ public class UserSettingActivity extends Activity {
     ////////////////////////////////////////////////////////////////////
     // 사진 관련
     ////////////////////////////////////////////////////////////////////
-    @Click(R.id.imgSignUpPhoto)
+    @Click(R.id.imgUserSettingPhoto)
     void getPicture() {
         Intent intent = new Intent(
                 Intent.ACTION_GET_CONTENT,      // 또는 ACTION_PICK
@@ -179,18 +207,42 @@ public class UserSettingActivity extends Activity {
         case REQ_CODE_PICK_IMAGE:
             if (resultCode == RESULT_OK) {
                 if (imageData != null) {
-                    String filePath = Environment.getExternalStorageDirectory()
-                            + "/temp.jpg";
+                    String filePath = Environment.getExternalStorageDirectory() + "/temp.jpg";
+                    AndLog.d("temp profile img : " + filePath);
  
-                    System.out.println("path" + filePath); // logCat으로 경로확인.
- 
+                    // 받은 파일을 변환하여 다시 임시파일에 쓴다
                     Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
-                    // temp.jpg파일을 Bitmap으로 디코딩한다.
-                    refreshMyIcon(selectedImage);
+                    RoundedImage roundedImg = new RoundedImage();
+                    Bitmap bitmap = roundedImg.getRoundedShape(selectedImage);
+                    
+                    ReWriteTempFile(bitmap);
                 }
             }
             break;
         }
     }
 
+    void ReWriteTempFile(Bitmap bitmap) {
+        // 다시 임시파일에 쓰기
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(CompressFormat.PNG, 0, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+        //write the bytes in file
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(mTempIconFile);
+            fos.write(bitmapdata);
+        } catch (IOException e) {
+        } finally {
+            try {
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+            }
+            
+        }
+        
+        refreshMyIcon(bitmap);
+    }
 }

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.group.SettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -180,7 +181,7 @@ public class LoginActivity extends Activity {
                     SettingActivity.LoginPref.savePreference(mId, mPasswd);    // 로그인 정보 저장
                 	
                 	// 사용자 폰번호가 없으면 업데이트한다
-                	JsonNode node = response.getProperty("phone");
+                	JsonNode node = response.getProperty(Person.ENTITY_NAME_PHONE);
                 	if (node == null || node.toString().length() == 0) {
                 	    doUserUpdateByBaasio(response);
                 	    return;

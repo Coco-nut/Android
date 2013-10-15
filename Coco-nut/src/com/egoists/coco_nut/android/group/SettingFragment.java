@@ -30,6 +30,16 @@ public class SettingFragment extends PreferenceFragment {
                     return false;
                 }
         });
+        
+        Preference profile = findPreference("profile");
+        
+        profile.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+                public boolean onPreferenceClick(Preference arg0){
+                    Intent i = new Intent(getActivity().getApplication(), com.egoists.coco_nut.android.login.UserSettingActivity_.class);
+                    startActivity(i);
+                    return false;
+                }
+        });
     }
 
 }
