@@ -18,8 +18,8 @@ public class RoundedImage {
      */
     public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
         
-        int targetWidth = 500;
-        int targetHeight = 500;
+        int targetWidth = 300;
+        int targetHeight = 300;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight,Bitmap.Config.ARGB_8888);
          
         Canvas canvas = new Canvas(targetBitmap);

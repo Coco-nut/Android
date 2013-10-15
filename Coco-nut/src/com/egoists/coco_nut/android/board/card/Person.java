@@ -12,6 +12,7 @@ import com.egoists.coco_nut.android.R;
 
 
 public class Person {
+    public static final String ENTITY_NAME_PICTURE    = "picture";      // 사진
     public static final String ENTITY_NAME_PHONE      = "phone";      // 휴대폰 번호
     
 	public String name;

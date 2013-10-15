@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.egoists.coco_nut.android.BaasioConfig;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.group.SettingActivity;
@@ -198,6 +199,8 @@ public class LoginActivity extends Activity {
         String phoneNum = MyAndroidInfo.getMyPhoneNumber(this).replace("+82", "0");
         
         mDialog = ProgressDialog.show(LoginActivity.this, "", "전화번호 업데이트 중", true);
+        String picture = "https://blob.baas.io/" + BaasioConfig.BAASIO_ID + "/" + BaasioConfig.APPLICATION_ID + "/files/4fd1a584-35bc-11e3-85fc-06f4fe0000b5";
+        user.setProperty(Person.ENTITY_NAME_PICTURE, picture);    //추가 정보
         user.setProperty("phone", phoneNum);    //추가 정보
         user.updateInBackground(mContext,
             new BaasioCallback<BaasioUser>() {
