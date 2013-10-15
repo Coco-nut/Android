@@ -63,6 +63,18 @@ public class DialogFactory {
         return dlg;
     }
     
+    /** One Button 퀵 다이얼로그 반환 **/
+    public static AlertDialog.Builder createFinishButtonDialog(final Activity con,  int titleRes, 
+            String messageStr, DialogInterface.OnClickListener onClickListener) {
+        
+        AlertDialog.Builder dlg = new AlertDialog.Builder(con);
+        dlg.setTitle(titleRes)
+        .setMessage(messageStr)
+        .setPositiveButton(R.string.title_confirm, onClickListener)
+        .setCancelable(false);
+        return dlg;
+    }
+    
     /** 버튼 없는 퀵 다이얼로그 반환 **/
     public static AlertDialog.Builder createNoButton(Context con, int titleRes, int messageRes) {
         

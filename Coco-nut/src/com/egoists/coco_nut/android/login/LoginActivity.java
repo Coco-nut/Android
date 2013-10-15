@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.BaasioConfig;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.board.event.SignupEvent;
 import com.egoists.coco_nut.android.group.SettingActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -33,6 +34,8 @@ import com.kth.baasio.callback.BaasioCallback;
 import com.kth.baasio.callback.BaasioSignInCallback;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
+
+import de.greenrobot.event.EventBus;
 
 @NoTitle
 @EActivity(R.layout.activity_login)
@@ -60,9 +63,22 @@ public class LoginActivity extends Activity {
 	void initLoginForm() {
 	    AndLog.setLevel(AndLog.TRACE);
 	    
+	    EventBus.getDefault().register(this);
 	    mContext = this;
 	    SettingActivity.LoginPref = new LoginPreference(mContext);
 	    waitAndPreLogin();
+	}
+	
+	@Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+	
+	// 회원가입이 완료되면 자동 로그인
+	public void onEvent(SignupEvent event) {
+	    edTxtLoginId.setText(event.id);
+	    edTxtLoginPassword.setText(event.passwd);
 	}
 	
 	@UiThread(delay=500)
@@ -75,7 +91,7 @@ public class LoginActivity extends Activity {
 	@Background
 	void doAutoLogin() {
 	    // 로그인 정보 가져오기
-	    SettingActivity.LoginPref.loadPreference();
+        SettingActivity.LoginPref.loadPreference();
         String id = SettingActivity.LoginPref.mId;
         String passwd = SettingActivity.LoginPref.mPasswd;
 
@@ -124,7 +140,6 @@ public class LoginActivity extends Activity {
 		fadeIn.setFillAfter(true);
 		fadeIn.setDuration(2000);
 		layLoginForm.startAnimation(fadeIn);
-		edTxtLoginId.setText(MyAndroidInfo.getMyIdFromEmail(this));
 	}
 	
 	@Click(R.id.txtSignup)

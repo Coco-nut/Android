@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.BaasioConfig;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.RoundedImage;
@@ -66,10 +67,17 @@ public class UserSettingActivity extends Activity {
     @AfterViews
     void initUserSettingForm() {
         mContext = this;
+        ImageFetcher imageFetcher = new ImageFetcher(mContext);
         
         BaasioUser user = Baas.io().getSignedInUser(); 
         edTxtUserSettingName.setText(user.getName());
         edTxtUserSettingPhone.setText(user.getProperty(Person.ENTITY_NAME_PHONE).asText());
+        String imageUrl = user.getPicture();
+        if (imageUrl != null) {
+            imageFetcher.loadImage(imageUrl, imgUserSettingPhoto, R.drawable.ic_group_templete_9);
+        } else {
+            imgUserSettingPhoto.setImageResource(R.drawable.ic_group_templete_0);
+        }
     }
     
     @UiThread

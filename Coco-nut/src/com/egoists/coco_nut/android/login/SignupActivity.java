@@ -3,10 +3,12 @@ package com.egoists.coco_nut.android.login;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.event.SignupEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.MyAndroidInfo;
@@ -18,6 +20,8 @@ import com.googlecode.androidannotations.annotations.ViewById;
 import com.kth.baasio.callback.BaasioSignUpCallback;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
+
+import de.greenrobot.event.EventBus;
 
 @NoTitle
 @EActivity(R.layout.activity_signup)
@@ -68,7 +72,7 @@ public class SignupActivity extends Activity {
     }
         
     // BAAS.IO SDK를 이용한 회원가입
-    void doSignUpByBaasio(String userId, String name, String passwd) {
+    void doSignUpByBaasio(final String userId, String name, final String passwd) {
         String email = MyAndroidInfo.getMyEmail(this);
         
         mDialog = ProgressDialog.show(SignupActivity.this, "", "회원 가입중", true);
@@ -93,9 +97,20 @@ public class SignupActivity extends Activity {
                     AndLog.d("Succeed : Sign Up");
                     String signupSucceedMessage = mContext.getResources().getString(R.string.signup_succeed);
                     signupSucceedMessage = signupSucceedMessage.replace("@userid", response.getName());
-                    BaasioDialogFactory.createFinishButtonDialog(SignupActivity.this, R.string.title_succeed, signupSucceedMessage).show();
+                    BaasioDialogFactory.createFinishButtonDialog(SignupActivity.this, R.string.title_succeed, 
+                            signupSucceedMessage, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            backToLoginActivity(userId, passwd);
+                        }
+                    }).show();
+                    
                 }
             }
         });
+    }
+    
+    void backToLoginActivity(String userId, String passwd) {
+        EventBus.getDefault().post(new SignupEvent(userId, passwd));
+        this.finish();
     }
 }

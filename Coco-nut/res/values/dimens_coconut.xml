@@ -14,4 +14,6 @@
     <dimen name="card_title_size">20dp</dimen>
     <dimen name="card_subtitle_size">12dp</dimen>
     
+    <dimen name="user_list_font_size">14sp</dimen>
+    
 </resources>

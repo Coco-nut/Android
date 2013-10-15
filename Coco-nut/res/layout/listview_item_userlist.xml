@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/imageProfile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@color/userlist_bg"
         />
 
@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:textSize="10sp"
+            android:textSize="@dimen/user_list_font_size"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/textUserPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:textSize="10sp" />
+            android:textSize="@dimen/user_list_font_size" />
     </LinearLayout>
 
 </LinearLayout>
