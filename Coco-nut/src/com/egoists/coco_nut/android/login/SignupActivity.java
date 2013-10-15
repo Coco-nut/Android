@@ -32,16 +32,17 @@ public class SignupActivity extends Activity {
     EditText edTxtSignUpConfirmPassword;
     @ViewById
     TextView txtSignUpMessage;
-    
+        
     private Context mContext;
     private ProgressDialog mDialog;
-        
+    
+    
     @AfterViews
     void initSignupForm() {
         mContext = this;
         edTxtSignUpId.setText(MyAndroidInfo.getMyIdFromEmail(this));
     }
-    
+        
     @Click(R.id.btnSignUp)
     void doSignUp() {
         String userId = edTxtSignUpId.getText().toString();
@@ -65,12 +66,12 @@ public class SignupActivity extends Activity {
         
         doSignUpByBaasio(userId, userName, passwd);
     }
-    
+        
     // BAAS.IO SDK를 이용한 회원가입
     void doSignUpByBaasio(String userId, String name, String passwd) {
         String email = MyAndroidInfo.getMyEmail(this);
-        mDialog = ProgressDialog.show(SignupActivity.this, "", "회원 가입중", true);
         
+        mDialog = ProgressDialog.show(SignupActivity.this, "", "회원 가입중", true);
         BaasioUser.signUpInBackground(userId, name, email, passwd, new BaasioSignUpCallback() {
             @Override
             public void onException(BaasioException e) {

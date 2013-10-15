@@ -11,19 +11,19 @@
         android:orientation="vertical"
         android:layout_marginTop="30dp" >
         <ImageView
-            android:id="@+id/imgSignUpPhoto"
+            android:id="@+id/imgUserSettingPhoto"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/ic_group_templete_0" />
         <!-- 안내 메시지 -->
         <TextView
-            android:id="@+id/txtSignUpMessage"
+            android:id="@+id/txtUserSettingMessage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/font_common_coconut"
             android:textSize="@dimen/login_font_size"
             android:textStyle="normal|italic"
-            android:text="@string/signup_message"
+            android:text="@string/user_setting_message"
             android:paddingTop="10dp"
             android:gravity="center"
             android:visibility="visible" />    
@@ -44,7 +44,7 @@
             android:orientation="horizontal" >
 
             <EditText
-                android:id="@+id/edTxtSignUpId"
+                android:id="@+id/edTxtUserSettingId"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -62,7 +62,7 @@
             android:orientation="horizontal" >
 
             <EditText
-                android:id="@+id/edTxtSignUpName"
+                android:id="@+id/edTxtUserSettingName"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -80,7 +80,7 @@
             android:orientation="horizontal" >
             
             <EditText
-                android:id="@+id/edTxtSignUpPassword"
+                android:id="@+id/edTxtUserSettingPassword"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -98,7 +98,7 @@
             android:layout_marginBottom="20dp" >
             
             <EditText
-                android:id="@+id/edTxtSignUpConfirmPassword"
+                android:id="@+id/edTxtUserSettingConfirmPassword"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -110,10 +110,10 @@
         
         <!-- 회원가입 -->
         <Button
-            android:id="@+id/btnSignUp"
+            android:id="@+id/btnUserSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/signup"
+            android:text="@string/user_setting"
             android:layout_marginBottom="10dp"
             />
         

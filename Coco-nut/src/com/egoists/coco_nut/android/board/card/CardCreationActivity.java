@@ -41,7 +41,6 @@ public class CardCreationActivity extends Activity {
     RatingBar ratingCreateCard;
         
     public static final String RELATION_NAME          = "group_card";
-    public static final String ENTITY_VAL_STATE_TODO       = "todo";       // 카드의 기본 상태는 todo 이다
     
     private int mCardRating = 0;    // 중요도 (기본 0)
     
@@ -112,8 +111,12 @@ public class CardCreationActivity extends Activity {
             entity.setProperty(Card.ENTITY_NAME_SUBTITLE, subTitle);
         }
         
-        entity.setProperty(Card.ENTITY_NAME_RATING, mCardRating);            // 중요도
-        entity.setProperty(Card.ENTITY_NAME_STATE, ENTITY_VAL_STATE_TODO);   // 상태
+        // TODO 카드 레이블 선택
+        entity.setProperty(Card.ENTITY_NAME_LABEL, 0);
+        // TODO 카드 레이블 선택
+        
+        entity.setProperty(Card.ENTITY_NAME_RATING, mCardRating);              // 중요도
+        entity.setProperty(Card.ENTITY_NAME_STATE, Card.ENTITY_VALUE_STATE);   // 기본 상태 : todo
         
         entity.saveInBackground(new BaasioCallback<BaasioEntity>() {
                     @Override

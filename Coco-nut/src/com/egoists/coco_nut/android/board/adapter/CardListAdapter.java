@@ -2,26 +2,28 @@ package com.egoists.coco_nut.android.board.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.codehaus.jackson.JsonNode;
+import java.util.Random;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.util.AndLog;
+import com.egoists.coco_nut.android.util.ColorChip;
 import com.egoists.coco_nut.android.util.DateConverter;
-import com.kth.baasio.entity.entity.BaasioEntity;
-import com.kth.baasio.utils.ObjectUtils;
 
 public class CardListAdapter extends BaseAdapter {
 //    private Activity mActivity;
+    // TODO
+    Random oRandom = new Random();
     
     private Context mContext;
     private LayoutInflater mInflater;
@@ -70,6 +72,9 @@ public class CardListAdapter extends BaseAdapter {
             view.mSubTitle = (TextView)convertView.findViewById(R.id.txtCardListSubTitle);
             view.mRatingBar = (RatingBar)convertView.findViewById(R.id.ratingListCard);
             view.mDate = (TextView)convertView.findViewById(R.id.txtCardListDueTo);
+            view.mCategory = (TextView)convertView.findViewById(R.id.viewCategory);
+            view.mParticipant = (LinearLayout)convertView.findViewById(R.id.layoutCardListParticipant);
+            
             
             if (view != null) {
                 convertView.setTag(view);
@@ -87,6 +92,12 @@ public class CardListAdapter extends BaseAdapter {
             
             view.mRatingBar.setRating(card.importance);
             view.mDate.setText(DateConverter.getStringTime(DateConverter.getCurrentGmcTime()));
+            view.mCategory.setBackgroundColor(ColorChip.getColor(oRandom.nextInt(10)));
+            view.mParticipant.removeAllViews();
+            for (Person person : card.participants) {
+                view.mParticipant.addView(person.getImageView(mContext));
+            }
+            
         }
         return convertView;
     }

@@ -5,14 +5,18 @@ import java.util.Calendar;
 
 import com.egoists.coco_nut.android.kanban.card.Checkbox;
 import com.egoists.coco_nut.android.kanban.card.Comment;
-import com.egoists.coco_nut.android.kanban.card.Person;
 
 public class Card {
     public static final String ENTITY                 = "card";
     public static final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
     public static final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목
-    public static final String ENTITY_NAME_RATING     = "rating";     // 중요도
+    public static final String ENTITY_NAME_DISCRIPTION = "description";  // 상세 설명 
+    public static final String ENTITY_NAME_RATING     = "importance"; // 중요도
     public static final String ENTITY_NAME_STATE      = "state";      // 카드 상태
+    public static final String ENTITY_NAME_LABEL      = "label";      // 카드 레이블
+    public static final String ENTITY_NAME_PARTY      = "participants";      // 참여자
+    public static final int ENTITY_VALUE_STATE        = 0;            // 0:todo, 1:doing, 2:done
+    
     
     public String title;
     public String sub_title;
@@ -131,25 +135,25 @@ public class Card {
         if (enddate != null) return enddate;
         else return expectedenddate;
     }
-    public void toggleCheckbox(int index)
-    {
-        checkboxes.get(index).ischecked = !checkboxes.get(index).ischecked;
-        //TODO: report change to server
-    }
-    public void writeComment(Person writer, String content)
-    {
-        comments.add(new Comment(writer, content));
-        //TODO: report change to server
-    }
-    public void editComment(int index, String content)
-    {
-        comments.get(index).content = content;
-        //TODO: report change to server
-    }
-    public void deleteComment(int index)
-    {
-        comments.remove(index);
-        //TODO: report change to server
-    }
+//    public void toggleCheckbox(int index)
+//    {
+//        checkboxes.get(index).ischecked = !checkboxes.get(index).ischecked;
+//        //TODO: report change to server
+//    }
+//    public void writeComment(Person writer, String content)
+//    {
+//        comments.add(new Comment(writer, content));
+//        //TODO: report change to server
+//    }
+//    public void editComment(int index, String content)
+//    {
+//        comments.get(index).content = content;
+//        //TODO: report change to server
+//    }
+//    public void deleteComment(int index)
+//    {
+//        comments.remove(index);
+//        //TODO: report change to server
+//    }
 
 }

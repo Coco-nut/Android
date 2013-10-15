@@ -30,8 +30,11 @@
     <string name="signup">회원가입</string>
     <string name="signup_require">아직 회원이 아니신가요?</string>
     <string name="signup_with_underline"><u>회원가입</u></string>
-    <string name="signup_message">코코넛의 회원가입을 환영합니다.\n회원님의 이메일 주소, 핸드폰 번호가 서버에 저장합니다.</string>
+    <string name="signup_message">코코넛의 회원가입을 환영합니다\n회원님의 이메일 주소, 핸드폰 번호가 서버에 저장됩니다</string>
     <string name="signup_succeed">회원가입에 성공하였습니다, @userid 님</string>
+    
+    <string name="user_setting">정보수정</string>
+    <string name="user_setting_message"><b>아이콘을 터치하여 사진을 등록하세요</b></string>
     
     <string name="create_group">그룹 이름을 입력해 주세요</string>
     <string name="create_group_select">그룹 템플릿을 선택해 주세요</string>

@@ -59,7 +59,6 @@ public class GroupSelectionFragment extends Fragment {
 	        txtFragGroupName.setText("그룹 생성");
 	        imgGroupSelection.setImageResource(mImages[MAX_GROUP_TEMPLETE-1]);
 	        txtFragGroupMembers.setText("그룹을 새로 생성합니다");
-	        // 이미지를 클릭하면 해당 그룹의 칸반으로 이동
 	        imgGroupSelection.setOnClickListener(new View.OnClickListener() {
 	                @Override
 	                public void onClick(View v) {

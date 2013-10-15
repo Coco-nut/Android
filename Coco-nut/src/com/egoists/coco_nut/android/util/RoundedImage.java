@@ -1,9 +1,15 @@
 package com.egoists.coco_nut.android.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.MediaStore.Images;
 
 public class RoundedImage {
 
@@ -12,8 +18,8 @@ public class RoundedImage {
      */
     public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
         
-        int targetWidth = 50;
-        int targetHeight = 50;
+        int targetWidth = 500;
+        int targetHeight = 500;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth, targetHeight,Bitmap.Config.ARGB_8888);
          
         Canvas canvas = new Canvas(targetBitmap);
@@ -32,5 +38,18 @@ public class RoundedImage {
                         targetHeight), null);
         return targetBitmap;
     }
-
+    
+    public Bitmap getRoundedShape(ContentResolver con, Uri uri) {
+        Bitmap bm = null;
+        try {
+            bm = Images.Media.getBitmap(con, uri);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return getRoundedShape(bm);
+    }
 }

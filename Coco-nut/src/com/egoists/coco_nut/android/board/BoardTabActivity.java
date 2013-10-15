@@ -36,8 +36,10 @@ import com.kth.baasio.callback.BaasioQueryCallback;
 import com.kth.baasio.entity.BaasioBaseEntity;
 import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.group.BaasioGroup;
+import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.exception.BaasioException;
 import com.kth.baasio.query.BaasioQuery;
+import com.kth.baasio.query.BaasioQuery.ORDER_BY;
 
 import de.greenrobot.event.EventBus;
 
@@ -51,6 +53,8 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     private ProgressDialog mDialog;
     
     public List<Card> mCards;    // 그룹의 가져온 카드
+   
+    private List<BaasioUser> mUsers;
     
     private final String RELATION_NAME          = "group_card";
     public static final String ARG_GROUP_UUID   = "group_uuid";
@@ -105,8 +109,8 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         
         mCards = new ArrayList<Card>();
         
-        // 그룹의 모든 카드를 가져옵니다.
-        getGroupCardsByBaasio();
+        // 그룹의 사용자 획득
+        getGroupUsersByBaasio();
     }
     
     @Override
@@ -168,7 +172,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
      */
     void dispatchGroupCardsToFragments(List<BaasioEntity> bassioCards) {
         Cards cardManager = new Cards();
-        mCards = cardManager.toCardArray(bassioCards);
+        mCards = cardManager.toCardArray(getResources(), bassioCards, mUsers);
         
         EventBus.getDefault().post(new MyCardsEvent(mCards));
         EventBus.getDefault().post(new TodoCardsEvent(mCards));
@@ -179,11 +183,38 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     ///////////////////////////////////////////////////////
     
     /**
+     * 해당 그룹의 사용자 추출
+     * @param groupUuid
+     */
+    void getGroupUsersByBaasio() {
+        mDialog = ProgressDialog.show(mContext, "", "카드 가져오는 중", true);
+        AndLog.d("Getting group users ... ");
+        // 쿼리 전송
+        BaasioQuery query = new BaasioQuery();
+        query.setRawString("groups/" + mExtraGroupUuid + "/users");
+        query.setOrderBy(BaasioBaseEntity.PROPERTY_MODIFIED, ORDER_BY.DESCENDING);
+        query.queryInBackground(new BaasioQueryCallback() { // 질의 요청
+
+            @Override
+            public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
+                mUsers = BaasioBaseEntity.toType(entities, BaasioUser.class);
+                // 그룹의 모든 카드 획득
+                getGroupCardsByBaasio();
+            }
+
+            @Override
+            public void onException(BaasioException e) {
+                mDialog.dismiss();
+                AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+            }
+        });
+    }
+    
+    /**
      * 해당 그룹의 카드 리스트 추출
      * @param groupUuid
      */
     void getGroupCardsByBaasio() {
-        mDialog = ProgressDialog.show(mContext, "", "카드 가져오는 중", true);
         BaasioGroup group = new BaasioGroup();
         group.setUuid(UUID.fromString(mExtraGroupUuid));
         BaasioQuery query = new BaasioQuery();
