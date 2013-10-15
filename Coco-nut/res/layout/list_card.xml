@@ -21,7 +21,7 @@
         android:orientation="vertical" 
         >
         <!-- 카드 제목 부 -->
-        <LinearLayout
+        <RelativeLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="5dp" >
@@ -37,19 +37,22 @@
                 android:id="@+id/txtCardListSubTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtCardListTitle"
+                android:layout_alignBottom="@id/txtCardListTitle"
                 android:paddingRight="10dp"
                 android:textSize="@dimen/card_subtitle_size"
                 android:text="창덕궁" />
-
             <RatingBar
                 android:id="@+id/ratingListCard"
                 style="@style/RatingBarSmallcoconut_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txtCardListSubTitle"
+                android:layout_alignBottom="@id/txtCardListTitle"
                 android:isIndicator="true"
                 android:numStars="5" />
 
-	    </LinearLayout>
+	    </RelativeLayout>
 	    <!-- 시간, 댓글, 체크 리스트 부 -->
 	    <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +68,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:textSize="@dimen/card_subtitle_size"
-                android:text="~09:00 AM 2013/09/12/THU" />
+                android:text="~" />
+            <TextView
+                android:id="@+id/txtCardListDueTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/card_subtitle_size"
+                android:text="09:00 AM 2013/09/12/THU" />
         </LinearLayout>
         <!-- 참가자 -->
         <LinearLayout

@@ -2,10 +2,8 @@ package com.egoists.coco_nut.android.board;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,23 +13,17 @@ import android.widget.ListView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.adapter.CardListAdapter;
+import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.event.MyCardsEvent;
 import com.egoists.coco_nut.android.util.AndLog;
-import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
-import com.kth.baasio.callback.BaasioQueryCallback;
-import com.kth.baasio.entity.BaasioBaseEntity;
-import com.kth.baasio.entity.entity.BaasioEntity;
-import com.kth.baasio.entity.group.BaasioGroup;
-import com.kth.baasio.exception.BaasioException;
-import com.kth.baasio.query.BaasioQuery;
+
+import de.greenrobot.event.EventBus;
 
 @EFragment
 public class MyCardsFragment extends Fragment {
-    private ProgressDialog mDialog;
-    private final String RELATION_NAME          = "group_card";
-    
     private CardListAdapter mListAdapter;
     Activity mContext;
     
@@ -49,59 +41,42 @@ public class MyCardsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_cards, container, false);
         
         // 카드 리스트
-        mListAdapter = new CardListAdapter(mContext, new ArrayList<BaasioEntity>());
+        mListAdapter = new CardListAdapter(mContext, new ArrayList<Card>());
         ListView list = (ListView)view.findViewById(R.id.list);  
         list.setAdapter(mListAdapter);
         
         return view;
     }
     
-    // 호출한 Activity와의 통신을 위함
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+    
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = activity;
     }
-
-    @AfterViews
-    void calledAfterViewInjection() {
-        getMyCardsByBaasio(mGroupUuid);
-    }
     
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+        
     @UiThread
-    void refreshCardList(List<BaasioEntity> cards) {
+    void refreshCardList(List<Card> cards) {
         mListAdapter.update(cards);
     }
     
     /**
-     * 해당 그룹의 카드 리스트 추출
-     * @param groupUuid
+     * EventBus로 부터 카드 획득
+     * 리스트에 뿌려준다
+     * @param event
      */
-    void getMyCardsByBaasio(String groupUuid) {
-        mDialog = ProgressDialog.show(mContext, "", "카드 가져오는 중", true);
-        BaasioGroup group = new BaasioGroup();
-        group.setUuid(UUID.fromString(groupUuid));
-        BaasioQuery query = new BaasioQuery();
-        query.setRelation(
-                group               // 그룹
-                , RELATION_NAME);   // 관계 카드
-
-        query.queryInBackground(new BaasioQueryCallback() {
-
-            @Override
-            public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
-                mDialog.dismiss();
-                // 성공
-                List<BaasioEntity> cards = BaasioBaseEntity.toType(entities, BaasioEntity.class);
-                
-                refreshCardList(cards);
-            }
-
-            @Override
-            public void onException(BaasioException e) {
-                mDialog.dismiss();
-                BaasioDialogFactory.createErrorDialog(mContext, e).show();
-            }
-        });
+    public void onEvent(MyCardsEvent event) {
+        refreshCardList(event.myCards);
     }
 }

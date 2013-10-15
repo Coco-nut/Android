@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.group.GroupSelectionActivity_;
+import com.egoists.coco_nut.android.group.GroupSelectionActivity;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EFragment;
@@ -55,7 +55,7 @@ public class GroupSelectionFragment extends Fragment {
 	    final String groupName = bundle.getString(ARG_GROUP_NAME);
 	    
 	    // 실제 그룹 정보가 아닌 그룹 생성 정보를 표시한다.
-	    if (groupName.equals(GroupSelectionActivity_.DUMMY_GROUP_TITLE)) {
+	    if (groupName.equals(GroupSelectionActivity.DUMMY_GROUP_TITLE)) {
 	        txtFragGroupName.setText("그룹 생성");
 	        imgGroupSelection.setImageResource(mImages[MAX_GROUP_TEMPLETE-1]);
 	        txtFragGroupMembers.setText("그룹을 새로 생성합니다");
@@ -63,7 +63,7 @@ public class GroupSelectionFragment extends Fragment {
 	        imgGroupSelection.setOnClickListener(new View.OnClickListener() {
 	                @Override
 	                public void onClick(View v) {
-	                    ((GroupSelectionActivity_)mContext).createNewGroup();
+	                    ((GroupSelectionActivity)mContext).createNewGroup();
 	                }
 	        });
 	        return;

@@ -39,11 +39,6 @@ public class CardCreationActivity extends Activity {
     RatingBar ratingCreateCard;
         
     public static final String RELATION_NAME          = "group_card";
-    public static final String ENTITY                 = "card";
-    public static final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
-    public static final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목
-    public static final String ENTITY_NAME_RATING     = "rating";     // 중요도
-    public static final String ENTITY_NAME_STATE      = "state";      // 카드 상태
     public static final String ENTITY_VAL_STATE_TODO       = "todo";       // 카드의 기본 상태는 todo 이다
     
     private int mCardRating = 0;    // 중요도 (기본 0)
@@ -109,16 +104,16 @@ public class CardCreationActivity extends Activity {
     void createCardByBassio(String title, String subTitle, String category) {
         mDialog = ProgressDialog.show(CardCreationActivity.this, "", "카드 생성 중", true);
         
-        BaasioEntity entity = new BaasioEntity(ENTITY);         // "card" entity
-        entity.setProperty(ENTITY_NAME_TITLE, title);           // 카드 제목 (필수)
+        BaasioEntity entity = new BaasioEntity(Card.ENTITY);         // "card" entity
+        entity.setProperty(Card.ENTITY_NAME_TITLE, title);           // 카드 제목 (필수)
         
         if (subTitle != null && subTitle.length() > 0) {
             // 부제목
-            entity.setProperty(ENTITY_NAME_SUBTITLE, subTitle);
+            entity.setProperty(Card.ENTITY_NAME_SUBTITLE, subTitle);
         }
         
-        entity.setProperty(ENTITY_NAME_RATING, mCardRating);            // 중요도
-        entity.setProperty(ENTITY_NAME_STATE, ENTITY_VAL_STATE_TODO);   // 상태
+        entity.setProperty(Card.ENTITY_NAME_RATING, mCardRating);            // 중요도
+        entity.setProperty(Card.ENTITY_NAME_STATE, ENTITY_VAL_STATE_TODO);   // 상태
         
         entity.saveInBackground(new BaasioCallback<BaasioEntity>() {
                     @Override

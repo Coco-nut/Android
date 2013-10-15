@@ -1,8 +1,13 @@
 package com.egoists.coco_nut.android.board;
 
+import java.util.List;
+import java.util.UUID;
+
 import android.app.ActionBar;
 import android.app.ActionBar.TabListener;
+import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,10 +19,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.Cards;
+import com.egoists.coco_nut.android.board.event.MyCardsEvent;
+import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.kth.baasio.callback.BaasioQueryCallback;
+import com.kth.baasio.entity.BaasioBaseEntity;
+import com.kth.baasio.entity.entity.BaasioEntity;
+import com.kth.baasio.entity.group.BaasioGroup;
+import com.kth.baasio.exception.BaasioException;
+import com.kth.baasio.query.BaasioQuery;
+
+import de.greenrobot.event.EventBus;
 
 @EActivity(R.layout.activity_kanban)
 public class BoardTabActivity extends FragmentActivity implements TabListener {
@@ -25,7 +42,12 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     String mExtraGroupUuid;
     @ViewById(R.id.pager_kanban)
     ViewPager mViewPager;
+    Activity mContext;
+    private ProgressDialog mDialog;
+    // 등록된 Fragments
+    MyCardsFragment mMyCardsFragment;
     
+    private final String RELATION_NAME          = "group_card";
     public static final String ARG_GROUP_UUID      = "group_uuid";
     
     /**
@@ -36,6 +58,8 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     
     @AfterViews
     void initViewPager() {
+        mContext = this;
+        
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -69,6 +93,9 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                     .setText(mSectionsPagerAdapter.getPageTitle(i))
                     .setTabListener(this));
         }
+        
+        // 그룹의 모든 카드를 가져옵니다.
+        getGroupCardsByBaasio();
     }
     
     @Override
@@ -130,23 +157,24 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
             // NOTE : AndroidAnnotation을 사용한 Fragments 는 끝에 '_' 처리.
             switch (position) {
             case 0:
-                Fragment myCardFragment = new MyCardsFragment_();
-                
-                // 그룹 UUID 삽입
-                Bundle args = new Bundle();
-                args.putString(ARG_GROUP_UUID, mExtraGroupUuid);
-                myCardFragment.setArguments(args);
-                
-                return myCardFragment;
+                mMyCardsFragment = new MyCardsFragment_();
+                return mMyCardsFragment;
+            case 1:
+                return new Fragment();
+            case 2:
+                return new Fragment();
+            case 3:
+                return new Fragment();
+            case 4:
             default:
-                return new MyCardsFragment_();
+                return new Fragment();
             }
         }
 
         @Override
         public int getCount() {
             // Show 5 total pages.
-            return 1;
+            return 5;
         }
 
         @Override
@@ -165,6 +193,48 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
             }
             return null;
         }
+    }
+    
+    /**
+     * 카드를 분류하여 각 프레그먼트로 보낸다
+     */
+    void dispatchGroupCardsToFragments(List<BaasioEntity> bassioCards) {
+        Cards cardManager = new Cards();
+        List<Card> cards = cardManager.toCardArray(bassioCards);
+        
+        // 내 카드 이벤트 전송
+        EventBus.getDefault().post(new MyCardsEvent(cards));
+    }
+    
+    /**
+     * 해당 그룹의 카드 리스트 추출
+     * @param groupUuid
+     */
+    void getGroupCardsByBaasio() {
+        mDialog = ProgressDialog.show(mContext, "", "카드 가져오는 중", true);
+        BaasioGroup group = new BaasioGroup();
+        group.setUuid(UUID.fromString(mExtraGroupUuid));
+        BaasioQuery query = new BaasioQuery();
+        query.setRelation(
+                group               // 그룹
+                , RELATION_NAME);   // 관계 카드
+
+        query.queryInBackground(new BaasioQueryCallback() {
+
+            @Override
+            public void onResponse(List<BaasioBaseEntity> entities, List<Object> list, BaasioQuery query, long timestamp) {
+                mDialog.dismiss();
+                // 성공
+                List<BaasioEntity> cards = BaasioBaseEntity.toType(entities, BaasioEntity.class);
+                dispatchGroupCardsToFragments(cards);
+            }
+
+            @Override
+            public void onException(BaasioException e) {
+                mDialog.dismiss();
+                BaasioDialogFactory.createErrorDialog(mContext, e).show();
+            }
+        });
     }
 
 }
