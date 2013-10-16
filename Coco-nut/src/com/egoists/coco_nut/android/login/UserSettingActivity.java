@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,6 +16,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,6 +72,11 @@ public class UserSettingActivity extends Activity {
         mContext = this;
         ImageFetcher imageFetcher = new ImageFetcher(mContext);
         
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("설정");
+        actionBar.setSubtitle("내 프로필");
+        
         BaasioUser user = Baas.io().getSignedInUser(); 
         edTxtUserSettingName.setText(user.getName());
         edTxtUserSettingPhone.setText(user.getProperty(Person.ENTITY_NAME_PHONE).asText());
@@ -78,6 +86,22 @@ public class UserSettingActivity extends Activity {
         } else {
             imgUserSettingPhoto.setImageResource(R.drawable.ic_group_templete_0);
         }
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.only_back_coconut, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
     
     @UiThread
@@ -151,7 +175,8 @@ public class UserSettingActivity extends Activity {
                         BaasioPreferences.setUserString(mContext, user.toString());
                         Baas.io().setSignedInUser(user);
                         
-                        BaasioDialogFactory.createOneButtonDialog(mContext, R.string.title_succeed, response.getUuid().toString()).show();
+                        BaasioDialogFactory.createFinishButtonDialog(UserSettingActivity.this, 
+                                R.string.title_succeed, "회원 정보가 수정되었습니다").show();
                     }
                 }
             });

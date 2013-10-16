@@ -86,6 +86,7 @@ public class GroupSelectionFragment extends Fragment {
                     Intent intent = new Intent(mContext, 
                             com.egoists.coco_nut.android.board.BoardTabActivity_.class);
                     intent.putExtra(ARG_GROUP_UUID, groupUuid);
+                    intent.putExtra(ARG_GROUP_NAME, groupName);
                     startActivity(intent);
                 }
 	    });

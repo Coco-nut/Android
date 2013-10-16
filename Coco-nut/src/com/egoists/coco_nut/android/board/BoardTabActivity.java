@@ -45,6 +45,8 @@ import de.greenrobot.event.EventBus;
 
 @EActivity(R.layout.activity_kanban)
 public class BoardTabActivity extends FragmentActivity implements TabListener {
+    @Extra("group_name")
+    String mExtraGroupName;
     @Extra("group_uuid")
     String mExtraGroupUuid;
     @ViewById(R.id.pager_kanban)
@@ -74,6 +76,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setTitle(mExtraGroupName);
         
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
@@ -151,7 +154,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     ///////////////////////////////////////////////////////
     //  EventBus 관련 이벤트 처리부
     ///////////////////////////////////////////////////////
-
+    
     // 서버로부터 다시 카드를 받는다
     public void onEvent(ReloadEvent event) {
         getGroupCardsByBaasio();

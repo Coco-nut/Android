@@ -1,5 +1,6 @@
 package com.egoists.coco_nut.android.group;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ public class SettingActivity extends Activity {
         getMenuInflater().inflate(R.menu.only_back_coconut, menu);
         return true;
     }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -25,10 +27,15 @@ public class SettingActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         
+        
+        final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("설정");
+        
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                        new SettingFragment()).commit();
     }
