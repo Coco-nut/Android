@@ -3,7 +3,6 @@ package com.egoists.coco_nut.android.board.card;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
