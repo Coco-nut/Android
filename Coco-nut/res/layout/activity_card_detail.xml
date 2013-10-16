@@ -10,5 +10,185 @@
 	        android:layout_height="fill_parent"
 	        android:orientation="vertical"
 	        >
+			<LinearLayout
+			    android:id="@+id/card_detail_header"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/white_coconut"
+			    android:minHeight="60dp"
+			    android:orientation="horizontal" >
+			    <LinearLayout
+			        android:layout_width="0dp"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1"
+			        android:layout_margin="10dp"
+			        android:background="@color/white_coconut"
+			        android:orientation="vertical" 
+			        >
+			        <!-- 카드 제목 부 -->
+			        <RelativeLayout
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginBottom="5dp" >
+				        <TextView
+				            android:id="@+id/card_detail_header_txtCardListTitle"
+				            android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:paddingRight="10dp"
+			                android:textSize="@dimen/card_title_size"
+			                android:textStyle="bold"
+			                android:text="고궁 답사" />
+				        <TextView
+			                android:id="@+id/card_detail_header_txtCardListSubTitle"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_toRightOf="@id/card_detail_header_txtCardListTitle"
+			                android:layout_alignBottom="@id/card_detail_header_txtCardListTitle"
+			                android:paddingRight="10dp"
+			                android:textSize="@dimen/card_subtitle_size"
+			                android:text="창덕궁" />
+			
+				    </RelativeLayout>
+				    <!-- 시간, 댓글, 체크 리스트 부 -->
+				    <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="5dp"
+			            android:gravity="center_vertical" >
+			            <ImageView 
+			                android:layout_width="20dp"
+			                android:layout_height="20dp"
+			                android:src="@drawable/ic_clock_coconut"/>
+			            <TextView
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="5dp"
+			                android:textSize="@dimen/card_subtitle_size"
+			                android:text="~" />
+			            <TextView
+			                android:id="@+id/card_detail_header_txtCardListDueTo"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="5dp"
+			                android:textSize="@dimen/card_subtitle_size"
+			                android:text="09:00 AM 2013/09/12/THU" />
+			        </LinearLayout>
+			    </LinearLayout>
+			</LinearLayout>
+			<!--  내용 -->
+
+		   <TextView
+		       android:layout_width="match_parent"
+		       android:layout_height="wrap_content"
+			   android:background="@color/white_coconut"
+		       android:paddingLeft="15dp"
+		       android:paddingRight="30dp"
+		       android:text="상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용
+		       상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용
+		       상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용상세내용"
+		       android:textSize="@dimen/card_subtitle_size" />
+
+			<!-- 참가자 -->
+		   <LinearLayout
+			    android:id="@+id/card_detail_layoutCardListParticipant"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/white_coconut"
+			    android:minHeight="60dp"
+			    android:orientation="horizontal" >
+		       
+		   </LinearLayout>
+
+		   <LinearLayout
+		       android:layout_width="match_parent"
+		       android:layout_height="20dp"
+		       android:minHeight="25dp"
+		       android:orientation="horizontal" >
+
+		       <LinearLayout
+		           android:id="@+id/card_detail_checkbutton"
+		           android:layout_width="fill_parent"
+		           android:layout_height="match_parent"
+		           android:background="@color/button_bg_coconut"
+		           android:layout_weight="1"
+		           android:orientation="horizontal" >
+
+		           <ImageView
+		               android:layout_width="wrap_content"
+		               android:layout_height="match_parent"
+		               android:src="@drawable/card_detail_check_icon" />
+
+		           <ImageView
+		               android:id="@+id/card_detail_checkbutton_arrow"
+		               android:layout_width="match_parent"
+		               android:layout_height="match_parent"
+		               android:layout_gravity="right|center_vertical"
+		               android:paddingBottom="3dp"
+		               android:paddingLeft="75dp"
+		               android:paddingTop="3dp"
+		               android:src="@drawable/card_detail_arrow_up" />
+
+		       </LinearLayout>
+
+		       <TextView
+		           android:layout_width="wrap_content"
+		           android:layout_height="match_parent"
+		           android:orientation="horizontal"
+		           android:minWidth="2dp" />
+
+		       <LinearLayout
+		           android:id="@+id/card_detail_commentbutton"
+		           android:layout_width="fill_parent"
+		           android:layout_height="match_parent"
+		           android:orientation="horizontal"
+		           android:background="@color/button_bg_coconut"
+		           android:layout_weight="1" >
+
+		           <ImageView
+		               android:layout_width="wrap_content"
+		               android:layout_height="match_parent"
+		               android:padding="2dp"
+		               android:src="@drawable/card_detail_comment_icon" />
+
+		           <ImageView
+		               android:id="@+id/card_detail_commentbutton_arrow"
+		               android:layout_width="match_parent"
+		               android:layout_height="match_parent"
+		               android:layout_gravity="right|center_vertical"
+		               android:paddingBottom="3dp"
+		               android:paddingLeft="75dp"
+		               android:paddingTop="3dp"
+		               android:src="@drawable/card_detail_arrow_down" />
+
+		       </LinearLayout>
+
+		   </LinearLayout>
+
+		   <LinearLayout
+		       android:layout_width="match_parent"
+		       android:layout_height="fill_parent"
+		       android:background="@color/userlist_bg"
+		           android:orientation="vertical" >
+		        <TextView
+		            android:id="@+id/card_detail_commentcheck_title"
+		            android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:paddingLeft="10dp"
+	                android:paddingTop="15dp"
+	                android:paddingBottom="15dp"
+	                android:textSize="@dimen/card_subtitle_size"
+	                android:textStyle="bold"
+		       		android:background="@color/userlist_bg"
+	                android:text="체크리스트" />
+
+		        <TextView
+		            android:id = "@+id/card_detail_line"
+		            android:layout_width="match_parent"
+		            android:layout_height="2dp"
+		            android:background="@color/category_5" />
+		       
+		   </LinearLayout>
 	   </LinearLayout>
+		
+
 </ScrollView>

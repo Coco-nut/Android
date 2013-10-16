@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/white_coconut"
     android:minHeight="60dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:clickable="true">
     <TextView
         android:id="@+id/viewCategory"
         android:layout_width="10dp"

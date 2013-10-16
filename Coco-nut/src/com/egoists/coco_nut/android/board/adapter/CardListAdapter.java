@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -93,6 +95,16 @@ public class CardListAdapter extends BaseAdapter {
             view.mRatingBar.setRating(card.importance);
             view.mDate.setText(DateConverter.getStringTime(DateConverter.getCurrentGmcTime()));
             view.mCategory.setBackgroundColor(ColorChip.getColor(oRandom.nextInt(10)));
+            
+            view.mRoot.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+    				Intent detail = new Intent(v.getContext(), 
+    						com.egoists.coco_nut.android.board.card.CardDetailActivity_.class);
+    				v.getContext().startActivity(detail);
+				}
+    		});
+            
             view.mParticipant.removeAllViews();
             for (Person person : card.participants) {
                 view.mParticipant.addView(person.getImageView(mContext));

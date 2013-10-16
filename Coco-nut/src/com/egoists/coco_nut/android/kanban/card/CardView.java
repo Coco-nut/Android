@@ -96,7 +96,7 @@ public class CardView extends View {
 		this.card = card;
 		initialize();
 		
-		setOnClickListener(new OnClickListener(){
+/*		setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				Intent detail = new Intent(context, 
@@ -104,7 +104,7 @@ public class CardView extends View {
 				detail.putExtra("Card", ((CardView)v).card);
 				context.startActivity(detail);
 			}
-		});
+		});*/
 	}
 	public void onDraw(Canvas canvas){
 		
