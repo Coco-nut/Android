@@ -6,12 +6,14 @@
         android:icon="@drawable/ic_plus_coconut"
         android:showAsAction="always|withText"     
         />
+    <!-- 
     <item
         android:title="알림" 
         android:id="@+id/menu_notification"
         android:icon="@drawable/ic_noti_coconut"
         android:showAsAction="always|withText"       
         />
+         -->
     <item
         android:title="설정" 
         android:id="@+id/menu_setting"

@@ -41,9 +41,13 @@ public class Cards {
                 label = nodeLabel.asInt();
             }
             
-            // TODO 카드 등록 사용자 검색
             groupUsers.clear();
-            groupUsers.add(new Person("최영근", res, false));
+            for (BaasioUser baasioUser : baasioUsers) {
+                // TODO groupUsers 와 baasioUsers 를 가지고
+                // TODO 카드에 추가된 참가자들을 추가한다
+                groupUsers.add(new Person(baasioUser.getUuid().toString(), 
+                        baasioUser.getName(), baasioUser.getPicture(), false));
+            }
             
             Card card = new Card(title, subTitle, (int)rating, groupUsers);
             card.label = label;

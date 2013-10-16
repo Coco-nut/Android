@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.ColorChip;
 import com.egoists.coco_nut.android.util.DateConverter;
@@ -28,12 +30,14 @@ public class CardListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Card> mCardList;
+    private ImageFetcher mImageFetcher;
     
     public CardListAdapter(Context context, ArrayList<Card> cardList) {
         super();
         mContext = context;
         mCardList = cardList;
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mImageFetcher = new ImageFetcher(mContext);
     }
 
     @Override
@@ -85,7 +89,7 @@ public class CardListAdapter extends BaseAdapter {
         
         // 검색 결과 출력
         final Card card = mCardList.get(position);
-
+        
         if (card != null) {
             view.mTitle.setText(card.title);
             view.mSubTitle.setText(card.sub_title);
@@ -94,8 +98,15 @@ public class CardListAdapter extends BaseAdapter {
             view.mDate.setText(DateConverter.getStringTime(DateConverter.getCurrentGmcTime()));
             view.mCategory.setBackgroundColor(ColorChip.getColor(oRandom.nextInt(10)));
             view.mParticipant.removeAllViews();
+            
+            ImageView pictureView;
             for (Person person : card.participants) {
-                view.mParticipant.addView(person.getImageView(mContext));
+                pictureView = Person.getImageView(mContext);
+                String imageUrl = person.pictureUrl;
+                if (imageUrl != null) {
+                    mImageFetcher.loadImage(imageUrl, pictureView, R.drawable.card_personphoto_default);
+                } 
+                view.mParticipant.addView(pictureView);
             }
             
         }

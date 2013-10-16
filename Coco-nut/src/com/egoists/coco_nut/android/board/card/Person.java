@@ -15,34 +15,30 @@ public class Person {
     public static final String ENTITY_NAME_PICTURE    = "picture";      // 사진
     public static final String ENTITY_NAME_PHONE      = "phone";      // 휴대폰 번호
     
+    public String uuid;
 	public String name;
-	public Drawable photo;
 	public boolean isme;
-	public Person(String name, Resources res, boolean isme){
-		this.name = name;
-		this.photo =res.getDrawable(R.drawable.card_personphoto_default); 
-		this.isme = isme;
-	}
+	public String pictureUrl;
+	
+	public Person(String uuid, String name, String pictureUrl, boolean isme){
+	    this.uuid = uuid;
+        this.name = name;
+        this.pictureUrl = pictureUrl; 
+        this.isme = isme;
+    }
 
-	public Person(String name, Bitmap photo, Resources res, boolean isme){
-		this.name = name;
-		this.photo = new BitmapDrawable(res,photo);
-		this.isme = isme;
-		//TODO: 서버에서 비트맵 받아오는법 처리
-	}
-
-    public ImageView getImageView(Context con) {
+    public static ImageView getImageView(Context con) {
         ImageView imgIcon = new ImageView(con);
         
         // width = height = 40dp
         final float scale = con.getResources().getDisplayMetrics().density;
         int pixels = (int) (40 * scale + 0.5f);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pixels, pixels);
-        // margin = 8dp
-        pixels = pixels/5;
+        // margin = 5dp
+        pixels = pixels/8;
         layoutParams.setMargins(pixels, pixels, pixels, pixels);
         imgIcon.setLayoutParams(layoutParams);
-        imgIcon.setImageDrawable(photo);
+        imgIcon.setImageResource(R.drawable.card_personphoto_default);
         return imgIcon;
     }
 }

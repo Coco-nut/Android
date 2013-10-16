@@ -56,9 +56,9 @@ public class KanbanActivity extends FragmentActivity implements ActionBar.TabLis
 				startActivity(new Intent(this, 
 						com.egoists.coco_nut.android.kanban.card.CardCreationActivity_.class));
                 return true;
-            case R.id.menu_notification:
-            	//노티.. 고민좀 해봐야할듯
-                return true;
+//            case R.id.menu_notification:
+//            	//노티.. 고민좀 해봐야할듯
+//                return true;
             case R.id.menu_setting:
 				startActivity(new Intent(this, 
 						com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));

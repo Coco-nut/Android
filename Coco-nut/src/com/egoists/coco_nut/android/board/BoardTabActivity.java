@@ -74,9 +74,13 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+//        Android BUG! 해결책은?
+//        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
         actionBar.setTitle(mExtraGroupName);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+       
         
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
@@ -140,9 +144,9 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                 i.putExtra(ARG_GROUP_UUID, mExtraGroupUuid);
                 startActivity(i);
                 return true;
-            case R.id.menu_notification:
-                //노티.. 고민좀 해봐야할듯
-                return true;
+//            case R.id.menu_notification:
+//                //노티.. 고민좀 해봐야할듯
+//                return true;
             case R.id.menu_setting:
 //                startActivity(new Intent(this, 
 //                        com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));
