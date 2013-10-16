@@ -62,6 +62,7 @@ public class GroupInvitationActivity extends Activity {
         // 액션바
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("그룹 사용자 추가");
         
         // 사용자 검색 결과 리스트
         mListAdapter = new UsersListAdapter(this, mContext, new ArrayList<BaasioUser>());

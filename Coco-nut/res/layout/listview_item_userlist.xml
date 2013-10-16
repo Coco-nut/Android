@@ -12,14 +12,14 @@
 
     <ImageView
         android:id="@+id/imageProfile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@color/userlist_bg"
         />
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0px"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="10dp" >
@@ -30,13 +30,20 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:textSize="@dimen/user_list_font_size"
+            android:textColor="@color/font_bold_gray"
+            android:text="이름"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/textUserPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
+            android:textColor="@color/font_bold_gray"
+            android:text="이메일"
             android:textSize="@dimen/user_list_font_size" />
     </LinearLayout>
-
+    <CheckBox 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

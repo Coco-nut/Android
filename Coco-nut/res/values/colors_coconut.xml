@@ -22,6 +22,7 @@
     <color name="button_bg_coconut">#97ACC5</color>
     <color name="font_common_coconut">#97ACC5</color>
     <color name="font_bold_coconut">#5F778D</color>
+    <color name="font_bold_gray">#555555</color>
     <color name="white_coconut">#FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="userlist_bg">#fff3f3f3</color>

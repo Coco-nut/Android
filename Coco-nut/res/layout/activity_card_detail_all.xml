@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_coconut"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout 
+	        android:layout_width="0px"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_margin="10dp"
+	        android:orientation="vertical"
+	        >
+	        <!-- 카드 제목 부 -->
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="5dp" >
+	            <TextView
+	                android:id="@+id/txtCardDetailTitle"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:paddingRight="10dp"
+	                android:textSize="@dimen/card_title_size"
+	                android:textStyle="bold"
+	                android:text="고궁 답사" />
+	            <TextView
+	                android:id="@+id/txtCardDetailSubTitle"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_toRightOf="@id/txtCardDetailTitle"
+	                android:layout_alignBottom="@id/txtCardDetailTitle"
+	                android:paddingRight="10dp"
+	                android:textSize="@dimen/card_subtitle_size"
+	                android:text="창덕궁" />
+	        </RelativeLayout>
+	        <!-- 시간, 댓글, 체크 리스트 부 -->
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:gravity="center_vertical" >
+	            <!-- 시간 -->
+	            <ImageView 
+	                android:layout_width="20dp"
+	                android:layout_height="20dp"
+	                android:src="@drawable/ic_clock_coconut"/>
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:textSize="@dimen/card_subtitle_size"
+	                android:text="~" />
+	            <TextView
+	                android:id="@+id/txtCardDetailDueTo"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:textSize="@dimen/card_subtitle_size"
+	                android:text="09:00 AM 2013/09/12/THU" />
+	        </LinearLayout>
+	        
+        </LinearLayout>
+        <!-- 라벨 깃발 -->
+	    <LinearLayout 
+	        android:layout_width="40dp"
+	        android:layout_height="wrap_content"
+	        >
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 카드 내역 상세 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textSize="@dimen/card_subtitle_size"
+        android:text="카드 상세 내역 입력을 위해 터치하세요" />
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/white_coconut">
+	    <!-- 체크 리스트 -->
+        <LinearLayout 
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/button_bg_coconut"
+            android:layout_marginRight="1dp"
+            android:gravity="center"
+            >
+            <ImageView 
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/card_check_white"
+                />
+            <TextView 
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/white_coconut"
+                android:textSize="@dimen/signup_button_font_size"
+                android:text="0 / 0"
+                />
+            <ImageView 
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_action_collapse"
+                />
+        </LinearLayout>
+        <!-- 댓글 -->
+        <LinearLayout 
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/button_bg_coconut"
+            android:layout_marginLeft="1dp"
+            android:gravity="center"
+            >
+            <ImageView 
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/card_comment_white"
+                />
+            <TextView 
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/white_coconut"
+                android:textSize="@dimen/signup_button_font_size"
+                android:text="0"
+                />
+            <ImageView 
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_action_expand"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 체크 리스트 및 댓글 뷰 -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="4"
+        android:background="@color/userlist_bg" >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:textSize="@dimen/signup_button_font_size"
+            android:text="@string/title_checklist"/>
+        
+    </LinearLayout>
+</LinearLayout>

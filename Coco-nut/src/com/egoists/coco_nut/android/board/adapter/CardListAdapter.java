@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.board.event.CardDetailEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.ColorChip;
 import com.egoists.coco_nut.android.util.DateConverter;
+
+import de.greenrobot.event.EventBus;
 
 public class CardListAdapter extends BaseAdapter {
 //    private Activity mActivity;
@@ -108,7 +112,20 @@ public class CardListAdapter extends BaseAdapter {
                 } 
                 view.mParticipant.addView(pictureView);
             }
-            
+        }
+        
+        if (view.mRoot != null) {
+            view.mRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 카드 디테일로 이동
+                    Intent i = new Intent(mContext,
+                            com.egoists.coco_nut.android.board.card.CardDetailActivity_.class);
+                    AndLog.d("Push card detail event");
+                    EventBus.getDefault().post(new CardDetailEvent(card));
+                    mContext.startActivity(i);
+                }
+            });
         }
         return convertView;
     }

@@ -13,6 +13,7 @@
     <string name="title_succeed">성공</string>
     <string name="title_error">오류</string>
     <string name="title_create">만들기</string>
+    <string name="title_checklist">체크리스트</string>
     
     <string name="err_empty_login_form">아이디 혹은 패스워드를 입력해주십시오.</string>
     <string name="error_equaled_password">패쓰워드가 일치하지 않습니다. 다시 입력하세요.</string>
