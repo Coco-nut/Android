@@ -14,6 +14,9 @@
     <dimen name="card_title_size">18sp</dimen>
     <dimen name="card_subtitle_size">10sp</dimen>
     
+    <dimen name="card_detail_title_size">20sp</dimen>
+    <dimen name="card_detail_subtitle_size">14sp</dimen>
+    
     <dimen name="user_list_font_size">12sp</dimen>
     
 </resources>

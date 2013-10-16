@@ -18,13 +18,10 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
-import com.egoists.coco_nut.android.board.event.CardDetailEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.ColorChip;
 import com.egoists.coco_nut.android.util.DateConverter;
-
-import de.greenrobot.event.EventBus;
 
 public class CardListAdapter extends BaseAdapter {
 //    private Activity mActivity;
@@ -122,8 +119,9 @@ public class CardListAdapter extends BaseAdapter {
                     Intent i = new Intent(mContext,
                             com.egoists.coco_nut.android.board.card.CardDetailActivity_.class);
                     AndLog.d("Push card detail event");
-                    EventBus.getDefault().post(new CardDetailEvent(card));
+                    i.putExtra("card_detail", card);
                     mContext.startActivity(i);
+//                    EventBus.getDefault().postSticky(new CardDetailEvent(card));
                 }
             });
         }

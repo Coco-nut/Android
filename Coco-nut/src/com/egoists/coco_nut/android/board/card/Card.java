@@ -1,12 +1,15 @@
 package com.egoists.coco_nut.android.board.card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.egoists.coco_nut.android.kanban.card.Checkbox;
 import com.egoists.coco_nut.android.kanban.card.Comment;
 
-public class Card {
+public class Card implements Serializable {
+    private static final long serialVersionUID = -3366308941296985726L;
+    
     public static final String ENTITY                 = "card";
     public static final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
     public static final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목

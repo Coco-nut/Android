@@ -26,7 +26,7 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:paddingRight="10dp"
-	                android:textSize="@dimen/card_title_size"
+	                android:textSize="@dimen/card_detail_title_size"
 	                android:textStyle="bold"
 	                android:text="고궁 답사" />
 	            <TextView
@@ -36,7 +36,7 @@
 	                android:layout_toRightOf="@id/txtCardDetailTitle"
 	                android:layout_alignBottom="@id/txtCardDetailTitle"
 	                android:paddingRight="10dp"
-	                android:textSize="@dimen/card_subtitle_size"
+	                android:textSize="@dimen/card_detail_subtitle_size"
 	                android:text="창덕궁" />
 	        </RelativeLayout>
 	        <!-- 시간, 댓글, 체크 리스트 부 -->
@@ -78,8 +78,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:textSize="@dimen/card_subtitle_size"
+        android:textSize="@dimen/card_detail_subtitle_size"
         android:text="카드 상세 내역 입력을 위해 터치하세요" />
+    <!-- 참가자 -->
+    <LinearLayout
+        android:id="@+id/layoutCardDetailParticipant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal" >
+    </LinearLayout>
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="35dp"

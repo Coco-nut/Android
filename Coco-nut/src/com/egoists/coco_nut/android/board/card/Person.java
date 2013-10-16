@@ -1,17 +1,17 @@
 package com.egoists.coco_nut.android.board.card;
 
+import java.io.Serializable;
+
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.egoists.coco_nut.android.R;
 
 
-public class Person {
+public class Person implements Serializable {
+    private static final long serialVersionUID = 1965186320993697142L;
+    
     public static final String ENTITY_NAME_PICTURE    = "picture";      // 사진
     public static final String ENTITY_NAME_PHONE      = "phone";      // 휴대폰 번호
     
