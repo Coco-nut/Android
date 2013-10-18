@@ -7,10 +7,16 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.util.DatePickerFragment;
 import com.egoists.coco_nut.android.util.TimePickerFragment;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -30,8 +36,14 @@ public class CardDetailEditActivity extends FragmentActivity {
     EditText edTxtCardEditDescription;
     @ViewById
     Spinner spinnerCardEditCategory;
+    @ViewById
+    RatingBar ratingCardEdit;
     
     private Context mContext;
+    
+    
+    private int mCardRating = 0;    // 중요도 (기본 0)
+    private int mCardLabel;         // 카드 레이블
     
     @AfterViews
     void init() {
@@ -45,6 +57,35 @@ public class CardDetailEditActivity extends FragmentActivity {
         edTxtCardEditTitle.setText(mCard.title);
         edTxtCardEditSubtitle.setText(mCard.sub_title);
         edTxtCardEditDescription.setText(mCard.discription);
+        
+        // 별점 리스너~
+        ratingCardEdit.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                mCardRating = (int) rating;
+            }
+        });
+        
+        // 카드 라벨 설정 스피너 생성
+        String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
+        spinnerCardEditCategory.setPrompt("카드 라벨을 고르세요");
+        CardLabelArrayAdapter adSpin = new CardLabelArrayAdapter(mContext, android.R.layout.simple_spinner_item, labels); 
+        spinnerCardEditCategory.setAdapter(adSpin);
+        if (mCard.label == -1)
+            spinnerCardEditCategory.setSelection(adSpin.getCount());
+        else
+            spinnerCardEditCategory.setSelection(mCard.label);
+        
+        spinnerCardEditCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int position, long id) {
+                mCardLabel = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
     }
     
     @Override

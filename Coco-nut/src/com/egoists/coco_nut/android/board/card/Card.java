@@ -25,7 +25,7 @@ public class Card implements Serializable {
     public String sub_title;
     public String discription;
     
-    public int label;
+    public int label = -1;
     public float importance;
     
     private Calendar startdate;

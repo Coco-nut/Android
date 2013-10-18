@@ -14,7 +14,7 @@
 	        android:layout_height="wrap_content"
 	        android:singleLine="true"
 	        android:ems="10"
-	        android:hint="타이틀 (필수)"
+	        android:hint="제목 (필수)"
 	        android:inputType="text" />
 	    <requestFocus />
 	    <EditText
@@ -23,17 +23,10 @@
 	        android:layout_height="wrap_content"
 	        android:singleLine="true"
 	        android:ems="10"
-	        android:hint="서브타이틀"
+	        android:hint="부제목"
 	        android:inputType="text"
-	        android:paddingTop="@dimen/card_creation_padding" />
-	    <EditText
-	        android:id="@+id/edTextCreateCardLabel"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:ems="10"
-	        android:hint="라벨"
 	        android:paddingTop="@dimen/card_creation_padding"
-	        android:inputType="text" />
+	        />
 	    <LinearLayout 
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
@@ -56,10 +49,31 @@
 	        android:paddingBottom="@dimen/card_creation_padding"
 	        android:numStars="5"
 	        android:stepSize="1" />
+	    <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="12dp"
+                    android:textSize="@dimen/card_creation_font_size"
+                    android:textColor="@color/font_common_coconut"
+                    android:text="레이블 선택"/>
+                <Spinner
+                    android:id="@+id/spinnerCardCreateCategory"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="12dp"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
         <Button 
             android:id="@+id/btnDoCreateCard"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/card_creation_padding"
             android:layout_gravity="center"
             android:text="@string/title_create" >
         </Button>

@@ -8,11 +8,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -39,10 +44,13 @@ public class CardCreationActivity extends Activity {
     EditText edTextCreateCardSubTitle;
     @ViewById
     RatingBar ratingCreateCard;
+    @ViewById
+    Spinner spinnerCardCreateCategory;
         
     public static final String RELATION_NAME          = "group_card";
     
     private int mCardRating = 0;    // 중요도 (기본 0)
+    private int mCardLabel = -1;    // 카드 레이블
     
     private Context mContext;
     private ProgressDialog mDialog;
@@ -60,6 +68,24 @@ public class CardCreationActivity extends Activity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 mCardRating = (int) rating;
+            }
+        });
+        
+        // 카드 라벨 설정 스피너 생성
+        String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
+        spinnerCardCreateCategory.setPrompt("카드 라벨을 고르세요");
+        CardLabelArrayAdapter adSpin = new CardLabelArrayAdapter(mContext, android.R.layout.simple_spinner_item, labels); 
+        spinnerCardCreateCategory.setAdapter(adSpin);
+        spinnerCardCreateCategory.setSelection(adSpin.getCount());
+        
+        spinnerCardCreateCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                    int position, long id) {
+                mCardLabel = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
     }
@@ -111,13 +137,9 @@ public class CardCreationActivity extends Activity {
             entity.setProperty(Card.ENTITY_NAME_SUBTITLE, subTitle);
         }
         
-        // TODO 카드 레이블 선택
-        entity.setProperty(Card.ENTITY_NAME_LABEL, 0);
-        // TODO 카드 레이블 선택
-        
-        entity.setProperty(Card.ENTITY_NAME_RATING, mCardRating);              // 중요도
+        entity.setProperty(Card.ENTITY_NAME_LABEL, mCardLabel);         // 카드 레이블
+        entity.setProperty(Card.ENTITY_NAME_RATING, mCardRating);       // 중요도
         entity.setProperty(Card.ENTITY_NAME_STATE, Card.ENTITY_VALUE_STATE);   // 기본 상태 : todo
-        
         entity.saveInBackground(new BaasioCallback<BaasioEntity>() {
                     @Override
                     public void onException(BaasioException e) {

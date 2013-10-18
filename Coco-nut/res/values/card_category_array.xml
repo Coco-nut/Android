@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="selected">
+    <string-array name="selectedCardLabel">
         <item>정보</item>
         <item>미팅</item>
         <item>기획</item>
@@ -10,5 +10,6 @@
         <item>개발</item>
         <item>테스트</item>
         <item>기타</item>
+        <item>라벨을 선택하세요</item>
     </string-array>
 </resources>
