@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.egoists.coco_nut.android.R;
+import com.kth.baasio.entity.user.BaasioUser;
 
 
 public class Person implements Serializable {
@@ -20,12 +21,16 @@ public class Person implements Serializable {
     public String uuid;
 	public String name;
 	public boolean isme;
-	public String pictureUrl;
+	public String picture;
+	
+	public Person(BaasioUser user, boolean isme) {
+	    this(user.getUuid().toString(), user.getName(), user.getPicture(), isme);
+	}
 	
 	public Person(String uuid, String name, String pictureUrl, boolean isme) {
 	    this.uuid = uuid;
         this.name = name;
-        this.pictureUrl = pictureUrl; 
+        this.picture = pictureUrl; 
         this.isme = isme;
     }
 

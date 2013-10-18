@@ -2,9 +2,15 @@ package com.egoists.coco_nut.android.board.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -30,13 +36,19 @@ import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
+import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.DatePickerFragment;
+import com.egoists.coco_nut.android.util.DialogFactory;
 import com.egoists.coco_nut.android.util.TimePickerFragment;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.ViewById;
+import com.kth.baasio.Baas;
+import com.kth.baasio.callback.BaasioCallback;
+import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.user.BaasioUser;
+import com.kth.baasio.exception.BaasioException;
 
 import de.greenrobot.event.EventBus;
 
@@ -65,13 +77,15 @@ public class CardDetailEditActivity extends FragmentActivity {
     @ViewById
     TextView textUserPhone;
     
-    private List<BaasioUser> mUsers;        // 그룹의 모든 사용자
-    private ArrayList<Person> mParticipant;      // 이 카드의 참가자
+    private List<BaasioUser> mUsers;            // 그룹의 모든 사용자
+    private ArrayList<Person> mParticipant;     // 이 카드의 참가자
+    private boolean mIsJoined[];                // 그룹의 사용자가 참여 할 것인지를 저장하는 플래그 (인덱스 기반)
     
     private Context mContext;
     private LayoutInflater mInflater;
     
     private ImageFetcher mImageFetcher;
+    private ProgressDialog mDialog;
     
     @AfterViews
     void init() {
@@ -80,6 +94,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         mImageFetcher = new ImageFetcher(mContext);
         
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
         mParticipant = new ArrayList<Person>();
         
         // Set up the action bar.
@@ -134,7 +149,8 @@ public class CardDetailEditActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.only_back_coconut, menu);
+        // TODO 메뉴 바꿀것
+        getMenuInflater().inflate(R.menu.edit_coconut, menu);
         return true;
     }
     
@@ -143,6 +159,9 @@ public class CardDetailEditActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.edit:
+                doUpdateByBaasio();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -162,9 +181,11 @@ public class CardDetailEditActivity extends FragmentActivity {
     public void onEvent(GroupUsersEvent event) {
         mUsers = event.users;
         AndLog.d("Users of this group : " + mUsers.size());
+        mIsJoined = new boolean[mUsers.size()]; 
         
         // 그룹의 사용자를 출력한다
-        for (final BaasioUser user : mUsers) {
+        for (int i=0; i<mUsers.size(); i++) {
+            final BaasioUser user = mUsers.get(i);
             LinearLayout userItemRoot = (LinearLayout)mInflater.inflate(R.layout.listview_item_userlist, null);
             // 사용자 이름
             TextView txtName = (TextView)userItemRoot.findViewById(R.id.textUserName);
@@ -176,23 +197,81 @@ public class CardDetailEditActivity extends FragmentActivity {
             ImageView pictureView = (ImageView)userItemRoot.findViewById(R.id.imageProfile);
             mImageFetcher.loadImage(user.getPicture(), pictureView, R.drawable.card_personphoto_default);
             // 사용자 참가 여부 체크박스
-            CheckBox userJoin = (CheckBox)userItemRoot.findViewById(R.id.checkUserJoin);
+            final CheckBox userJoin = (CheckBox)userItemRoot.findViewById(R.id.checkUserJoin);
+            userJoin.setTag(""+i);  // 체크박스에 현재 사용자 index 저장
             userJoin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    String tag = (String)userJoin.getTag();
                     if (isChecked) {
-                        mParticipant.add(new Person(user.getUuid().toString(), user.getName(), user.getPicture(), false));
+                        if (tag.length() != 0)
+                            mIsJoined[Integer.parseInt(tag)] = true;
+                        AndLog.d(tag + "th user is joined");
                     } else {
-//                        mParticipant.re
-//                        
+                        if (tag.length() != 0)
+                            mIsJoined[Integer.parseInt(tag)] = false;
+                        AndLog.d(tag + "th user resign");
                     }
-                    
-                    AndLog.d(user.getName() + " join? : " + isChecked);
                 }
                 
             });
             layGroupCardEditGroupUsers.addView(userItemRoot);
         }
+    }
+    
+    void doUpdateByBaasio() {
+        BaasioEntity entity = new BaasioEntity(Card.ENTITY);
+        entity.setUuid(UUID.fromString(mCard.uuid));
+        entity.setProperty(Card.ENTITY_NAME_TITLE, edTxtCardEditTitle.getText().toString());
+        entity.setProperty(Card.ENTITY_NAME_SUBTITLE, edTxtCardEditSubtitle.getText().toString());
+        entity.setProperty(Card.ENTITY_NAME_DESCRIPTION, edTxtCardEditDescription.getText().toString());
+        entity.setProperty(Card.ENTITY_NAME_RATING, (int) mCard.importance);
+        entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
+        // 실제로 체크한 사용자만 추려내서 업데이트한다
+        String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인
+        for (int i=0; i<mUsers.size(); i++) {
+            BaasioUser user = mUsers.get(i);
+            boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
+            mParticipant.add(new Person(user, isMe));
+        }
+        
+        mDialog = ProgressDialog.show(CardDetailEditActivity.this, "", "카드 업데이트 중", true);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.convertValue(mParticipant, JsonNode.class);
+        entity.setProperty(Card.ENTITY_NAME_PARTY, jsonNode);
+//      entity.setProperty(Card.ENTITY_NAME_STATE, edTxtCard);
+        
+        entity.updateInBackground(
+                new BaasioCallback<BaasioEntity>() {
+
+                    @Override
+                    public void onException(BaasioException e) {
+                        // 실패
+                        mDialog.dismiss();
+                        BaasioDialogFactory.createErrorDialog(mContext, e).show();
+                    }
+
+                    @Override
+                    public void onResponse(BaasioEntity response) {
+                        if (response != null) {
+                            mDialog.dismiss();
+                            // 성공
+                            DialogFactory
+                            .createNoButton(CardDetailEditActivity.this,R.string.title_succeed, "")
+                            .setPositiveButton(
+                                    R.string.create_card_succeed,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+//                                            backToBoardTabActivity();
+                                            }
+                                        })
+                            .setCancelable(false)
+                            .show();
+                            
+                        }
+                    }
+                });
     }
 }

@@ -13,14 +13,14 @@ public class Card implements Serializable {
     public static final String ENTITY                 = "card";
     public static final String ENTITY_NAME_TITLE      = "title";      // 카드 제목
     public static final String ENTITY_NAME_SUBTITLE   = "subtitle";   // 카드 부제목
-    public static final String ENTITY_NAME_DISCRIPTION = "description";  // 상세 설명 
+    public static final String ENTITY_NAME_DESCRIPTION = "description";  // 상세 설명 
     public static final String ENTITY_NAME_RATING     = "importance"; // 중요도
     public static final String ENTITY_NAME_STATE      = "state";      // 카드 상태
     public static final String ENTITY_NAME_LABEL      = "label";      // 카드 레이블
     public static final String ENTITY_NAME_PARTY      = "participants";      // 참여자
     public static final int ENTITY_VALUE_STATE        = 0;            // 0:todo, 1:doing, 2:done
     
-    
+    public String uuid;
     public String title;
     public String sub_title;
     public String discription;

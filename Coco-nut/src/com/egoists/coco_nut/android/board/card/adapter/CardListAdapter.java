@@ -95,10 +95,11 @@ public class CardListAdapter extends BaseAdapter {
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             view.mParticipant.removeAllViews();
             
+            AndLog.d("show pictures for " + card.participants.size() + " users");
             ImageView pictureView;
             for (Person person : card.participants) {
                 pictureView = Person.getImageView(mContext);
-                String imageUrl = person.pictureUrl;
+                String imageUrl = person.picture;
                 if (imageUrl != null) {
                     mImageFetcher.loadImage(imageUrl, pictureView, R.drawable.card_personphoto_default);
                 } 

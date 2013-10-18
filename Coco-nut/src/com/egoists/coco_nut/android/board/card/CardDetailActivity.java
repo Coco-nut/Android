@@ -117,7 +117,7 @@ public class CardDetailActivity extends Activity {
         ImageView pictureView;
         for (Person person : mCard.participants) {
             pictureView = Person.getImageView(mContext);
-            String imageUrl = person.pictureUrl;
+            String imageUrl = person.picture;
             if (imageUrl != null) {
                 mImageFetcher.loadImage(imageUrl, pictureView, R.drawable.card_personphoto_default);
             } 
