@@ -10,6 +10,6 @@
         <item>개발</item>
         <item>테스트</item>
         <item>기타</item>
-        <item>라벨을 선택하세요</item>
+        <item>-</item>
     </string-array>
 </resources>

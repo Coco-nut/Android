@@ -28,7 +28,7 @@
 	                android:paddingRight="10dp"
 	                android:textSize="@dimen/card_detail_title_size"
 	                android:textStyle="bold"
-	                android:text="고궁 답사" />
+	                android:text="제목" />
 	            <TextView
 	                android:id="@+id/txtCardDetailSubTitle"
 	                android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
 	                android:layout_alignBottom="@id/txtCardDetailTitle"
 	                android:paddingRight="10dp"
 	                android:textSize="@dimen/card_detail_subtitle_size"
-	                android:text="창덕궁" />
+	                android:text="부제목" />
 	        </RelativeLayout>
 	        <!-- 시간, 댓글, 체크 리스트 부 -->
 	        <LinearLayout
@@ -67,14 +67,30 @@
 	        
         </LinearLayout>
         <!-- 라벨 깃발 -->
-	    <LinearLayout 
-	        android:layout_width="40dp"
+	    <RelativeLayout 
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        >
-        </LinearLayout>
+	        android:layout_gravity="top"
+	        android:layout_marginRight="10dp" >
+            <ImageView 
+                android:id="@+id/imgCardDetailLabelFlag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/flag_card_label_0" />
+	        <TextView
+	            android:id="@+id/txtCardDetailLabel"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_marginTop="5dp"
+	            android:text="-"
+	            android:textColor="@color/white_coconut"
+	            android:textSize="10sp" />
+        </RelativeLayout>
     </LinearLayout>
     <!-- 카드 내역 상세 -->
     <TextView
+        android:id="@+id/txtCardDetailDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

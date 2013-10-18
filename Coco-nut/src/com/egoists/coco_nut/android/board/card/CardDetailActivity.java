@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.adapter.ColoredCardLabel;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
@@ -34,7 +35,13 @@ public class CardDetailActivity extends Activity {
     @ViewById
     TextView txtCardDetailDueTo;
     @ViewById
+    TextView txtCardDetailDescription;
+    @ViewById
+    TextView txtCardDetailLabel;
+    @ViewById
     LinearLayout layoutCardDetailParticipant;
+    @ViewById
+    ImageView imgCardDetailLabelFlag;
     
     private Context mContext;
     private ImageFetcher mImageFetcher;
@@ -88,8 +95,24 @@ public class CardDetailActivity extends Activity {
     
     @UiThread
     void drawCardDetail() {
+        
+        // 깃발 그림
+        // TODO poor implementation
+        int importanceImgResources[] = {
+                R.drawable.flag_card_label_0, R.drawable.flag_card_label_1, 
+                R.drawable.flag_card_label_2, R.drawable.flag_card_label_3,
+                R.drawable.flag_card_label_4, R.drawable.flag_card_label_5};
+        
         txtCardDetailTitle.setText(mCard.title);
         txtCardDetailSubTitle.setText(mCard.sub_title);
+        txtCardDetailDescription.setText(mCard.discription);
+        
+        // 라벨 + 카테고리 추가
+        String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
+        txtCardDetailLabel.setText(labels[mCard.label]);
+        imgCardDetailLabelFlag.setImageResource(importanceImgResources[(int)mCard.importance]);
+        imgCardDetailLabelFlag.setColorFilter(ColoredCardLabel.getColor(mCard.label));
+        
         // 참가자 아이콘 추가
         ImageView pictureView;
         for (Person person : mCard.participants) {

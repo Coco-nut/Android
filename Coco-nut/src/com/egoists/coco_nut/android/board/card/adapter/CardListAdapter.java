@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.board.adapter;
+package com.egoists.coco_nut.android.board.card.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,9 @@ import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
-import com.egoists.coco_nut.android.util.ColorChip;
 import com.egoists.coco_nut.android.util.DateConverter;
 
 public class CardListAdapter extends BaseAdapter {
-//    private Activity mActivity;
-    // TODO
-    Random oRandom = new Random();
     
     private Context mContext;
     private LayoutInflater mInflater;
@@ -97,7 +93,7 @@ public class CardListAdapter extends BaseAdapter {
             
             view.mRatingBar.setRating(card.importance);
             view.mDate.setText(DateConverter.getStringTime(DateConverter.getCurrentGmcTime()));
-            view.mCategory.setBackgroundColor(ColorChip.getColor(oRandom.nextInt(10)));
+            view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             view.mParticipant.removeAllViews();
             
             ImageView pictureView;
@@ -121,7 +117,6 @@ public class CardListAdapter extends BaseAdapter {
                     AndLog.d("Push card detail event");
                     i.putExtra("card_detail", card);
                     mContext.startActivity(i);
-//                    EventBus.getDefault().postSticky(new CardDetailEvent(card));
                 }
             });
         }

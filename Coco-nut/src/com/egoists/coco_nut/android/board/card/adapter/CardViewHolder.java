@@ -1,4 +1,4 @@
-package com.egoists.coco_nut.android.board.adapter;
+package com.egoists.coco_nut.android.board.card.adapter;
 
 import android.view.ViewGroup;
 import android.widget.LinearLayout;

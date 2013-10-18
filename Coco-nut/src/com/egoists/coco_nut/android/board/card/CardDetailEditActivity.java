@@ -9,10 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RatingBar.OnRatingBarChangeListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.Spinner;
 
 import com.egoists.coco_nut.android.R;
@@ -41,10 +40,6 @@ public class CardDetailEditActivity extends FragmentActivity {
     
     private Context mContext;
     
-    
-    private int mCardRating = 0;    // 중요도 (기본 0)
-    private int mCardLabel;         // 카드 레이블
-    
     @AfterViews
     void init() {
         mContext = this;
@@ -57,12 +52,12 @@ public class CardDetailEditActivity extends FragmentActivity {
         edTxtCardEditTitle.setText(mCard.title);
         edTxtCardEditSubtitle.setText(mCard.sub_title);
         edTxtCardEditDescription.setText(mCard.discription);
-        
+        ratingCardEdit.setRating((float)mCard.importance);
         // 별점 리스너~
         ratingCardEdit.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                mCardRating = (int) rating;
+                mCard.importance = (int) rating;
             }
         });
         
@@ -80,7 +75,7 @@ public class CardDetailEditActivity extends FragmentActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                     int position, long id) {
-                mCardLabel = position;
+                mCard.label = position;
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {

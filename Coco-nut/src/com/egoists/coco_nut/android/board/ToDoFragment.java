@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.board.adapter.CardListAdapter;
 import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.adapter.CardListAdapter;
 import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
 import com.egoists.coco_nut.android.board.event.TodoCardsEvent;
 import com.egoists.coco_nut.android.util.AndLog;
