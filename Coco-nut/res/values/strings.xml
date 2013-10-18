@@ -44,4 +44,14 @@
     <string name="create_group_succeed">프로젝트 생성에 성공하였습니다</string>
     
     <string name="create_card_succeed">카드 등록에 성공하였습니다</string>
+    
+    <string name="card_detail_title">제목</string>
+    <string name="card_detail_subtitle">부제목</string>
+    <string name="card_detail_description">상세 설명</string>
+    <string name="card_detail_start_date">시작 일자</string>
+    <string name="card_detail_start_time">시작 시간</string>
+    <string name="card_detail_dueto_date">만료 일자</string>
+    <string name="card_detail_dueto_time">만료 시간</string>
+    <string name="card_detail_participant">참가자 수정</string>
+    <string name="card_detail_label">라벨</string>
 </resources>

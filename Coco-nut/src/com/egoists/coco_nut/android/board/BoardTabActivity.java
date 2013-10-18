@@ -246,6 +246,10 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
             }
         });
     }
+    
+    ///////////////////////////////////////////////////////
+    //  Tab 관리
+    ///////////////////////////////////////////////////////
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

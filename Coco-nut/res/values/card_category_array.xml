@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="selected">
+        <item>정보</item>
+        <item>미팅</item>
+        <item>기획</item>
+        <item>자료조사</item>
+        <item>문서작성</item>
+        <item>디자인</item>
+        <item>개발</item>
+        <item>테스트</item>
+        <item>기타</item>
+    </string-array>
+</resources>

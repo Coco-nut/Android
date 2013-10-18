@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="30dp"
+	        android:orientation="vertical" >
+	        <!-- 상태 선택 -->
+	            <RadioGroup
+			        android:id="@+id/radioGroupCardEditState"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center"
+			        android:checkedButton="@+id/CardEditStateTodo"
+			        android:orientation="horizontal" >
+			        <RadioButton
+			            android:id="@id/CardEditStateTodo"
+			            android:layout_width="0px"
+			            android:layout_height="wrap_content"
+			            android:gravity="center"
+			            android:layout_weight="1"
+			            android:text="@string/title_to_do" />
+			        <RadioButton
+			            android:id="@+id/CardEditStateDoing"
+			            android:layout_width="0px"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:gravity="center"
+			            android:text="@string/title_in_progress" />
+			        <RadioButton
+			            android:id="@+id/CardEditStateDone"
+			            android:layout_width="0px"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:gravity="center"
+			            android:text="@string/title_done" />
+			    </RadioGroup>
+	        <!-- 제목 -->
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp"
+	            android:orientation="horizontal">
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:textSize="@dimen/card_title_size"
+	                android:textColor="@color/font_bold_coconut"
+	                android:text="제목"/>
+	            <EditText
+	                android:id="@+id/edTxtCardEditTitle"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:singleLine="true"
+	                android:ems="10"
+	                android:hint="@string/card_detail_title" />
+	            <requestFocus />
+	        </RelativeLayout>
+	        <!-- 부제목 -->
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:textSize="@dimen/card_title_size"
+	                android:textColor="@color/font_bold_coconut"
+	                android:text="부제목"/>
+	            <EditText
+	                android:id="@+id/edTxtCardEditSubtitle"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:singleLine="true"
+	                android:ems="10"
+	                android:hint="@string/card_detail_subtitle" />
+	        </RelativeLayout>
+	        <!-- 라벨 선택 -->
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:textSize="@dimen/card_title_size"
+	                android:textColor="@color/font_bold_coconut"
+	                android:text="레이블 선택"/>
+	            <Spinner
+	                android:id="@+id/spinnerCardEditCategory"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                />
+	        </RelativeLayout>
+	        <!-- 중요도 -->
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp">
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:textSize="@dimen/card_title_size"
+	                android:textColor="@color/font_bold_coconut"
+	                android:text="중요도"/>
+	        </RelativeLayout>
+	        <RatingBar
+	            android:id="@+id/ratingCardEdit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:numStars="5"
+	            android:stepSize="1" />
+	        <!-- 상세 -->
+	        <LinearLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="25dp"
+	            android:gravity="center"
+	            android:orientation="horizontal">
+	            <EditText
+	                android:id="@+id/edTxtCardEditDescription"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:ems="10"
+	                android:hint="@string/card_detail_description"
+	                android:inputType="textMultiLine" />
+	        </LinearLayout>
+	        <!-- 시작 시간 -->
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_marginTop="25dp" >
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:text="시작 시간"
+	                android:textColor="@color/font_bold_coconut"
+	                android:textSize="@dimen/card_title_size" />
+	            <TextView
+	                android:id="@+id/edTxtStartTime"
+	                android:layout_width="100dp"
+	                android:layout_height="30dp"
+	                android:layout_alignParentRight="true"
+	                android:layout_centerVertical="true"
+	                android:gravity="center"
+	                android:ems="10"
+	                android:background="@drawable/list_selector_holo_light"
+	                android:clickable="true"
+	                android:onClick="showTimePickerDialog"
+	                android:text="시간 입력" />
+	            <TextView
+	                android:id="@+id/edTxtStartDate"
+	                android:layout_width="100dp"
+	                android:layout_height="30dp"
+	                android:layout_toLeftOf="@+id/edTxtStartTime"
+	                android:layout_centerVertical="true"
+	                android:gravity="center"
+	                android:ems="10"
+	                android:background="@drawable/list_selector_holo_light"
+	                android:clickable="true"
+	                android:onClick="showDatePickerDialog"
+	                android:text="날짜 입력" />
+	        </RelativeLayout>
+	        <!-- 만료 시간 -->
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            android:layout_marginTop="10dp" >
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:text="만료 시간"
+	                android:textColor="@color/font_bold_coconut"
+	                android:textSize="@dimen/card_title_size" />
+	            <TextView
+	                android:id="@+id/edTxtDueToTime"
+	                android:layout_width="100dp"
+	                android:layout_height="30dp"
+	                android:layout_alignParentRight="true"
+	                android:layout_centerVertical="true"
+	                android:gravity="center"
+	                android:ems="10"
+	                android:background="@drawable/list_selector_holo_light"
+	                android:clickable="true"
+	                android:onClick="showTimePickerDialog"
+	                android:text="시간 입력" />
+	            <TextView
+	                android:id="@+id/edTxtDueToDate"
+	                android:layout_width="100dp"
+	                android:layout_height="30dp"
+	                android:layout_toLeftOf="@+id/edTxtDueToTime"
+	                android:layout_centerVertical="true"
+	                android:gravity="center"
+	                android:ems="10"
+	                android:background="@drawable/list_selector_holo_light"
+	                android:clickable="true"
+	                android:onClick="showDatePickerDialog"
+	                android:text="날짜 입력" />
+	        </RelativeLayout>
+	        <!-- 참가자 -->
+	        <RelativeLayout 
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp">
+	            <TextView 
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:textSize="@dimen/card_title_size"
+	                android:textColor="@color/font_bold_coconut"
+	                android:text="참가자"/>
+	        </RelativeLayout>
+	    </LinearLayout>
+	</LinearLayout>
+</ScrollView>
