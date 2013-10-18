@@ -11,10 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.R.layout;
 import com.egoists.coco_nut.android.kanban.card.CardView;
 import com.egoists.coco_nut.android.kanban.card.KanbanData;
-import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.EFragment;
 
 @EFragment(R.layout.fragment_my_works)

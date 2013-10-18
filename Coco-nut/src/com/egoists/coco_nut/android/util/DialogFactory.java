@@ -1,11 +1,11 @@
 package com.egoists.coco_nut.android.util;
 
-import com.egoists.coco_nut.android.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import com.egoists.coco_nut.android.R;
 
 public class DialogFactory {
     /** One Button 퀵 다이얼로그 반환 **/

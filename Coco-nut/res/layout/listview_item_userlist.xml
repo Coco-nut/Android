@@ -43,6 +43,7 @@
             android:textSize="@dimen/user_list_font_size" />
     </LinearLayout>
     <CheckBox 
+        android:id="@+id/checkUserJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

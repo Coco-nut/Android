@@ -229,5 +229,12 @@
 	                android:text="참가자"/>
 	        </RelativeLayout>
 	    </LinearLayout>
+	    <LinearLayout 
+	        android:id="@+id/layGroupCardEditGroupUsers"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	        
+	    </LinearLayout>
 	</LinearLayout>
 </ScrollView>

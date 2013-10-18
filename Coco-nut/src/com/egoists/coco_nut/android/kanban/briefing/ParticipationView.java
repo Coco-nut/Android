@@ -1,22 +1,18 @@
 package com.egoists.coco_nut.android.kanban.briefing;
 
-import java.util.Calendar;
-
-import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.util.AndLog;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
+import android.graphics.Paint.Align;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.Paint.Align;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.egoists.coco_nut.android.R;
 
 public class ParticipationView extends View  {
 	

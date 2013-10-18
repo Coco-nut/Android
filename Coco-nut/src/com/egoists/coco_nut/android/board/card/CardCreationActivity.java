@@ -10,11 +10,11 @@ import android.content.DialogInterface;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.Spinner;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;

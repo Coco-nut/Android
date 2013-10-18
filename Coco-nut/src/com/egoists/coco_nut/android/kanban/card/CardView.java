@@ -2,9 +2,6 @@ package com.egoists.coco_nut.android.kanban.card;
 
 import java.util.Calendar;
 
-import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.util.AndLog;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,11 +12,11 @@ import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
+
+import com.egoists.coco_nut.android.R;
 
 public class CardView extends View {
 

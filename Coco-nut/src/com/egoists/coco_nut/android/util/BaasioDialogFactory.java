@@ -1,11 +1,11 @@
 package com.egoists.coco_nut.android.util;
 
-import com.egoists.coco_nut.android.R;
-import com.kth.baasio.exception.BaasioException;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import com.egoists.coco_nut.android.R;
+import com.kth.baasio.exception.BaasioException;
 
 public class BaasioDialogFactory extends DialogFactory {
 

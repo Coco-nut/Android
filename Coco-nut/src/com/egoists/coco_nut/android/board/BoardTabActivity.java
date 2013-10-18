@@ -21,8 +21,10 @@ import android.view.MenuItem;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Cards;
+import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.MyCardsEvent;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
+import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestMyCardsEvent;
 import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
 import com.egoists.coco_nut.android.board.event.TodoCardsEvent;
@@ -51,11 +53,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     String mExtraGroupUuid;
     @ViewById(R.id.pager_kanban)
     ViewPager mViewPager;
+    
     Activity mContext;
     private ProgressDialog mDialog;
     
     public List<Card> mCards;    // 그룹의 가져온 카드
-   
     private List<BaasioUser> mUsers;
     
     private final String RELATION_NAME          = "group_card";
@@ -172,6 +174,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     // MyCards Fragment에 카드를 쏴준다
     public void onEvent(RequestMyCardsEvent event) {
         EventBus.getDefault().post(new MyCardsEvent(mCards));
+    }
+    
+    // 그룹의 사용자들 정보를 전송한다
+    public void onEvent(RequestGroupUsersEvent event) {
+        EventBus.getDefault().post(new GroupUsersEvent(mUsers));
     }
     
     /**

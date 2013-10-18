@@ -1,14 +1,11 @@
 package com.egoists.coco_nut.android.kanban;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -16,7 +13,6 @@ import android.widget.ScrollView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.kanban.card.CardView;
 import com.egoists.coco_nut.android.kanban.card.KanbanData;
-import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.EFragment;
 
 @EFragment(R.layout.fragment_to_do)

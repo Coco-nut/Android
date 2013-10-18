@@ -1,14 +1,11 @@
 
 package com.egoists.coco_nut.android;
 
-import com.kth.baasio.Baas;
-import com.kth.baasio.callback.BaasioDeviceCallback;
-import com.kth.baasio.entity.push.BaasioDevice;
-import com.kth.baasio.exception.BaasioException;
-import com.kth.common.utils.LogUtils;
-
 import android.app.Application;
 import android.os.AsyncTask;
+
+import com.kth.baasio.Baas;
+import com.kth.common.utils.LogUtils;
 
 public class BaasioApplication extends Application {
     private static final String TAG = LogUtils.makeLogTag(BaasioApplication.class);

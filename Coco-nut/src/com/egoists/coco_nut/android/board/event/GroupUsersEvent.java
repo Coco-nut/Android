@@ -5,7 +5,7 @@ import java.util.List;
 import com.kth.baasio.entity.user.BaasioUser;
 
 public class GroupUsersEvent {
-    List<BaasioUser> users;
+    public List<BaasioUser> users;
 
     public GroupUsersEvent(List<BaasioUser> users) {
         this.users = users;

@@ -2,7 +2,6 @@ package com.egoists.coco_nut.android.board.card.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.content.Context;
 import android.content.Intent;

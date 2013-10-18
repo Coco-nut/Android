@@ -1,12 +1,5 @@
 package com.egoists.coco_nut.android.kanban;
 
-import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.R.layout;
-import com.egoists.coco_nut.android.kanban.card.CardView;
-import com.egoists.coco_nut.android.kanban.card.KanbanData;
-import com.egoists.coco_nut.android.util.AndLog;
-import com.googlecode.androidannotations.annotations.EFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.kanban.card.CardView;
+import com.egoists.coco_nut.android.kanban.card.KanbanData;
+import com.googlecode.androidannotations.annotations.EFragment;
 
 @EFragment(R.layout.fragment_in_progress)
 public class InProgressFragment extends Fragment {

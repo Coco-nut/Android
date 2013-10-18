@@ -1,11 +1,9 @@
 package com.egoists.coco_nut.android.kanban.card;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
 
 import com.egoists.coco_nut.android.R;
 

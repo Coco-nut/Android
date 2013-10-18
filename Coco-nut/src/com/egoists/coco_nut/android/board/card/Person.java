@@ -12,7 +12,9 @@ import com.egoists.coco_nut.android.R;
 public class Person implements Serializable {
     private static final long serialVersionUID = 1965186320993697142L;
     
-    public static final String ENTITY_NAME_PICTURE    = "picture";      // 사진
+    public static final String ENTITY_NAME_UUID       = "uuid";       // 사용자 UUID
+    public static final String ENTITY_NAME_NAME       = "name";       // 사용자 이름
+    public static final String ENTITY_NAME_PICTURE    = "picture";    // 사진
     public static final String ENTITY_NAME_PHONE      = "phone";      // 휴대폰 번호
     
     public String uuid;
@@ -20,7 +22,7 @@ public class Person implements Serializable {
 	public boolean isme;
 	public String pictureUrl;
 	
-	public Person(String uuid, String name, String pictureUrl, boolean isme){
+	public Person(String uuid, String name, String pictureUrl, boolean isme) {
 	    this.uuid = uuid;
         this.name = name;
         this.pictureUrl = pictureUrl; 
