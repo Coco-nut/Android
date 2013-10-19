@@ -16,6 +16,7 @@ import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
+import com.egoists.coco_nut.android.util.DateConverter;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
@@ -39,6 +40,7 @@ public class CardDetailActivity extends Activity {
     TextView txtCardDetailDescription;
     @ViewById
     TextView txtCardDetailLabel;
+    
     @ViewById
     LinearLayout layoutCardDetailParticipant;
     @ViewById
@@ -108,7 +110,7 @@ public class CardDetailActivity extends Activity {
         txtCardDetailTitle.setText(mCard.title);
         txtCardDetailSubTitle.setText(mCard.sub_title);
         txtCardDetailDescription.setText(mCard.discription);
-        
+        txtCardDetailDueTo.setText(DateConverter.getTimeString(mCard.startdate, mCard.enddate));
         // 라벨 + 카테고리 추가
         String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
         txtCardDetailLabel.setText(labels[mCard.label]);
