@@ -30,7 +30,7 @@ public class StartDatePickerFragment extends DialogFragment implements OnDateSet
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        
+        month += 1;
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
