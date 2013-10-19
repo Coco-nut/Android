@@ -97,8 +97,8 @@ public class CardDetailEditActivity extends FragmentActivity {
     private ArrayList<Person> mParticipant;     // 이 카드의 참가자
     private boolean mIsJoined[];                // 그룹의 사용자가 참여 할 것인지를 저장하는 플래그 (인덱스 기반)
     
-    private Calendar mStartCal;      // 시작시간
-    private Calendar mDuetoCal;      // 종료시간
+    private Calendar mStartCal = null;      // 시작시간
+    private Calendar mDuetoCal = null;      // 종료시간
     
     private Context mContext;
     private LayoutInflater mInflater;
@@ -361,10 +361,14 @@ public class CardDetailEditActivity extends FragmentActivity {
         mCard.importance = mCard.importance;
         entity.setProperty(Card.ENTITY_NAME_RATING, (int)mCard.importance);
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
-        mCard.startdate = mStartCal;
-        mCard.enddate = mDuetoCal;
-        entity.setProperty(Card.ENTITY_NAME_START_DATE, mCard.startdate.getTimeInMillis());
-        entity.setProperty(Card.ENTITY_NAME_DUETO_DATE, mCard.enddate.getTimeInMillis());
+        if (mStartCal != null) {
+            mCard.startdate = mStartCal;
+            entity.setProperty(Card.ENTITY_NAME_START_DATE, mCard.startdate.getTimeInMillis());
+        }
+        if (mDuetoCal != null) {
+            mCard.enddate = mDuetoCal;
+            entity.setProperty(Card.ENTITY_NAME_DUETO_DATE, mCard.enddate.getTimeInMillis());
+        }
         
         // 실제로 체크한 사용자만 추려내서 업데이트한다
         mCard.ismine = false;

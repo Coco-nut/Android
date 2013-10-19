@@ -28,7 +28,7 @@ public class DateConverter {
     
     public static String getTimeString(Calendar startCal, Calendar endCal) {
         String[] AMPM = {"AM", "PM"}; 
-        String[] DATE_OF_WEEK = {"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
+        String[] DATE_OF_WEEK = {"", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"};
         if(startCal == null && endCal == null)
             return "";
         else if (startCal == null){
