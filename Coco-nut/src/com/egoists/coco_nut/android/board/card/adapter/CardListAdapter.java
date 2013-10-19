@@ -91,10 +91,7 @@ public class CardListAdapter extends BaseAdapter {
             view.mSubTitle.setText(card.sub_title);
             
             view.mRatingBar.setRating(card.importance);
-            Calendar c = card.enddate;
-            if (c != null) {
-                view.mDate.setText(DateConverter.getStringTime(c.getTimeInMillis()));
-            }
+            view.mDate.setText(DateConverter.getTimeString(card.startdate, card.enddate));
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             view.mParticipant.removeAllViews();
             
