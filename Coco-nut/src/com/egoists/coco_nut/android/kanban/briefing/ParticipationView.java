@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.BoardTabActivity;
 
 public class ParticipationView extends View  {
 	
-	//Dummy Dataset : will be achieved from server later
-	final int number_of_people = 12;
-	final double[] participation_ratio = {0.11, 0.14, 0.13, 0.08, 0.07, 0.09, 0.08, 0.09, 0.02, 0.12, 0.05, 0.02};
+	
+	int number_of_people;
+	double[] participation_ratio;
+	
+	BoardTabActivity mActivity;
 	
 	//x y cordinated of things: will be scaled by screen definitions
 	final int top_margin = 267;
@@ -80,6 +83,7 @@ public class ParticipationView extends View  {
 	
 	public ParticipationView(Context context){
 		super(context);
+		mActivity = (BoardTabActivity) context;
 		//get screen resolution
 		resolution = new Point();
 		((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(resolution);
@@ -92,8 +96,13 @@ public class ParticipationView extends View  {
 		
 
 	}
+	public void refresh(){
+		loadData();
+		locate();
+	}
 	public void onDraw(Canvas canvas){
 
+		refresh();
 		icon.draw(canvas);
 		canvas.drawText("기여도 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 		
@@ -120,30 +129,12 @@ public class ParticipationView extends View  {
 	private int y(int y){
 		return y * resolution.y / 1280;
 	}
-
-	
-	private void initialize(){
-		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
-		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
-		circle_rect_outter = new RectF(x(center_x-circle_radius_outter), y(center_y)-x(circle_radius_outter), 
-				x(center_x+circle_radius_outter), y(center_y)+x(circle_radius_outter));
-		circle_rect_inner = new RectF(x(center_x-circle_radius_inner), y(center_y)-x(circle_radius_inner), 
-				x(center_x+circle_radius_inner), y(center_y)+x(circle_radius_inner));
-		circle_outter_paint = new Paint[number_of_people];
-		circle_inner_paint = new Paint[number_of_people];
-		for(int i = 0; i < number_of_people; i++)
-		{
-			circle_outter_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
-			circle_outter_paint[i].setStyle(Paint.Style.FILL);
-			circle_outter_paint[i].setColor(outter_color[i]);
-			circle_inner_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
-			circle_inner_paint[i].setStyle(Paint.Style.FILL);
-			circle_inner_paint[i].setColor(inner_color[i]);
-		}
-		circle_center_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		circle_center_paint.setStyle(Paint.Style.FILL);
-		circle_center_paint.setColor(Color.WHITE);
+	private void loadData(){
+		number_of_people = mActivity.mUsers.size();
+		participation_ratio = new double[number_of_people];
 		
+	}
+	private void locate(){
 		people_center_x = new int[number_of_people];
 		people_center_y = new int[number_of_people];
 		ratio_text_x = new int[number_of_people];
@@ -168,7 +159,30 @@ public class ParticipationView extends View  {
 			
 			cumul_angle = cumul_angle + participation_ratio[i] * 360;
 		}
-
+	}
+	
+	private void initialize(){
+		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
+		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
+		circle_rect_outter = new RectF(x(center_x-circle_radius_outter), y(center_y)-x(circle_radius_outter), 
+				x(center_x+circle_radius_outter), y(center_y)+x(circle_radius_outter));
+		circle_rect_inner = new RectF(x(center_x-circle_radius_inner), y(center_y)-x(circle_radius_inner), 
+				x(center_x+circle_radius_inner), y(center_y)+x(circle_radius_inner));
+		circle_outter_paint = new Paint[number_of_people];
+		circle_inner_paint = new Paint[number_of_people];
+		for(int i = 0; i < number_of_people; i++)
+		{
+			circle_outter_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
+			circle_outter_paint[i].setStyle(Paint.Style.FILL);
+			circle_outter_paint[i].setColor(outter_color[i]);
+			circle_inner_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
+			circle_inner_paint[i].setStyle(Paint.Style.FILL);
+			circle_inner_paint[i].setColor(inner_color[i]);
+		}
+		circle_center_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		circle_center_paint.setStyle(Paint.Style.FILL);
+		circle_center_paint.setColor(Color.WHITE);
+		
 		ratio_text_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		ratio_text_paint.setStyle(Paint.Style.FILL);
 		ratio_text_paint.setTypeface(Typeface.create((String)null, Typeface.BOLD));

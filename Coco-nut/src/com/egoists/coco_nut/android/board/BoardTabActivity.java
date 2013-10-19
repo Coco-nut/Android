@@ -59,7 +59,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     private ProgressDialog mDialog;
     
     public List<Card> mCards;    // 그룹의 가져온 카드
-    private List<BaasioUser> mUsers;
+    public List<BaasioUser> mUsers;
     
     private final String RELATION_NAME          = "group_card";
     public static final String ARG_GROUP_UUID   = "group_uuid";
