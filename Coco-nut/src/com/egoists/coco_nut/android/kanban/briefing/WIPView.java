@@ -107,6 +107,8 @@ public class WIPView extends View {
 	final int icon_text_size = 33;
 	Paint icontext_paint;
 	Drawable icon;
+	Drawable up;
+	Drawable down;
 	
 	Point resolution;
 	int nLines;
@@ -126,16 +128,21 @@ public class WIPView extends View {
 		
 		//Initializations
 		initialize();
-		setBackgroundColor(background_c);
-		setMinimumHeight(y(1070));
 
 	}
 	public void refresh(){
-		loadData();
-		locate();
-		loaded = true;
+		if (mActivity.mCards != null)
+		{
+			loadData();
+			locate();
+			loaded = true;
+		}
 	}
 	public void onDraw(Canvas canvas){
+		icon.draw(canvas);
+		up.draw(canvas);
+		down.draw(canvas);
+		canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_y2), icontext_paint);
 		
 		if (loaded)
 		{
@@ -183,9 +190,10 @@ public class WIPView extends View {
 				canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
 						x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin), toptext_paint);
 			}
-	
-			icon.draw(canvas);
-			canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_y2), icontext_paint);
+		}
+		else
+		{
+			canvas.drawText("카드 로딩 안됨!", x(leftline_x), y(leftline_y2), flagtext_paint);
 		}
 	}
 	
@@ -321,6 +329,9 @@ public class WIPView extends View {
 	}
 	
 	private void initialize(){
+		setBackgroundColor(background_c);
+		setMinimumHeight(y(1050));
+		
 		alarm = getResources().getDrawable(R.drawable.briefing_alarm); 
 		alarm_center_x = new int[max_alarms];
 		alarm_center_y = new int[max_alarms];
@@ -388,5 +399,10 @@ public class WIPView extends View {
 		
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
 		icon.setBounds(x(leftline_x), y(icon_y1), x(icon_x2), y(icon_y2));
+		
+		down = getResources().getDrawable(R.drawable.briefing_arrow_down);
+		down.setBounds(x(330), y(996), x(390), y(1030));
+		up = getResources().getDrawable(R.drawable.briefing_arrow_up);
+		up.setBounds(x(330), y(16), x(390), y(50));
 	}
 }

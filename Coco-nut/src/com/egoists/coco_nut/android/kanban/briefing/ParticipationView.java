@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.egoists.coco_nut.android.R;
@@ -89,6 +90,8 @@ public class ParticipationView extends RelativeLayout  {
 	boolean loaded = false;
 	Point resolution;
 	int nLines;
+	Drawable up;
+	Drawable down;
 	
 	public ParticipationView(Context context){
 		super(context);
@@ -100,13 +103,11 @@ public class ParticipationView extends RelativeLayout  {
 		
 		//Initializations
 		initialize();
-		setBackgroundColor(Color.WHITE);
-		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
 		
 
 	}
 	public void refresh(){
-		if (mActivity.mUsers != null)
+		if (mActivity.mUsers != null && mActivity.mCards != null)
 		{
 			loadData();
 			locate();
@@ -115,27 +116,33 @@ public class ParticipationView extends RelativeLayout  {
 	}
 	public void onDraw(Canvas canvas){
 		
-		
+
+		icon.draw(canvas);
+		up.draw(canvas);
+		down.draw(canvas);
+		canvas.drawText("기여도 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 		if (loaded)
 		{
-			icon.draw(canvas);
-			canvas.drawText("기여도 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 			
 			double cumul_angle = start_angle;
 			for(int i=0; i<number_of_people; i++)
 			{
 				canvas.drawLine(x(center_x), y(center_y), x(people_center_x[i]), y(people_center_y[i]), people_line_paint[i]);
 				canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), x(circle_radius_people), circle_outter_paint[i]);
-				
-				
-				
-				
 				canvas.drawArc(circle_rect_outter, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_outter_paint[i]);
 				canvas.drawArc(circle_rect_inner, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_inner_paint[i]);
 				canvas.drawText((int)(participation_ratio[i]*100)+"%", x(ratio_text_x[i]), y(ratio_text_y[i]), ratio_text_paint);
 				cumul_angle = cumul_angle + participation_ratio[i] * 360;
 			}
 			canvas.drawCircle(x(center_x), y(center_y), x(circle_radius_center), circle_center_paint);
+		}
+		else
+		{
+			Paint messagepaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			messagepaint.setStyle(Paint.Style.FILL);
+			messagepaint.setColor(Color.BLACK);
+			messagepaint.setTextSize(25);
+			canvas.drawText("카드 또는 유저 로딩 안됨!", x(50), y(center_y), messagepaint);
 		}
 	}
 	
@@ -215,17 +222,33 @@ public class ParticipationView extends RelativeLayout  {
 		faces = new ImageView[number_of_people];
 		for (int i=0; i< number_of_people; i++)
 		{
-			faces[i] = Person.getImageView(mActivity);
+			faces[i] = getImageView();
 			if (mActivity.mUsers.get(i).getPicture() != null) 
-				mImageFetcher.loadImage(mActivity.mUsers.get(i).getPicture(), faces[i], R.drawable.card_personphoto_default);
+				mImageFetcher.loadImage(mActivity.mUsers.get(i).getPicture(), faces[i]);
 			
-			faces[i].setX(x(people_center_x[i] - circle_radius_people));
-			faces[i].setY(y(people_center_y[i]) - x(circle_radius_people));
+			faces[i].setX(x(people_center_x[i] - 45));
+			faces[i].setY(y(people_center_y[i]) - x(45));
 			addView(faces[i]);
 		}
 	}
-	
+    private ImageView getImageView() {
+        ImageView imgIcon = new ImageView(mActivity);
+        
+        // width = height = 40dp
+        final float scale = getResources().getDisplayMetrics().density;
+        int pixels = (int) (45 * scale + 0.5f);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pixels, pixels);
+        // margin = 5dp
+        pixels = pixels/8;
+        layoutParams.setMargins(pixels, pixels, pixels, pixels);
+        imgIcon.setLayoutParams(layoutParams);
+        imgIcon.setImageResource(R.drawable.briefing_face);
+        return imgIcon;
+    }
 	private void initialize(){
+		setBackgroundColor(Color.WHITE);
+		setMinimumHeight(y(Math.max(1050, top_margin + chart_height + 250)));
+		
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
 		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
 		circle_rect_outter = new RectF(x(center_x-circle_radius_outter), y(center_y)-x(circle_radius_outter), 
@@ -250,7 +273,11 @@ public class ParticipationView extends RelativeLayout  {
 		icontext_paint.setColor(icon_text_c);
 		icontext_paint.setTextSize(y(icon_text_size));	
 		icontext_paint.setTextAlign(Align.LEFT);
-		
+
+		down = getResources().getDrawable(R.drawable.briefing_arrow_down);
+		down.setBounds(x(330), y(996), x(390), y(1030));
+		up = getResources().getDrawable(R.drawable.briefing_arrow_up);
+		up.setBounds(x(330), y(16), x(390), y(50));
 		
 	}
 }

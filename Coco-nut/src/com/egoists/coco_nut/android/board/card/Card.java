@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.egoists.coco_nut.android.kanban.card.Checkbox;
-import com.egoists.coco_nut.android.kanban.card.Comment;
 
 public class Card implements Serializable {
     private static final long serialVersionUID = -3366308941296985726L;
@@ -41,8 +39,6 @@ public class Card implements Serializable {
     public Calendar timeofdoing;
     public Calendar timeofdone;
     
-    public ArrayList<Comment> comments;
-    public ArrayList<Checkbox> checkboxes;
     public ArrayList<Person> participants;
     
     public int status; //0:do, 1:doing, 2:done
@@ -57,8 +53,6 @@ public class Card implements Serializable {
         this.importance = importance;
         this.participants = participants;
         this.status = 0;
-        comments = new ArrayList<Comment>();
-        checkboxes = new ArrayList<Checkbox>();
         for (int i = 0; i< this.participants.size(); i++)
             if (this.participants.get(i).isme){
                 this.ismine = true;
@@ -68,7 +62,7 @@ public class Card implements Serializable {
     }
     public Card(String title, String sub_title, String discription, int label, int importance,
             Calendar startdate, Calendar enddate, Calendar expectedstartdate, 
-            Calendar expectedenddate, ArrayList<Comment> comments, ArrayList<Checkbox> checkboxes,
+            Calendar expectedenddate,
             ArrayList<Person> participants, int status, boolean ismine)
             {
         //Cards loaded from server
@@ -81,8 +75,6 @@ public class Card implements Serializable {
         this.enddate = enddate;
         this.expectedstartdate = expectedstartdate;
         this.expectedenddate = expectedenddate;
-        this.comments = comments;
-        this.checkboxes = checkboxes;
         this.participants = participants;
         this.status = status;
         this.ismine = ismine;

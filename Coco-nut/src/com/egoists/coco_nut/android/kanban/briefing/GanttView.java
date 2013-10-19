@@ -122,12 +122,19 @@ public class GanttView extends View {
 		initialize();
 	}
 	public void refresh(){
-		loadData();
-		locate();
-		loaded = true;
+		if (mActivity.mCards != null)
+		{
+			loadData();
+			locate();
+			loaded = true;
+		}
 	}
 	public void onDraw(Canvas canvas){
 
+		icon.draw(canvas);
+		down.draw(canvas);
+		canvas.drawText("간트 차트", x(icon_text_x), y(icon_y2), icontext_paint);
+		
 		if(loaded)
 		{
 			//Draw leftLine
@@ -177,10 +184,10 @@ public class GanttView extends View {
 				flag[i].draw(canvas);
 				canvas.drawText(category_name[i], x(flag_text_x + i%3*flag_dx), y(flag_text_y + i/3*flag_dy), flagtext_paint);
 			}
-			
-			icon.draw(canvas);
-			down.draw(canvas);
-			canvas.drawText("간트 차트", x(icon_text_x), y(icon_y2), icontext_paint);
+		}
+		else
+		{
+			canvas.drawText("카드 로딩 안됨!", x(bottomline_x1), y(leftline_y2), flagtext_paint);
 		}
 	}
 	
@@ -306,7 +313,7 @@ public class GanttView extends View {
 		label_DONE_paint.setColor(Color.argb(100, 100, 100, 100));
 
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
-		down = getResources().getDrawable(R.drawable.briefing_down_icon);
+		down = getResources().getDrawable(R.drawable.briefing_arrow_down);
 	}
 	
 	private void locate(){
@@ -316,12 +323,12 @@ public class GanttView extends View {
 		flag_y2 = leftline_y1 + chart_height + 12 + 29;
 		flag_text_y = top_margin + chart_height + 48;
 		
-		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
+		setMinimumHeight(y(Math.max(1050, top_margin + chart_height + 250)));
 		for (int i=0; i < number_of_categories; i++)
 			flag[i].setBounds( x(flag_x1 + i%3*flag_dx), y(flag_y1 + i/3*flag_dy), x(flag_x2 + i%3*flag_dx), y(flag_y2 + i/3*flag_dy));
 		
 		icon.setBounds(x(leftline_x), y(icon_y1), x(icon_x2), y(icon_y2));
-		down.setBounds(x(330), y(1016), x(390), y(1050));
+		down.setBounds(x(330), y(996), x(390), y(Math.max(1050, top_margin + chart_height + 250)-20));
 		label_cropped = new Bitmap[number_of_cards];
 		label_x1 = new int[number_of_cards];
 		label_x2 = new int[number_of_cards];
@@ -340,7 +347,9 @@ public class GanttView extends View {
 			int rightend = centerline_x1 + (centerline_x2 - centerline_x1)/(nLines+1)*nLines;
 			label_x1[i] = rightend - (int)(((day_of_end.getTimeInMillis() - startdates[i].getTimeInMillis())/24/3600/1000) * day_dx);
 			label_x2[i] = rightend - (int)(((day_of_end.getTimeInMillis() - enddates[i].getTimeInMillis())/24/3600/1000) * day_dx);
-			label_cropped[i] = Bitmap.createBitmap(label[category[i]],0,0, x(label_x2[i]-label_x1[i]+1), y(label_h));
+			int crop_x = label_x2[i]-label_x1[i]+1;
+			crop_x = crop_x > 1 ? crop_x : 1;
+			label_cropped[i] = Bitmap.createBitmap(label[category[i]],0,0, x(crop_x), y(label_h));
 		}	
 	}
 }
