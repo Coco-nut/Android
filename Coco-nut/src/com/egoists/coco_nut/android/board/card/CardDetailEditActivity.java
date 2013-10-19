@@ -34,6 +34,7 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
+import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -181,10 +182,13 @@ public class CardDetailEditActivity extends FragmentActivity {
     public void onEvent(GroupUsersEvent event) {
         mUsers = event.users;
         AndLog.d("Users of this group : " + mUsers.size());
-        mIsJoined = new boolean[mUsers.size()]; 
+        
+        // 사용자 참가여부 리스트 설정, 초기화
+        int nGroupUsers = mUsers.size();
+        mIsJoined = new boolean[nGroupUsers];
         
         // 그룹의 사용자를 출력한다
-        for (int i=0; i<mUsers.size(); i++) {
+        for (int i=0; i<nGroupUsers; i++) {
             final BaasioUser user = mUsers.get(i);
             LinearLayout userItemRoot = (LinearLayout)mInflater.inflate(R.layout.listview_item_userlist, null);
             // 사용자 이름
@@ -196,9 +200,16 @@ public class CardDetailEditActivity extends FragmentActivity {
             // 프로필 사진
             ImageView pictureView = (ImageView)userItemRoot.findViewById(R.id.imageProfile);
             mImageFetcher.loadImage(user.getPicture(), pictureView, R.drawable.card_personphoto_default);
+            
             // 사용자 참가 여부 체크박스
             final CheckBox userJoin = (CheckBox)userItemRoot.findViewById(R.id.checkUserJoin);
             userJoin.setTag(""+i);  // 체크박스에 현재 사용자 index 저장
+            // 이미 조인한 사용자는 체크박스를 활성화해둔다
+            if (isInvolvedUserForThisCard(user.getUuid().toString())) {
+                mIsJoined[i] = true;
+                userJoin.setChecked(true);
+                
+            }
             userJoin.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -219,22 +230,46 @@ public class CardDetailEditActivity extends FragmentActivity {
         }
     }
     
+    boolean isInvolvedUserForThisCard(String uuid) {
+        List<Person> involvedUsers = mCard.participants;
+        for (Person involvedUser : involvedUsers) {
+            AndLog.d("Is " + involvedUser.uuid + " involved?");
+            if (involvedUser.uuid.equals(uuid))
+                return true;
+        }
+        return false;
+    }
+    
+    void backToCardDetailActivity() {
+        // 종료
+        EventBus.getDefault().post(new UpdatedCardEvent(mCard));
+        this.finish();
+    }
+    
     void doUpdateByBaasio() {
         BaasioEntity entity = new BaasioEntity(Card.ENTITY);
         entity.setUuid(UUID.fromString(mCard.uuid));
-        entity.setProperty(Card.ENTITY_NAME_TITLE, edTxtCardEditTitle.getText().toString());
-        entity.setProperty(Card.ENTITY_NAME_SUBTITLE, edTxtCardEditSubtitle.getText().toString());
-        entity.setProperty(Card.ENTITY_NAME_DESCRIPTION, edTxtCardEditDescription.getText().toString());
-        entity.setProperty(Card.ENTITY_NAME_RATING, (int) mCard.importance);
+        mCard.title = edTxtCardEditTitle.getText().toString();
+        entity.setProperty(Card.ENTITY_NAME_TITLE, mCard.title);
+        mCard.sub_title = edTxtCardEditSubtitle.getText().toString();
+        entity.setProperty(Card.ENTITY_NAME_SUBTITLE, mCard.sub_title);
+        mCard.discription = edTxtCardEditDescription.getText().toString();
+        entity.setProperty(Card.ENTITY_NAME_DESCRIPTION, mCard.discription);
+        mCard.importance = mCard.importance;
+        entity.setProperty(Card.ENTITY_NAME_RATING, (int)mCard.importance);
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
-        // 실제로 체크한 사용자만 추려내서 업데이트한다
-        String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인
-        for (int i=0; i<mUsers.size(); i++) {
-            BaasioUser user = mUsers.get(i);
-            boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
-            mParticipant.add(new Person(user, isMe));
-        }
         
+        // 실제로 체크한 사용자만 추려내서 업데이트한다
+        String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
+        for (int i=0; i<mUsers.size(); i++) {
+            if (mIsJoined[i]) {
+                BaasioUser user = mUsers.get(i);
+                boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
+                mParticipant.add(new Person(user, isMe));
+            }
+            
+        }
+        mCard.participants = mParticipant;
         mDialog = ProgressDialog.show(CardDetailEditActivity.this, "", "카드 업데이트 중", true);
         
         ObjectMapper mapper = new ObjectMapper();
@@ -264,7 +299,7 @@ public class CardDetailEditActivity extends FragmentActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             finish();
-//                                            backToBoardTabActivity();
+                                            backToCardDetailActivity();
                                             }
                                         })
                             .setCancelable(false)

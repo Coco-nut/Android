@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.adapter.ColoredCardLabel;
+import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
@@ -45,6 +46,8 @@ public class CardDetailActivity extends Activity {
     
     private Context mContext;
     private ImageFetcher mImageFetcher;
+    // 만약 업데이트를 다시 했다면 메인으로 되돌아갈 때 리프레쉬를 해야함
+    private boolean isUpdated = false;      
     
     @AfterViews
     void initCard() {
@@ -78,11 +81,10 @@ public class CardDetailActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                backToBoardTabActivity();
                 return true;
             case R.id.edit:
                 // 카드 수정으로...
-             // 카드 디테일로 이동
                 Intent i = new Intent(mContext,
                         com.egoists.coco_nut.android.board.card.CardDetailEditActivity_.class);
                 AndLog.d("Push card detail event");
@@ -114,6 +116,7 @@ public class CardDetailActivity extends Activity {
         imgCardDetailLabelFlag.setColorFilter(ColoredCardLabel.getColor(mCard.label));
         
         // 참가자 아이콘 추가
+        layoutCardDetailParticipant.removeAllViews();
         ImageView pictureView;
         for (Person person : mCard.participants) {
             pictureView = Person.getImageView(mContext);
@@ -129,8 +132,19 @@ public class CardDetailActivity extends Activity {
     //  EventBus 관련 이벤트 처리부
     ///////////////////////////////////////////////////////
         
-    // 카드 수정이 완료되면 수정된 카드를 받는다
+    // 카드 수정이 완료되면 메인 화면으로...
     public void onEvent(UpdatedCardEvent event) {
-        AndLog.d("Recieved updated card detail event");
+        mCard = event.card;
+        isUpdated = true;
+        drawCardDetail();
+    }
+    
+    void backToBoardTabActivity() {
+        if (isUpdated) {
+            // BoadTabActivity가 카드를 다시 리로드
+            EventBus.getDefault().post(new ReloadEvent());
+        }
+        
+        this.finish();
     }
 }
