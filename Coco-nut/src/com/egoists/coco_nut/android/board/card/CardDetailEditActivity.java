@@ -260,11 +260,13 @@ public class CardDetailEditActivity extends FragmentActivity {
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
         
         // 실제로 체크한 사용자만 추려내서 업데이트한다
+        mCard.ismine = false;
         String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
         for (int i=0; i<mUsers.size(); i++) {
             if (mIsJoined[i]) {
                 BaasioUser user = mUsers.get(i);
                 boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
+                mCard.ismine = true;
                 mParticipant.add(new Person(user, isMe));
             }
             

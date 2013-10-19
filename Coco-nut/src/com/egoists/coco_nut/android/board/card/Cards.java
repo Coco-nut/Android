@@ -20,6 +20,7 @@ public class Cards {
         String subTitle = "";
         float rating = 0;
         int label = -1;
+        int state = 0;
         ArrayList<Person> groupUsers = new ArrayList<Person>();
         for (BaasioEntity baasioCard : baasioCards) {
             JsonNode nodeTitle = baasioCard.getProperty(Card.ENTITY_NAME_TITLE);
@@ -40,6 +41,11 @@ public class Cards {
             JsonNode nodeLabel = baasioCard.getProperty(Card.ENTITY_NAME_LABEL);
             if (!ObjectUtils.isEmpty(nodeLabel)) {
                 label = nodeLabel.asInt();
+            }
+            
+            JsonNode nodeState = baasioCard.getProperty(Card.ENTITY_NAME_STATE);
+            if (!ObjectUtils.isEmpty(nodeState)) {
+                state = nodeState.asInt();
             }
             
             groupUsers.clear();
@@ -67,6 +73,7 @@ public class Cards {
             Card card = new Card(title, subTitle, (int)rating, groupUsers);
             card.uuid = baasioCard.getUuid().toString();
             card.label = label;
+            card.status = state;
             
             cards.add(card);
         }

@@ -18,6 +18,7 @@ public class Card implements Serializable {
     public static final String ENTITY_NAME_STATE      = "state";      // 카드 상태
     public static final String ENTITY_NAME_LABEL      = "label";      // 카드 레이블
     public static final String ENTITY_NAME_PARTY      = "participants";      // 참여자
+    public static final String ENTITY_NAME_ISMINE      = "ismine";      // 나도 참여자
     public static final int ENTITY_VALUE_STATE        = 0;            // 0:todo, 1:doing, 2:done
     
     public String uuid;

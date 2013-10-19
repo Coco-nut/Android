@@ -21,9 +21,15 @@ import android.view.MenuItem;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Cards;
+import com.egoists.coco_nut.android.board.event.AllCardsEvent;
+import com.egoists.coco_nut.android.board.event.DoingCardsEvent;
+import com.egoists.coco_nut.android.board.event.DoneCardsEvent;
 import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.MyCardsEvent;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
+import com.egoists.coco_nut.android.board.event.RequestAllCardsEvent;
+import com.egoists.coco_nut.android.board.event.RequestDoingCardsEvent;
+import com.egoists.coco_nut.android.board.event.RequestDoneCardsEvent;
 import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestMyCardsEvent;
 import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
@@ -57,7 +63,12 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     Activity mContext;
     private ProgressDialog mDialog;
     
-    public List<Card> mCards;    // 그룹의 가져온 카드
+    public List<Card> mCards;    // 그룹의 가져온 전체 카드
+    public List<Card> mMyCards;  // 내 카드
+    public List<Card> mTodoCards;    // 할일 카드
+    public List<Card> mDoingCards;    // 하는중 카드
+    public List<Card> mDoneCards;    // 완료 카드
+    
     private List<BaasioUser> mUsers;
     
     private final String RELATION_NAME          = "group_card";
@@ -117,6 +128,10 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         mViewPager.setCurrentItem(1);   // 기본은 BriefingFragment
         
         mCards = new ArrayList<Card>();
+        mMyCards = new ArrayList<Card>();
+        mTodoCards = new ArrayList<Card>();
+        mDoingCards = new ArrayList<Card>();
+        mDoneCards = new ArrayList<Card>();
         
         // 그룹의 사용자 획득
         getGroupUsersByBaasio();
@@ -166,14 +181,29 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         getGroupCardsByBaasio();
     }
     
-    // TodoFragment에 카드를 쏴준다
-    public void onEvent(RequestTodoCardsEvent event) {
-        EventBus.getDefault().post(new TodoCardsEvent(mCards));
-    }
-    
     // MyCards Fragment에 카드를 쏴준다
     public void onEvent(RequestMyCardsEvent event) {
-        EventBus.getDefault().post(new MyCardsEvent(mCards));
+        EventBus.getDefault().post(new MyCardsEvent(mMyCards));
+    }
+    
+    // TodoFragment에 카드를 쏴준다
+    public void onEvent(RequestTodoCardsEvent event) {
+        EventBus.getDefault().post(new TodoCardsEvent(mTodoCards));
+    }
+    
+    // DoingCards Fragment에 카드를 쏴준다
+    public void onEvent(RequestDoingCardsEvent event) {
+        EventBus.getDefault().post(new DoingCardsEvent(mDoingCards));
+    }
+    
+    // DoneCards Fragment에 카드를 쏴준다
+    public void onEvent(RequestDoneCardsEvent event) {
+        EventBus.getDefault().post(new DoneCardsEvent(mDoneCards));
+    }
+
+    // Brifing Fragment에 카드를 쏴준다
+    public void onEvent(RequestAllCardsEvent event) {
+        EventBus.getDefault().post(new AllCardsEvent(mCards));
     }
     
     // 그룹의 사용자들 정보를 전송한다
@@ -188,8 +218,40 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         Cards cardManager = new Cards();
         mCards = cardManager.toCardArray(getResources(), bassioCards, mUsers);
         
-        EventBus.getDefault().post(new MyCardsEvent(mCards));
-        EventBus.getDefault().post(new TodoCardsEvent(mCards));
+        classifyAllCards();
+        
+        EventBus.getDefault().post(new MyCardsEvent(mMyCards));
+        EventBus.getDefault().post(new TodoCardsEvent(mTodoCards));
+        EventBus.getDefault().post(new DoingCardsEvent(mDoingCards));
+        EventBus.getDefault().post(new DoneCardsEvent(mDoneCards));
+    }
+    
+    void classifyAllCards() {
+        mMyCards.clear();
+        mTodoCards.clear();
+        mDoingCards.clear();
+        mDoneCards.clear();
+        for (Card card : mCards) {
+            // 내가 속한 카드
+            if (card.ismine) {
+                mMyCards.add(card);
+            }
+            
+            // 카드 상태 (할일, 하는중, 한일) 분배
+            switch (card.status) {
+            case 0:
+                mTodoCards.add(card);
+                break;
+            case 1:
+                mDoingCards.add(card);
+                break;
+            case 2:
+                mDoneCards.add(card);
+                break;
+            default :
+                break;
+            }
+        }
     }
     
     ///////////////////////////////////////////////////////
@@ -281,10 +343,12 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                 AndLog.d("ToDo Fragment");
                 return new ToDoFragment_();
             case 3:
-                return new Fragment();
+                AndLog.d("Doing Fragment");
+                return new DoingFragment_();
             case 4:
             default:
-                return new Fragment();
+                AndLog.d("Done Fragment");
+                return new DoneFragment_();
             }
         }
 
