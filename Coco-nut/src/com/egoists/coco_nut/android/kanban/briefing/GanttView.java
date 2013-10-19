@@ -108,6 +108,7 @@ public class GanttView extends View {
 	Point resolution;
 	int nLines;
 	
+	boolean loaded = false;
 	public GanttView(Context context){
 		super(context);
 		mActivity = (BoardTabActivity) context;
@@ -123,62 +124,64 @@ public class GanttView extends View {
 	public void refresh(){
 		loadData();
 		locate();
+		loaded = true;
 	}
 	public void onDraw(Canvas canvas){
 
-		refresh();
-		//Draw leftLine
-		canvas.drawLine( x(leftline_x), y(leftline_y1), x(leftline_x), y(leftline_y2), leftline_paint);
-		
-		//Draw bottomLine
-		canvas.drawLine( x(bottomline_x1), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
-		
-		//Draw centerLines
-		if(nLines != 1)
-			for(int i = 1; i <= nLines; i++)
-				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
-						x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
-		
-		//Draw topTexts
-		Calendar tmp = Calendar.getInstance();
-		for(int i = 0; i< nLines; i++){
-			tmp.setTimeInMillis(day_of_end.getTimeInMillis()-dday_Millis*i);
-			canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
-					x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin),toptext_paint);
+		if(loaded)
+		{
+			//Draw leftLine
+			canvas.drawLine( x(leftline_x), y(leftline_y1), x(leftline_x), y(leftline_y2), leftline_paint);
+			
+			//Draw bottomLine
+			canvas.drawLine( x(bottomline_x1), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
+			
+			//Draw centerLines
+			if(nLines != 1)
+				for(int i = 1; i <= nLines; i++)
+					canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
+							x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
+			
+			//Draw topTexts
+			Calendar tmp = Calendar.getInstance();
+			for(int i = 0; i< nLines; i++){
+				tmp.setTimeInMillis(day_of_end.getTimeInMillis()-dday_Millis*i);
+				canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
+						x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin),toptext_paint);
+			}
+			
+			//Draw Labels_Done
+			int label_count = 0;
+			for(int i = 0; i< number_of_cards; i++)
+				if (statuses[i] == 2){
+					canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), label_DONE_paint);
+					label_count ++;
+				}
+	
+			//Draw Labels_Doing
+			for(int i = 0; i< number_of_cards; i++)
+				if (statuses[i] == 1){
+					canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), null);
+					label_count ++;
+				}
+	
+			//Draw Labels_ToDo
+			for(int i = 0; i< number_of_cards; i++)
+				if (statuses[i] == 0){
+					canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), label_TODO_paint);
+					label_count ++;
+				}
+			
+			//Draw Flags and FlagTexts
+			for(int i = 0; i< number_of_categories; i++){
+				flag[i].draw(canvas);
+				canvas.drawText(category_name[i], x(flag_text_x + i%3*flag_dx), y(flag_text_y + i/3*flag_dy), flagtext_paint);
+			}
+			
+			icon.draw(canvas);
+			down.draw(canvas);
+			canvas.drawText("간트 차트", x(icon_text_x), y(icon_y2), icontext_paint);
 		}
-		
-		//Draw Labels_Done
-		int label_count = 0;
-		for(int i = 0; i< number_of_cards; i++)
-			if (statuses[i] == 2){
-				canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), label_DONE_paint);
-				label_count ++;
-			}
-
-		//Draw Labels_Doing
-		for(int i = 0; i< number_of_cards; i++)
-			if (statuses[i] == 1){
-				canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), null);
-				label_count ++;
-			}
-
-		//Draw Labels_ToDo
-		for(int i = 0; i< number_of_cards; i++)
-			if (statuses[i] == 0){
-				canvas.drawBitmap(label_cropped[i], x(label_x1[i]), y(label_y1 + label_count * label_dy), label_TODO_paint);
-				label_count ++;
-			}
-		
-		//Draw Flags and FlagTexts
-		for(int i = 0; i< number_of_categories; i++){
-			flag[i].draw(canvas);
-			canvas.drawText(category_name[i], x(flag_text_x + i%3*flag_dx), y(flag_text_y + i/3*flag_dy), flagtext_paint);
-		}
-		
-		icon.draw(canvas);
-		down.draw(canvas);
-		canvas.drawText("간트 차트", x(icon_text_x), y(icon_y2), icontext_paint);
-		
 	}
 	
 	private int x(int x){
@@ -194,6 +197,7 @@ public class GanttView extends View {
 
 	private void loadData(){
 		number_of_cards = mActivity.mCards.size();
+		AndLog.e("number_of_cards : " + number_of_cards);
 		startdates = new Calendar[number_of_cards];
 		enddates = new Calendar[number_of_cards];
 		category = new int[number_of_cards];

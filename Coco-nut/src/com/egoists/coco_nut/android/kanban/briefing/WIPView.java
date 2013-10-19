@@ -114,7 +114,7 @@ public class WIPView extends View {
 	int maxWD;
 	long dday_Millis;
 	Calendar currentdate;
-	
+	boolean loaded = false;
 	public WIPView(Context context){
 		super(context);
 		
@@ -133,58 +133,60 @@ public class WIPView extends View {
 	public void refresh(){
 		loadData();
 		locate();
+		loaded = true;
 	}
 	public void onDraw(Canvas canvas){
 		
-		refresh();
-		
-		//Fill graph between done line and wip line
-		canvas.drawPath(donewippath, donewippath_paint);
-		canvas.drawPath(overwippath, overwippath_paint);
-		canvas.drawPath(overwip_maskpath, mask_paint);
-		
-		//Draw leftLine
-		canvas.drawLine( x(leftline_x), y(leftline_y1), x(leftline_x), y(leftline_y2), leftline_paint);
-		
-		//Draw bottomLine
-		canvas.drawLine( x(leftline_x), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
-		
-		//Draw centerLine
-		if(nLines != 1)
-			for(int i = 1; i <= nLines; i++)
-				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
-						x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
-		
-		//Draw alarms
-		for(int i = 0; i <number_of_alarms; i ++)
+		if (loaded)
 		{
-			alarm.setBounds(x(alarm_center_x[i] - alarm_x/2), y(alarm_center_y[i] - alarm_y/2), 
-					x(alarm_center_x[i] + alarm_x/2), y(alarm_center_y[i] + alarm_y/2));
-			alarm.draw(canvas);
+			//Fill graph between done line and wip line
+			canvas.drawPath(donewippath, donewippath_paint);
+			canvas.drawPath(overwippath, overwippath_paint);
+			canvas.drawPath(overwip_maskpath, mask_paint);
+			
+			//Draw leftLine
+			canvas.drawLine( x(leftline_x), y(leftline_y1), x(leftline_x), y(leftline_y2), leftline_paint);
+			
+			//Draw bottomLine
+			canvas.drawLine( x(leftline_x), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
+			
+			//Draw centerLine
+			if(nLines != 1)
+				for(int i = 1; i <= nLines; i++)
+					canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
+							x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
+			
+			//Draw alarms
+			for(int i = 0; i <number_of_alarms; i ++)
+			{
+				alarm.setBounds(x(alarm_center_x[i] - alarm_x/2), y(alarm_center_y[i] - alarm_y/2), 
+						x(alarm_center_x[i] + alarm_x/2), y(alarm_center_y[i] + alarm_y/2));
+				alarm.draw(canvas);
+			}
+			
+			//draw flags and flagtexts
+			canvas.drawRoundRect(flags[0], 5, 5, donewippath_paint);
+			canvas.drawRoundRect(flags[1], 5, 5, donepath_paint);
+			canvas.drawRoundRect(flags[2], 5, 5, overwippath_paint);
+			canvas.drawText("하는 중", x(flag_text_x), y(flag_text_y), flagtext_paint);
+			canvas.drawText("완료", x(flag_text_x + flag_dx), y(flag_text_y), flagtext_paint);
+			canvas.drawText("동시진행 허용량 초과", x(flag_text_x + 2*flag_dx), y(flag_text_y), flagtext_paint);
+			
+			//Fill graph under done line
+			canvas.drawPath(donepath, donepath_paint);
+			
+			
+			//Draw topTexts
+			Calendar tmp = Calendar.getInstance();
+			for(int i = 0; i< nLines; i++){
+				tmp.setTimeInMillis(currentdate.getTimeInMillis()-dday_Millis*i);
+				canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
+						x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin), toptext_paint);
+			}
+	
+			icon.draw(canvas);
+			canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_y2), icontext_paint);
 		}
-		
-		//draw flags and flagtexts
-		canvas.drawRoundRect(flags[0], 5, 5, donewippath_paint);
-		canvas.drawRoundRect(flags[1], 5, 5, donepath_paint);
-		canvas.drawRoundRect(flags[2], 5, 5, overwippath_paint);
-		canvas.drawText("하는 중", x(flag_text_x), y(flag_text_y), flagtext_paint);
-		canvas.drawText("완료", x(flag_text_x + flag_dx), y(flag_text_y), flagtext_paint);
-		canvas.drawText("동시진행 허용량 초과", x(flag_text_x + 2*flag_dx), y(flag_text_y), flagtext_paint);
-		
-		//Fill graph under done line
-		canvas.drawPath(donepath, donepath_paint);
-		
-		
-		//Draw topTexts
-		Calendar tmp = Calendar.getInstance();
-		for(int i = 0; i< nLines; i++){
-			tmp.setTimeInMillis(currentdate.getTimeInMillis()-dday_Millis*i);
-			canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
-					x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin), toptext_paint);
-		}
-
-		icon.draw(canvas);
-		canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_y2), icontext_paint);
 	}
 	
 	private int x(int x){

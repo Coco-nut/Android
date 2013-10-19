@@ -70,7 +70,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
     public List<Card> mDoingCards;    // 하는중 카드
     public List<Card> mDoneCards;    // 완료 카드
     
-    private List<BaasioUser> mUsers;
+    public List<BaasioUser> mUsers;
     
     private final String RELATION_NAME          = "group_card";
     public static final String ARG_GROUP_UUID   = "group_uuid";
