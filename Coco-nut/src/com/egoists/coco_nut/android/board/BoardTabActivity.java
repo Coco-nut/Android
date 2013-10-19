@@ -28,6 +28,7 @@ import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestMyCardsEvent;
 import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
 import com.egoists.coco_nut.android.board.event.TodoCardsEvent;
+import com.egoists.coco_nut.android.kanban.briefing.BriefingFragment;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.googlecode.androidannotations.annotations.AfterViews;
@@ -276,7 +277,8 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                 AndLog.d("My Card Fragment");
                 return new MyCardsFragment_();
             case 1:
-                return new Fragment();
+            	AndLog.d("Brieging Fragment");
+                return new BriefingFragment();
             case 2:
                 AndLog.d("ToDo Fragment");
                 return new ToDoFragment_();

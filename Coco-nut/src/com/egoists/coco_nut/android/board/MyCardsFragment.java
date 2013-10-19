@@ -56,7 +56,7 @@ public class MyCardsFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        AndLog.d("Unegister");
+        AndLog.d("Unregister");
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
