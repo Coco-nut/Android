@@ -1,6 +1,7 @@
 package com.egoists.coco_nut.android.board.card;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,13 +35,19 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
+import com.egoists.coco_nut.android.board.event.UpdateDuetoDateEvent;
+import com.egoists.coco_nut.android.board.event.UpdateDuetoTimeEvent;
+import com.egoists.coco_nut.android.board.event.UpdateStartDateEvent;
+import com.egoists.coco_nut.android.board.event.UpdateStartTimeEvent;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
-import com.egoists.coco_nut.android.util.DatePickerFragment;
 import com.egoists.coco_nut.android.util.DialogFactory;
-import com.egoists.coco_nut.android.util.TimePickerFragment;
+import com.egoists.coco_nut.android.util.DuetoDatePickerFragment;
+import com.egoists.coco_nut.android.util.DuetoTimePickerFragment;
+import com.egoists.coco_nut.android.util.StartDatePickerFragment;
+import com.egoists.coco_nut.android.util.StartTimePickerFragment;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
@@ -69,6 +76,14 @@ public class CardDetailEditActivity extends FragmentActivity {
     RatingBar ratingCardEdit;
     @ViewById
     LinearLayout layGroupCardEditGroupUsers;
+    @ViewById
+    TextView txtStartTime;
+    @ViewById
+    TextView txtStartDate;
+    @ViewById
+    TextView txtDueToTime;
+    @ViewById
+    TextView txtDueToDate;
    
     // 유저 리스트의 하위 레이아웃
     @ViewById
@@ -81,6 +96,9 @@ public class CardDetailEditActivity extends FragmentActivity {
     private List<BaasioUser> mUsers;            // 그룹의 모든 사용자
     private ArrayList<Person> mParticipant;     // 이 카드의 참가자
     private boolean mIsJoined[];                // 그룹의 사용자가 참여 할 것인지를 저장하는 플래그 (인덱스 기반)
+    
+    private Calendar mStartCal;      // 시작시간
+    private Calendar mDuetoCal;      // 종료시간
     
     private Context mContext;
     private LayoutInflater mInflater;
@@ -169,13 +187,98 @@ public class CardDetailEditActivity extends FragmentActivity {
     }
     
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new StartDatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
     
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
+        DialogFragment newFragment = new StartTimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+    
+    public void showDueToDatePickerDialog(View v) {
+        DialogFragment newFragment = new DuetoDatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+    
+    public void showDueToTimePickerDialog(View v) {
+        DialogFragment newFragment = new DuetoTimePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+    
+    ///////////////////////////////////////////////////////
+    //  EventBus 관련 이벤트 처리부
+    ///////////////////////////////////////////////////////
+    boolean setStartDate = false;
+    
+    public void onEvent(UpdateStartTimeEvent event) {
+        int hour = event.h;
+        int minute = event.m;
+        
+        txtStartTime.setText(hour + ":" + minute);
+        
+        // 날짜가 선택되어 있지 않았다면 현재 날짜로 바꿔준다
+        if (setStartDate == false) {
+            mStartCal = Calendar.getInstance();
+            txtStartDate.setText(mStartCal.get(Calendar.YEAR) 
+                    + "/" + mStartCal.get(Calendar.MONTH) 
+                    + "/" + mStartCal.get(Calendar.DAY_OF_MONTH));
+            setStartDate = true;
+        }
+        mStartCal.set(Calendar.HOUR_OF_DAY, hour);
+        mStartCal.set(Calendar.MINUTE, minute);
+        
+        
+    }
+
+    public void onEvent(UpdateStartDateEvent event) {
+        setStartDate = true;
+        
+        int year = event.y;
+        int month = event.m;
+        int day = event.d;
+        
+        txtStartDate.setText(year + "/" + month + "/" + day);
+        mStartCal = Calendar.getInstance();
+        mStartCal.set(Calendar.YEAR, year);
+        mStartCal.set(Calendar.MONTH, month);
+        mStartCal.set(Calendar.DAY_OF_MONTH, day);
+    }
+    
+    boolean setDutoDate = false;
+    
+    public void onEvent(UpdateDuetoTimeEvent event) {
+        int hour = event.h;
+        int minute = event.m;
+        
+        txtDueToTime.setText(hour + ":" + minute);
+        
+        // 날짜가 선택되어 있지 않았다면 현재 날짜로 바꿔준다
+        if (setDutoDate == false) {
+            mDuetoCal = Calendar.getInstance();
+            txtDueToDate.setText(mStartCal.get(Calendar.YEAR) 
+                    + "/" + mStartCal.get(Calendar.MONTH) 
+                    + "/" + mStartCal.get(Calendar.DAY_OF_MONTH));
+            setDutoDate = true;
+        }
+        mDuetoCal.set(Calendar.HOUR_OF_DAY, hour);
+        mDuetoCal.set(Calendar.MINUTE, minute);
+        
+        
+    }
+
+    public void onEvent(UpdateDuetoDateEvent event) {
+        setDutoDate = true;
+        
+        int year = event.y;
+        int month = event.m;
+        int day = event.d;
+        
+        txtDueToDate.setText(year + "/" + month + "/" + day);
+        mDuetoCal = Calendar.getInstance();
+        mDuetoCal.set(Calendar.YEAR, year);
+        mDuetoCal.set(Calendar.MONTH, month);
+        mDuetoCal.set(Calendar.DAY_OF_MONTH, day);
     }
     
     // 사용자 정보를 획득한다
@@ -258,6 +361,10 @@ public class CardDetailEditActivity extends FragmentActivity {
         mCard.importance = mCard.importance;
         entity.setProperty(Card.ENTITY_NAME_RATING, (int)mCard.importance);
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
+        mCard.startdate = mStartCal;
+        mCard.enddate = mDuetoCal;
+        entity.setProperty(Card.ENTITY_NAME_START_DATE, mCard.startdate.getTimeInMillis());
+        entity.setProperty(Card.ENTITY_NAME_DUETO_DATE, mCard.enddate.getTimeInMillis());
         
         // 실제로 체크한 사용자만 추려내서 업데이트한다
         mCard.ismine = false;

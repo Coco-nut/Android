@@ -19,7 +19,11 @@ public class Card implements Serializable {
     public static final String ENTITY_NAME_LABEL      = "label";      // 카드 레이블
     public static final String ENTITY_NAME_PARTY      = "participants";      // 참여자
     public static final String ENTITY_NAME_ISMINE      = "ismine";      // 나도 참여자
+    public static final String ENTITY_NAME_START_DATE      = "startdate";
+    public static final String ENTITY_NAME_DUETO_DATE      = "enddate";
+    
     public static final int ENTITY_VALUE_STATE        = 0;            // 0:todo, 1:doing, 2:done
+    
     
     public String uuid;
     public String title;
@@ -29,9 +33,9 @@ public class Card implements Serializable {
     public int label = -1;
     public float importance;
     
-    private Calendar startdate;
+    public Calendar startdate;
     private Calendar expectedstartdate;
-    private Calendar enddate;
+    public Calendar enddate;
     private Calendar expectedenddate;
     
     

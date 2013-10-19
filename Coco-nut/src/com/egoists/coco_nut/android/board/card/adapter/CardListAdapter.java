@@ -1,6 +1,7 @@
 package com.egoists.coco_nut.android.board.card.adapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
@@ -75,7 +76,6 @@ public class CardListAdapter extends BaseAdapter {
             view.mCategory = (TextView)convertView.findViewById(R.id.viewCategory);
             view.mParticipant = (LinearLayout)convertView.findViewById(R.id.layoutCardListParticipant);
             
-            
             if (view != null) {
                 convertView.setTag(view);
             }
@@ -91,7 +91,10 @@ public class CardListAdapter extends BaseAdapter {
             view.mSubTitle.setText(card.sub_title);
             
             view.mRatingBar.setRating(card.importance);
-            view.mDate.setText(DateConverter.getStringTime(DateConverter.getCurrentGmcTime()));
+            Calendar c = card.enddate;
+            if (c != null) {
+                view.mDate.setText(DateConverter.getStringTime(c.getTimeInMillis()));
+            }
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             view.mParticipant.removeAllViews();
             

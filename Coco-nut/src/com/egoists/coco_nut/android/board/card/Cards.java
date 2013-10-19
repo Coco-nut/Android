@@ -1,6 +1,7 @@
 package com.egoists.coco_nut.android.board.card;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.codehaus.jackson.JsonNode;
@@ -21,6 +22,8 @@ public class Cards {
         float rating = 0;
         int label = -1;
         int state = 0;
+        long startMilSec = -1;
+        long endMilSec = -1;
         ArrayList<Person> groupUsers = new ArrayList<Person>();
         for (BaasioEntity baasioCard : baasioCards) {
             JsonNode nodeTitle = baasioCard.getProperty(Card.ENTITY_NAME_TITLE);
@@ -46,6 +49,16 @@ public class Cards {
             JsonNode nodeState = baasioCard.getProperty(Card.ENTITY_NAME_STATE);
             if (!ObjectUtils.isEmpty(nodeState)) {
                 state = nodeState.asInt();
+            }
+            
+            JsonNode nodeStartMilSec = baasioCard.getProperty(Card.ENTITY_NAME_START_DATE);
+            if (!ObjectUtils.isEmpty(nodeStartMilSec)) {
+                startMilSec = nodeStartMilSec.asLong();
+            }
+            
+            JsonNode nodeEndMilSec = baasioCard.getProperty(Card.ENTITY_NAME_DUETO_DATE);
+            if (!ObjectUtils.isEmpty(nodeEndMilSec)) {
+                endMilSec = nodeEndMilSec.asLong();
             }
             
             groupUsers.clear();
@@ -74,6 +87,16 @@ public class Cards {
             card.uuid = baasioCard.getUuid().toString();
             card.label = label;
             card.status = state;
+            Calendar c = Calendar.getInstance();
+            if (startMilSec > 0) {
+                c.setTimeInMillis(startMilSec);
+                card.startdate = c;
+            }
+            if (endMilSec > 0) {
+                c.setTimeInMillis(endMilSec);
+                card.enddate = c;
+            }
+            
             
             cards.add(card);
         }
