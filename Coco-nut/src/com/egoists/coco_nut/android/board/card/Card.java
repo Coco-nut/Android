@@ -38,6 +38,8 @@ public class Card implements Serializable {
     public Calendar enddate;
     private Calendar expectedenddate;
     
+    public Calendar timeofdoing;
+    public Calendar timeofdone;
     
     public ArrayList<Comment> comments;
     public ArrayList<Checkbox> checkboxes;
@@ -117,6 +119,7 @@ public class Card implements Serializable {
         this.startdate = startdate;
         enddate = Calendar.getInstance();
         enddate.setTimeInMillis(startdate.getTimeInMillis() + 24 * 3600 * 1000);
+        timeofdoing = Calendar.getInstance();
         this.status = 1;
         //TODO: report change to server
     }
@@ -124,6 +127,7 @@ public class Card implements Serializable {
     {
         this.startdate = null;
         this.enddate = null;
+        timeofdoing = null;
         this.status = 0;
         //TODO: report change to server
     }
@@ -131,6 +135,7 @@ public class Card implements Serializable {
     {
         this.enddate = enddate;
         this.status = 2;
+        timeofdone = Calendar.getInstance();
         //TODO: peer rating, report change to server
     }
     public Calendar getstartdate()

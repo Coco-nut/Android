@@ -1,5 +1,8 @@
 package com.egoists.coco_nut.android.kanban.briefing;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +13,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.adapter.CardListAdapter;
+import com.egoists.coco_nut.android.board.event.MyCardsEvent;
+import com.egoists.coco_nut.android.board.event.RequestMyCardsEvent;
+import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.EFragment;
+
+import de.greenrobot.event.EventBus;
 
 
 @EFragment(R.layout.fragment_briefing)
@@ -21,6 +31,7 @@ public class BriefingFragment extends Fragment {
 	LinearLayout wip_list;
 	LinearLayout parti_list;
 	LinearLayout peer_list;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
@@ -44,9 +55,5 @@ public class BriefingFragment extends Fragment {
 		
 		return briefing_layout;
 	}
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		menu.findItem(R.id.menu_add).setVisible(false);
-	}
+
 }

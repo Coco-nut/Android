@@ -1,6 +1,8 @@
 package com.egoists.coco_nut.android.kanban.briefing;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,16 +18,19 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.egoists.coco_nut.android.R;
+import com.egoists.coco_nut.android.board.BoardTabActivity;
+import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.util.CalendarComparator;
 
 public class WIPView extends View {
 	
-	//Dummy Dataset : will be achieved from server later
-	Calendar[] dateofchanges;
-	final int number_of_dates = 17;
-	final int[] WIP = {1, 3, 6, 4, 2, 5, 6, 4, 7, 6, 5, 4, 3, 5, 3, 2, 1};
-	final int[] Done = {0, 0, 1, 2, 3, 3, 3, 4, 4, 8, 8, 8, 8, 9, 11, 12, 13};
-	final int[] changedate = {1, 3, 7, 8, 11, 12, 14, 15, 18, 22, 24, 25, 26, 28, 29, 30, 1};
-	final int[] changemonth = {9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10};
+	BoardTabActivity mActivity;
+	
+	int number_of_dates;
+	int[] WIP;
+	int[] Done;
+	ArrayList<Calendar> dateofchanges;
+	
 	final int maxWIP = 4;
 	final int alarm_WIP = 6;
 	
@@ -43,9 +48,7 @@ public class WIPView extends View {
 	
 	final int bottomline_w = 1;
 	final int bottomline_c = Color.argb(255, 203, 203, 203);
-	final int bottomline_x1 = leftline_x;
 	final int bottomline_x2 = 689;
-	final int bottomline_y = leftline_y2;
 	Paint bottomline_paint;
 	
 	final int flag_x1 = leftline_x + 28;
@@ -65,14 +68,11 @@ public class WIPView extends View {
 	final int centerline_c = Color.argb(255, 236, 236, 236);
 	final int centerline_x1 = leftline_x + 2;
 	final int centerline_x2 = 740;
-	final int centerline_y1 = leftline_y1;
-	final int centerline_y2 = leftline_y2;
 	double centerline_dx;
 	Paint centerline_paint;
 	
 	int graph_x2;
 	final int graph_y1 = leftline_y1 + 21;
-	final int graph_y2 = leftline_y2;
 
 	final int overwippath_c = Color.argb(220, 255, 138, 138);
 	Paint overwippath_paint;
@@ -87,7 +87,6 @@ public class WIPView extends View {
 	Path donepath;
 	Paint donepath_paint;
 	
-	final int toptext_y = top_margin;
 	final int toptext_c = Color.argb(255, 217, 217, 217);
 	final int toptext_size = 20;
 	Paint toptext_paint;
@@ -102,11 +101,9 @@ public class WIPView extends View {
 
 	final int icon_y1 = top_margin / 3;
 	final int icon_y2 = icon_y1 + 40;
-	final int icon_x1 = leftline_x;
-	final int icon_x2 = icon_x1 + 28;
+	final int icon_x2 = leftline_x + 28;
 	final int icon_text_c = Color.argb(255, 94, 119, 142);
 	final int icon_text_x = icon_x2 + 20;
-	final int icon_text_y = icon_y2;
 	final int icon_text_size = 33;
 	Paint icontext_paint;
 	Drawable icon;
@@ -120,8 +117,8 @@ public class WIPView extends View {
 	
 	public WIPView(Context context){
 		super(context);
-		//instantiate dummy data
-		instantiatedummydates();
+		
+		mActivity = (BoardTabActivity) context;
 		
 		//get screen resolution
 		resolution = new Point();
@@ -130,10 +127,16 @@ public class WIPView extends View {
 		//Initializations
 		initialize();
 		setBackgroundColor(background_c);
-		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
+		setMinimumHeight(y(1070));
 
 	}
+	public void refresh(){
+		loadData();
+		locate();
+	}
 	public void onDraw(Canvas canvas){
+		
+		refresh();
 		
 		//Fill graph between done line and wip line
 		canvas.drawPath(donewippath, donewippath_paint);
@@ -144,13 +147,13 @@ public class WIPView extends View {
 		canvas.drawLine( x(leftline_x), y(leftline_y1), x(leftline_x), y(leftline_y2), leftline_paint);
 		
 		//Draw bottomLine
-		canvas.drawLine( x(bottomline_x1), y(bottomline_y), x(bottomline_x2), y(bottomline_y), bottomline_paint);
+		canvas.drawLine( x(leftline_x), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
 		
 		//Draw centerLine
 		if(nLines != 1)
 			for(int i = 1; i <= nLines; i++)
-				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(centerline_y1), 
-						x((int)(centerline_x1 + centerline_dx*i)), y(centerline_y2), centerline_paint);
+				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
+						x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
 		
 		//Draw alarms
 		for(int i = 0; i <number_of_alarms; i ++)
@@ -177,11 +180,11 @@ public class WIPView extends View {
 		for(int i = 0; i< nLines; i++){
 			tmp.setTimeInMillis(currentdate.getTimeInMillis()-dday_Millis*i);
 			canvas.drawText((tmp.get(Calendar.MONTH)+1)+"."+tmp.get(Calendar.DATE),
-					x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(toptext_y), toptext_paint);
+					x((int)(centerline_x1 + (nLines-i)*centerline_dx)), y(top_margin), toptext_paint);
 		}
 
 		icon.draw(canvas);
-		canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
+		canvas.drawText("진행상황 차트", x(icon_text_x), y(icon_y2), icontext_paint);
 	}
 	
 	private int x(int x){
@@ -195,17 +198,123 @@ public class WIPView extends View {
 		return days / (days/10 + 1) + 1;
 	}
 	
-	private void instantiatedummydates(){
-		dateofchanges = new Calendar[number_of_dates];
+	private void loadData(){
 		
-		currentdate = Calendar.getInstance();
+		ArrayList<Card> mCards = (ArrayList<Card>) mActivity.mCards;
+		
+		ArrayList<Calendar> changesDoing = new ArrayList<Calendar>();
+		ArrayList<Calendar> changesDone = new ArrayList<Calendar>();
+		
+
+		for(int i=0; i<mCards.size(); i++){
+			if (mCards.get(i).timeofdoing != null)
+				changesDoing.add(mCards.get(i).timeofdoing);
+			if (mCards.get(i).timeofdone != null)
+				changesDone.add(mCards.get(i).timeofdone);
+		}
+		dateofchanges = new ArrayList<Calendar>();
+		dateofchanges.addAll(changesDoing);
+		dateofchanges.addAll(changesDone);
+		
+		number_of_dates = dateofchanges.size();
+		WIP = new int[number_of_dates];
+		Done = new int[number_of_dates];
+		
+		Collections.sort(dateofchanges, new CalendarComparator());
+		
+		int curwip = 0;
+		int curdone = 0;
 		maxWD = 0;
-		for(int i = 0; i< number_of_dates; i++)
-		{
-			dateofchanges[i] = Calendar.getInstance();
-			dateofchanges[i].set(2013, changemonth[i]-1, changedate[i]);
+		for(int i=0; i<number_of_dates; i++){
+			if (changesDoing.contains(dateofchanges.get(i)))
+				curwip ++;
+			else{
+				curdone ++;
+				curwip --;
+			}
+			WIP[i] = curwip;
+			Done[i] = curdone;
 			if (maxWD < WIP[i] + Done[i])
 				maxWD = WIP[i] + Done[i];
+		}
+
+		currentdate = Calendar.getInstance();
+	}
+	
+	private void locate(){
+		//Calculate date difference
+		
+		if (number_of_dates != 0 || maxWD != 0)
+		{
+			long tmp = (currentdate.getTimeInMillis()-dateofchanges.get(0).getTimeInMillis())/24/3600/1000;
+			nLines = numberofLinestoDraw((int)tmp);
+			dday = (int)(tmp/nLines + 1);
+			dday_Millis = (long)dday*24*3600*1000;		
+			
+			centerline_dx = (centerline_x2 - centerline_x1)/(nLines+1);
+			int[] pointstofill_x = new int[2*number_of_dates];
+			int[] pointstofill_y = new int[2*number_of_dates];
+			double day_dx = centerline_dx/ (double)dday;
+			int graph_x2 = centerline_x1 + (centerline_x2 - centerline_x1)/(nLines+1)*nLines;
+			double dy = (maxWD==0)?0:(leftline_y2 - graph_y1)/maxWD;
+			double close_alarm = Double.MIN_VALUE;
+			for(int i = 0; i < number_of_dates; i++)
+			{
+				double point_x1 = graph_x2 - 
+						(int)(tmp * day_dx);
+				pointstofill_x[i] = (int)point_x1;
+				pointstofill_x[2*number_of_dates-i-1] = (int)point_x1;
+				pointstofill_y[i] = (int)(leftline_y2 - (Done[i] + WIP[i])*dy);
+				pointstofill_y[2*number_of_dates-i-1] = (int)(leftline_y2 - Done[i]*dy);
+				
+				if (point_x1 - close_alarm >= 2*alarm_x && WIP[i] >= alarm_WIP){
+					alarm_center_x[number_of_alarms] = (int)point_x1;
+					alarm_center_y[number_of_alarms] = (int)(leftline_y2 - (Done[i] + WIP[i])*dy) - alarm_y/2;
+					close_alarm = point_x1; 
+					number_of_alarms++;
+				}
+				
+			}
+			int pathstart_x = (pointstofill_y[1] == pointstofill_y[0]) ? leftline_x :
+				Math.max( leftline_x, pointstofill_x[0] - (pointstofill_y[0] - leftline_y2) * 
+						(pointstofill_x[1] - pointstofill_x[0]) / (pointstofill_y[1] - pointstofill_y[0]));
+		
+			int pathstart_y = (pathstart_x != leftline_x) ? leftline_y2 : 
+				pointstofill_y[0] - (pointstofill_y[1] - pointstofill_y[0]) / (pointstofill_x[1] - pointstofill_x[0]) 
+					* (pointstofill_x[0] - leftline_x) ;
+			
+			donewippath.moveTo(x(pathstart_x), y(pathstart_y));
+			for(int i = 0; i < number_of_dates; i++)
+				donewippath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
+			donewippath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates -1]));
+			donewippath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates]));
+			for(int i = number_of_dates; i < number_of_dates*2; i++)
+				donewippath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
+			donewippath.lineTo(x(pathstart_x), y(pointstofill_y[number_of_dates*2-1]));
+			donewippath.lineTo(x(pathstart_x), y(pathstart_y));
+			
+			donepath.moveTo(x(graph_x2), y(leftline_y2));
+			donepath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates]));
+			for(int i = 0; i < number_of_dates; i++)
+				donepath.lineTo(x(pointstofill_x[number_of_dates + i]), y(pointstofill_y[number_of_dates + i]));
+			donepath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(leftline_y2));
+			donepath.lineTo(x(graph_x2), y(leftline_y2));
+			
+			overwippath.moveTo(x(graph_x2), y(graph_y1));
+			overwippath.lineTo(x(graph_x2), y(Math.max(graph_y1, (int)(pointstofill_y[number_of_dates] - dy * maxWIP))));
+			for(int i = 0; i < number_of_dates; i++)
+				overwippath.lineTo(x(pointstofill_x[number_of_dates + i]), 
+						y(Math.max(graph_y1, (int)(pointstofill_y[number_of_dates + i] - dy * maxWIP))));
+			overwippath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(graph_y1));
+			overwippath.lineTo(x(graph_x2), y(graph_y1));
+	
+			overwip_maskpath.moveTo(x(pathstart_x), y(pathstart_y));
+			for(int i = 0; i < number_of_dates; i++)
+				overwip_maskpath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
+			overwip_maskpath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates -1]));
+			overwip_maskpath.lineTo(x(graph_x2), y(graph_y1));
+			overwip_maskpath.lineTo(x(pathstart_x), y(graph_y1));
+			overwip_maskpath.lineTo(x(pathstart_x), y(pathstart_y));
 		}
 	}
 	
@@ -213,12 +322,6 @@ public class WIPView extends View {
 		alarm = getResources().getDrawable(R.drawable.briefing_alarm); 
 		alarm_center_x = new int[max_alarms];
 		alarm_center_y = new int[max_alarms];
-		
-		//Calculate date difference
-		long tmp = (currentdate.getTimeInMillis()-dateofchanges[0].getTimeInMillis())/24/3600/1000;
-		nLines = numberofLinestoDraw((int)tmp);
-		dday = (int)(tmp/nLines + 1);
-		dday_Millis = (long)dday*24*3600*1000;
 		
 		leftline_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		leftline_paint.setStyle(Paint.Style.STROKE);
@@ -276,82 +379,12 @@ public class WIPView extends View {
 		mask_paint.setColor(background_c);
 		overwip_maskpath = new Path();
 		
-
-		centerline_dx = (centerline_x2 - centerline_x1)/(nLines+1);
-		int[] pointstofill_x = new int[2*number_of_dates];
-		int[] pointstofill_y = new int[2*number_of_dates];
-		double day_dx = centerline_dx/ (double)dday;
-		int graph_x2 = centerline_x1 + (centerline_x2 - centerline_x1)/(nLines+1)*nLines;
-		double dy = (graph_y2 - graph_y1)/maxWD;
-		double close_alarm = Double.MIN_VALUE;
-		for(int i = 0; i < number_of_dates; i++)
-		{
-			double point_x1 = graph_x2 - 
-					(int)(((currentdate.getTimeInMillis() - dateofchanges[i].getTimeInMillis())/24/3600/1000) * day_dx);
-			pointstofill_x[i] = (int)point_x1;
-			pointstofill_x[2*number_of_dates-i-1] = (int)point_x1;
-			pointstofill_y[i] = (int)(graph_y2 - (Done[i] + WIP[i])*dy);
-			pointstofill_y[2*number_of_dates-i-1] = (int)(graph_y2 - Done[i]*dy);
-			
-			if (point_x1 - close_alarm >= 2*alarm_x && WIP[i] >= alarm_WIP){
-				alarm_center_x[number_of_alarms] = (int)point_x1;
-				alarm_center_y[number_of_alarms] = (int)(graph_y2 - (Done[i] + WIP[i])*dy) - alarm_y/2;
-				close_alarm = point_x1; 
-				number_of_alarms++;
-			}
-			
-		}
-
 		flags = new RectF[3];
 		flags[0] = new RectF(x(flag_x1), y(flag_y1), x(flag_x2), y(flag_y2));
 		flags[1] = new RectF(x(flag_x1 + flag_dx), y(flag_y1), x(flag_x2 + flag_dx), y(flag_y2));
 		flags[2] = new RectF(x(flag_x1 + 2*flag_dx), y(flag_y1), x(flag_x2 + 2*flag_dx), y(flag_y2));
 		
 		icon = getResources().getDrawable(R.drawable.briefing_chart_icon);
-		icon.setBounds(x(icon_x1), y(icon_y1), x(icon_x2), y(icon_y2));
-		
-		
-		int pathstart_x = (pointstofill_y[1] == pointstofill_y[0]) ? leftline_x :
-			Math.max( leftline_x, pointstofill_x[0] - (pointstofill_y[0] - bottomline_y) * 
-					(pointstofill_x[1] - pointstofill_x[0]) / (pointstofill_y[1] - pointstofill_y[0]));
-	
-		int pathstart_y = (pathstart_x != leftline_x) ? bottomline_y : 
-			pointstofill_y[0] - (pointstofill_y[1] - pointstofill_y[0]) / (pointstofill_x[1] - pointstofill_x[0]) 
-				* (pointstofill_x[0] - leftline_x) ;
-		
-		donewippath.moveTo(x(pathstart_x), y(pathstart_y));
-		for(int i = 0; i < number_of_dates; i++)
-			donewippath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
-		donewippath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates -1]));
-		donewippath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates]));
-		for(int i = number_of_dates; i < number_of_dates*2; i++)
-			donewippath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
-		donewippath.lineTo(x(pathstart_x), y(pointstofill_y[number_of_dates*2-1]));
-		donewippath.lineTo(x(pathstart_x), y(pathstart_y));
-		
-		donepath.moveTo(x(graph_x2), y(graph_y2));
-		donepath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates]));
-		for(int i = 0; i < number_of_dates; i++)
-			donepath.lineTo(x(pointstofill_x[number_of_dates + i]), y(pointstofill_y[number_of_dates + i]));
-		donepath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(graph_y2));
-		donepath.lineTo(x(graph_x2), y(graph_y2));
-		
-		overwippath.moveTo(x(graph_x2), y(graph_y1));
-		overwippath.lineTo(x(graph_x2), y(Math.max(graph_y1, (int)(pointstofill_y[number_of_dates] - dy * maxWIP))));
-		for(int i = 0; i < number_of_dates; i++)
-			overwippath.lineTo(x(pointstofill_x[number_of_dates + i]), 
-					y(Math.max(graph_y1, (int)(pointstofill_y[number_of_dates + i] - dy * maxWIP))));
-		overwippath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(graph_y1));
-		overwippath.lineTo(x(graph_x2), y(graph_y1));
-
-		overwip_maskpath.moveTo(x(pathstart_x), y(pathstart_y));
-		for(int i = 0; i < number_of_dates; i++)
-			overwip_maskpath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
-		overwip_maskpath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates -1]));
-		overwip_maskpath.lineTo(x(graph_x2), y(graph_y1));
-		overwip_maskpath.lineTo(x(pathstart_x), y(graph_y1));
-		overwip_maskpath.lineTo(x(pathstart_x), y(pathstart_y));
-		
-		
+		icon.setBounds(x(leftline_x), y(icon_y1), x(icon_x2), y(icon_y2));
 	}
 }
