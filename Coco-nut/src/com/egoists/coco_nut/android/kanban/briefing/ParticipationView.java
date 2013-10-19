@@ -1,5 +1,7 @@
 package com.egoists.coco_nut.android.kanban.briefing;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,15 +13,22 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.BoardTabActivity;
+import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.cache.ImageFetcher;
+import com.kth.baasio.entity.user.BaasioUser;
 
-public class ParticipationView extends View  {
+public class ParticipationView extends RelativeLayout  {
 	
 	
 	int number_of_people;
 	double[] participation_ratio;
+	ImageFetcher mImageFetcher;
 	
 	BoardTabActivity mActivity;
 	
@@ -65,6 +74,7 @@ public class ParticipationView extends View  {
 	Paint ratio_text_paint;
 	int[] ratio_text_x;
 	int[] ratio_text_y;
+	ImageView[] faces;
 	
 	final int icon_y1 = top_margin / 3;
 	final int icon_y2 = icon_y1 + 40;
@@ -76,21 +86,20 @@ public class ParticipationView extends View  {
 	final int icon_text_size = 33;
 	Paint icontext_paint;
 	Drawable icon;
-
-	Drawable face;
+	boolean isLoaded = false;
 	Point resolution;
 	int nLines;
 	
 	public ParticipationView(Context context){
 		super(context);
 		mActivity = (BoardTabActivity) context;
+		mImageFetcher = new ImageFetcher(context);
 		//get screen resolution
 		resolution = new Point();
 		((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(resolution);
 		
 		//Initializations
 		initialize();
-		face = getResources().getDrawable(R.drawable.briefing_face);
 		setBackgroundColor(Color.WHITE);
 		setMinimumHeight(y(Math.max(1070, top_margin + chart_height + 250)));
 		
@@ -101,8 +110,11 @@ public class ParticipationView extends View  {
 		locate();
 	}
 	public void onDraw(Canvas canvas){
-
+		
+		faces = new ImageView[4];
+			
 		refresh();
+		
 		icon.draw(canvas);
 		canvas.drawText("기여도 차트", x(icon_text_x), y(icon_text_y), icontext_paint);
 		
@@ -111,9 +123,20 @@ public class ParticipationView extends View  {
 		{
 			canvas.drawLine(x(center_x), y(center_y), x(people_center_x[i]), y(people_center_y[i]), people_line_paint[i]);
 			canvas.drawCircle(x(people_center_x[i]), y(people_center_y[i]), x(circle_radius_people), circle_outter_paint[i]);
-			face.setBounds(x(people_center_x[i] - circle_radius_people/2), y(people_center_y[i]) - x(circle_radius_people/2),
-					x(people_center_x[i] + circle_radius_people/2), y(people_center_y[i]) + x(circle_radius_people)/2 );
-			face.draw(canvas);
+			
+			
+			
+			faces[i] = Person.getImageView(mActivity);
+			if (mActivity.mUsers.get(i).getPicture() != null) 
+				mImageFetcher.loadImage(mActivity.mUsers.get(i).getPicture(), faces[i], R.drawable.card_personphoto_default);
+			
+			faces[i].setX(x(people_center_x[i] - circle_radius_people));
+			faces[i].setY(y(people_center_y[i]) - x(circle_radius_people));
+			if (!isLoaded)
+			{
+				addView(faces[i]);
+				isLoaded = !isLoaded;
+			}
 			canvas.drawArc(circle_rect_outter, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_outter_paint[i]);
 			canvas.drawArc(circle_rect_inner, (float) cumul_angle, (float) (participation_ratio[i] * 360), true, circle_inner_paint[i]);
 			canvas.drawText((int)(participation_ratio[i]*100)+"%", x(ratio_text_x[i]), y(ratio_text_y[i]), ratio_text_paint);
@@ -130,9 +153,28 @@ public class ParticipationView extends View  {
 		return y * resolution.y / 1280;
 	}
 	private void loadData(){
+		double W = 0.5;
 		number_of_people = mActivity.mUsers.size();
 		participation_ratio = new double[number_of_people];
-		
+		double normalization = 0;
+		int i = 0;
+		for (BaasioUser u : mActivity.mUsers)
+		{
+			participation_ratio[i] = 0;
+			for (Card c : mActivity.mCards)
+				if (c.status == 2)
+					for (int j = 0; j < c.participants.size(); j++)
+						if (c.participants.get(j).uuid.equals(u.getUuid()))
+							participation_ratio[i] += 
+									Math.pow((1+W),c.importance)*c.participants.get(j).sumRate;
+			normalization += participation_ratio[i];
+			i++;
+		}
+		for (i=0; i< number_of_people; i++)
+			if(normalization == 0)
+				participation_ratio[i] = 1.0 / number_of_people;
+			else
+				participation_ratio[i] /= normalization;
 	}
 	private void locate(){
 		people_center_x = new int[number_of_people];
@@ -140,6 +182,17 @@ public class ParticipationView extends View  {
 		ratio_text_x = new int[number_of_people];
 		ratio_text_y = new int[number_of_people];
 		people_line_paint = new Paint[number_of_people];
+		circle_outter_paint = new Paint[number_of_people];
+		circle_inner_paint = new Paint[number_of_people];
+		for(int i = 0; i < number_of_people; i++)
+		{
+			circle_outter_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
+			circle_outter_paint[i].setStyle(Paint.Style.FILL);
+			circle_outter_paint[i].setColor(outter_color[i]);
+			circle_inner_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
+			circle_inner_paint[i].setStyle(Paint.Style.FILL);
+			circle_inner_paint[i].setColor(inner_color[i]);
+		}
 		double cumul_angle = start_angle;
 		for(int i = 0; i< number_of_people; i++ )
 		{
@@ -168,17 +221,7 @@ public class ParticipationView extends View  {
 				x(center_x+circle_radius_outter), y(center_y)+x(circle_radius_outter));
 		circle_rect_inner = new RectF(x(center_x-circle_radius_inner), y(center_y)-x(circle_radius_inner), 
 				x(center_x+circle_radius_inner), y(center_y)+x(circle_radius_inner));
-		circle_outter_paint = new Paint[number_of_people];
-		circle_inner_paint = new Paint[number_of_people];
-		for(int i = 0; i < number_of_people; i++)
-		{
-			circle_outter_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
-			circle_outter_paint[i].setStyle(Paint.Style.FILL);
-			circle_outter_paint[i].setColor(outter_color[i]);
-			circle_inner_paint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
-			circle_inner_paint[i].setStyle(Paint.Style.FILL);
-			circle_inner_paint[i].setColor(inner_color[i]);
-		}
+
 		circle_center_paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		circle_center_paint.setStyle(Paint.Style.FILL);
 		circle_center_paint.setColor(Color.WHITE);
@@ -196,5 +239,7 @@ public class ParticipationView extends View  {
 		icontext_paint.setColor(icon_text_c);
 		icontext_paint.setTextSize(y(icon_text_size));	
 		icontext_paint.setTextAlign(Align.LEFT);
+		
+		
 	}
 }

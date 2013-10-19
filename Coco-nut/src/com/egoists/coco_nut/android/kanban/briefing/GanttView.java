@@ -306,7 +306,7 @@ public class GanttView extends View {
 	}
 	
 	private void locate(){
-		chart_height = 21 + 29*number_of_cards + 8;
+		chart_height = Math.max(21 + 29*number_of_cards + 8, 435);
 		leftline_y2 = top_margin + chart_height + 13;
 		flag_y1 = leftline_y1 + chart_height + 12;
 		flag_y2 = leftline_y1 + chart_height + 12 + 29;
