@@ -271,7 +271,7 @@ public class WIPView extends View {
 			for(int i = 0; i < number_of_dates; i++)
 			{
 				double point_x1 = graph_x2 - 
-						(int)(tmp * day_dx);
+						(int)((((currentdate.getTimeInMillis() - dateofchanges.get(i).getTimeInMillis())) * day_dx)/24/3600/1000);
 				pointstofill_x[i] = (int)point_x1;
 				pointstofill_x[2*number_of_dates-i-1] = (int)point_x1;
 				pointstofill_y[i] = (int)(leftline_y2 - (Done[i] + WIP[i])*dy);
@@ -285,13 +285,17 @@ public class WIPView extends View {
 				}
 				
 			}
+			/* 왼쪽 채우기 모드. 안하는게 나은듯...
+			int divider = (pointstofill_y[1] - pointstofill_y[0]) == 0 ? 1 : (pointstofill_y[1] - pointstofill_y[0]);
 			int pathstart_x = (pointstofill_y[1] == pointstofill_y[0]) ? leftline_x :
 				Math.max( leftline_x, pointstofill_x[0] - (pointstofill_y[0] - leftline_y2) * 
-						(pointstofill_x[1] - pointstofill_x[0]) / (pointstofill_y[1] - pointstofill_y[0]));
+						(pointstofill_x[1] - pointstofill_x[0]) / divider);
 		
+			divider = (pointstofill_x[1] - pointstofill_x[0]) == 0 ? 1: (pointstofill_x[1] - pointstofill_x[0]);
 			int pathstart_y = (pathstart_x != leftline_x) ? leftline_y2 : 
-				pointstofill_y[0] - (pointstofill_y[1] - pointstofill_y[0]) / (pointstofill_x[1] - pointstofill_x[0]) 
+				pointstofill_y[0] - (pointstofill_y[1] - pointstofill_y[0]) / divider 
 					* (pointstofill_x[0] - leftline_x) ;
+			
 			
 			donewippath.moveTo(x(pathstart_x), y(pathstart_y));
 			for(int i = 0; i < number_of_dates; i++)
@@ -309,6 +313,19 @@ public class WIPView extends View {
 				donepath.lineTo(x(pointstofill_x[number_of_dates + i]), y(pointstofill_y[number_of_dates + i]));
 			donepath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(leftline_y2));
 			donepath.lineTo(x(graph_x2), y(leftline_y2));
+			*/
+			//Fill graph between done line and wip line
+			donewippath.moveTo(x(pointstofill_x[0]), y(pointstofill_y[0]));
+			for(int i = 1; i < number_of_dates*2; i++)
+				donewippath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
+			donewippath.lineTo(x(pointstofill_x[0]), y(pointstofill_y[0]));
+			
+			//Fill graph under done line
+			donepath.moveTo(x(pointstofill_x[number_of_dates-1]), y(leftline_y2));
+			for(int i = 0; i < number_of_dates; i++)
+				donepath.lineTo(x(pointstofill_x[number_of_dates + i]), y(pointstofill_y[number_of_dates + i]));
+			donepath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(leftline_y2));
+			donepath.lineTo(x(pointstofill_x[number_of_dates-1]), y(leftline_y2));
 			
 			overwippath.moveTo(x(graph_x2), y(graph_y1));
 			overwippath.lineTo(x(graph_x2), y(Math.max(graph_y1, (int)(pointstofill_y[number_of_dates] - dy * maxWIP))));
@@ -318,13 +335,14 @@ public class WIPView extends View {
 			overwippath.lineTo(x(pointstofill_x[number_of_dates*2-1]), y(graph_y1));
 			overwippath.lineTo(x(graph_x2), y(graph_y1));
 	
-			overwip_maskpath.moveTo(x(pathstart_x), y(pathstart_y));
+			
+			overwip_maskpath.moveTo(x(pointstofill_x[0]), y(pointstofill_y[0]));
 			for(int i = 0; i < number_of_dates; i++)
 				overwip_maskpath.lineTo(x(pointstofill_x[i]), y(pointstofill_y[i]));
 			overwip_maskpath.lineTo(x(graph_x2), y(pointstofill_y[number_of_dates -1]));
 			overwip_maskpath.lineTo(x(graph_x2), y(graph_y1));
-			overwip_maskpath.lineTo(x(pathstart_x), y(graph_y1));
-			overwip_maskpath.lineTo(x(pathstart_x), y(pathstart_y));
+			overwip_maskpath.lineTo(x(pointstofill_x[0]), y(graph_y1));
+			overwip_maskpath.moveTo(x(pointstofill_x[0]), y(pointstofill_y[0]));
 		}
 	}
 	

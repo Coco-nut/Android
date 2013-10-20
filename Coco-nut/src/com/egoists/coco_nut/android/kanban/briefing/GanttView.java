@@ -219,10 +219,10 @@ public class GanttView extends View {
 		
 		for(int i = 0; i< number_of_cards; i++)
 		{
-			startdates[i] = mActivity.mCards.get(i).getstartdate();
+			startdates[i] = mActivity.mCards.get(i).startdate;
 			if (startdates[i] == null)
 				startdates[i] = day_of_start;	
-			enddates[i] = mActivity.mCards.get(i).getenddate();
+			enddates[i] = mActivity.mCards.get(i).enddate;
 			if (enddates[i] == null)
 				enddates[i] = day_of_end;	
 			if(day_of_start.compareTo(startdates[i]) > 0)
@@ -237,7 +237,7 @@ public class GanttView extends View {
 			AndLog.e("status of card" + statuses[i]);
 		}
 		
-		int[] category_map = {1, 3, 5, 6, 7, 0, 2, 4, 9, 8};
+		int[] category_map = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 		String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
   		number_of_categories = categories.size();
 		used_categories = new int[number_of_categories];
