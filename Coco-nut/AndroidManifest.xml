@@ -77,17 +77,7 @@
             android:label="@string/app_name_locale"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.egoists.coco_nut.android.kanban.KanbanActivity_"
-            android:label="@string/app_name_locale"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.egoists.coco_nut.android.kanban.KanbanSettingActivity"
-            android:label="@string/app_name_locale"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.egoists.coco_nut.android.kanban.card.CardCreationActivity_"
             android:label="@string/app_name_locale"
             android:screenOrientation="portrait" >
         </activity>

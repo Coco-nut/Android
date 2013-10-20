@@ -69,8 +69,6 @@ public class GroupSelectionActivity extends FragmentActivity {
 	
 	@Click({R.id.btn_notices})
 	void goToKanban() {
-		Intent intent = new Intent(this, com.egoists.coco_nut.android.kanban.KanbanActivity_.class);
-		startActivity(intent);
 	}
 	
 	@Click({R.id.btn_setting})
