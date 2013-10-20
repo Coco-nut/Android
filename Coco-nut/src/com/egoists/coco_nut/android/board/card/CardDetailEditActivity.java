@@ -26,6 +26,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.Spinner;
@@ -61,7 +63,7 @@ import com.kth.baasio.exception.BaasioException;
 import de.greenrobot.event.EventBus;
 
 @EActivity(R.layout.activity_card_detail_edit)
-public class CardDetailEditActivity extends FragmentActivity {
+public class CardDetailEditActivity extends FragmentActivity implements android.widget.RadioGroup.OnCheckedChangeListener {
     @Extra("card_detail")
     Card mCard;
     @ViewById
@@ -85,6 +87,16 @@ public class CardDetailEditActivity extends FragmentActivity {
     @ViewById
     TextView txtDueToDate;
    
+    // 카드 상태 
+    @ViewById
+    RadioGroup radioGroupCardEditState;
+    @ViewById
+    RadioButton radioCardEditStateTodo;
+    @ViewById
+    RadioButton radioCardEditStateDoing;
+    @ViewById
+    RadioButton radioCardEditStateDone;
+    
     // 유저 리스트의 하위 레이아웃
     @ViewById
     LinearLayout layoutRoot;
@@ -121,6 +133,23 @@ public class CardDetailEditActivity extends FragmentActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("카드 수정");
         
+        // 라디오 버튼
+        // 할 일일 경우 완료 체크박스 표시 불가.
+        // 완료일 경우 전부 표시 불가
+        if (mCard.status == 0) {    // todo
+            radioCardEditStateTodo.setChecked(true);
+            radioCardEditStateDone.setVisibility(View.GONE);
+        } else if (mCard.status == 1) { // doing
+            radioCardEditStateDoing.setChecked(true);
+        } else if (mCard.status == 2) { // done
+            radioCardEditStateDone.setChecked(true);
+            radioCardEditStateTodo.setVisibility(View.GONE);
+            radioCardEditStateDoing.setVisibility(View.GONE);
+        }
+        
+        radioGroupCardEditState.setOnCheckedChangeListener(this);
+        
+        // 제목, 부제목, 상세 설명, 중요도
         edTxtCardEditTitle.setText(mCard.title);
         edTxtCardEditSubtitle.setText(mCard.sub_title);
         edTxtCardEditDescription.setText(mCard.discription);
@@ -165,7 +194,10 @@ public class CardDetailEditActivity extends FragmentActivity {
         });
         
         // 그룹 사용자 획득
-        EventBus.getDefault().post(new RequestGroupUsersEvent());
+        // 완료일 경우 사용자를 표시하지 않는다.
+        if (mCard.status != 2) { 
+            EventBus.getDefault().post(new RequestGroupUsersEvent());
+        }
     }
     
     @Override
@@ -200,6 +232,22 @@ public class CardDetailEditActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    @Override
+    public void onCheckedChanged(RadioGroup arg0, int arg1) { // 라디오버튼
+        switch (arg1) {
+        case R.id.radioCardEditStateTodo:
+            mCard.status = 0;
+            break;
+        case R.id.radioCardEditStateDoing:
+            mCard.status = 1;
+            break;
+        case R.id.radioCardEditStateDone:
+            mCard.status = 2;
+            break;
+        }
+    }
+
     
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new StartDatePickerFragment();
@@ -261,7 +309,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         int month = event.m;
         int day = event.d;
         
-        txtStartDate.setText(year + "/" + (month) + "/" + day);
+        txtStartDate.setText(year + "/" + (month+1) + "/" + day);
         mStartCal = Calendar.getInstance();
         mStartCal.set(Calendar.YEAR, year);
         mStartCal.set(Calendar.MONTH, month);
@@ -293,7 +341,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         int month = event.m;
         int day = event.d;
         
-        txtDueToDate.setText(year + "/" + (month) + "/" + day);
+        txtDueToDate.setText(year + "/" + (month+1) + "/" + day);
         mDuetoCal = Calendar.getInstance();
         mDuetoCal.set(Calendar.YEAR, year);
         mDuetoCal.set(Calendar.MONTH, month);
@@ -366,45 +414,61 @@ public class CardDetailEditActivity extends FragmentActivity {
     
     void doUpdateByBaasio() {
         BaasioEntity entity = new BaasioEntity(Card.ENTITY);
+        // UUID
         entity.setUuid(UUID.fromString(mCard.uuid));
         mCard.title = edTxtCardEditTitle.getText().toString();
+        // 제목
         entity.setProperty(Card.ENTITY_NAME_TITLE, mCard.title);
         mCard.sub_title = edTxtCardEditSubtitle.getText().toString();
+        // 부제목
         entity.setProperty(Card.ENTITY_NAME_SUBTITLE, mCard.sub_title);
         mCard.discription = edTxtCardEditDescription.getText().toString();
+        // 상태
+        entity.setProperty(Card.ENTITY_NAME_STATE, mCard.status);
+        if (mCard.status == 1)
+            entity.setProperty(Card.ENTITY_NAME_DOING_DATE, Calendar.getInstance().getTimeInMillis());
+        if (mCard.status == 2)
+            entity.setProperty(Card.ENTITY_NAME_DONE_DATE, Calendar.getInstance().getTimeInMillis());
+        // 상세내역
         entity.setProperty(Card.ENTITY_NAME_DESCRIPTION, mCard.discription);
         mCard.importance = mCard.importance;
+        // 중요도
         entity.setProperty(Card.ENTITY_NAME_RATING, (int)mCard.importance);
+        // 라벨
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);
+        // 시작시간
         if (mStartCal != null) {
             mCard.startdate = mStartCal;
             entity.setProperty(Card.ENTITY_NAME_START_DATE, mCard.startdate.getTimeInMillis());
         }
+        // 종료시간
         if (mDuetoCal != null) {
             mCard.enddate = mDuetoCal;
             entity.setProperty(Card.ENTITY_NAME_DUETO_DATE, mCard.enddate.getTimeInMillis());
         }
         
-        // 실제로 체크한 사용자만 추려내서 업데이트한다
-        mCard.ismine = false;
-        String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
-        for (int i=0; i<mUsers.size(); i++) {
-            if (mIsJoined[i]) {
-                BaasioUser user = mUsers.get(i);
-                boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
-                mCard.ismine = true;
-                mParticipant.add(new Person(user, isMe));
-            }
+        // 카드 상태가 완료이면 사용자 업데이트 안함
+        if (mCard.status != 2) {
+            // 실제로 체크한 사용자만 추려내서 업데이트한다
+            mCard.ismine = false;
+            String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
             
+            for (int i=0; i<mUsers.size(); i++) {
+                if (mIsJoined[i]) {
+                    BaasioUser user = mUsers.get(i);
+                    boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
+                    mCard.ismine = true;
+                    mParticipant.add(new Person(user, isMe, 5 * (mUsers.size() - 1)));
+                }
+            }
+            mCard.participants = mParticipant;
+            
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.convertValue(mParticipant, JsonNode.class);
+            entity.setProperty(Card.ENTITY_NAME_PARTY, jsonNode);
         }
-        mCard.participants = mParticipant;
+        
         mDialog = ProgressDialog.show(CardDetailEditActivity.this, "", "카드 업데이트 중", true);
-        
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.convertValue(mParticipant, JsonNode.class);
-        entity.setProperty(Card.ENTITY_NAME_PARTY, jsonNode);
-//      entity.setProperty(Card.ENTITY_NAME_STATE, edTxtCard);
-        
         entity.updateInBackground(
                 new BaasioCallback<BaasioEntity>() {
 

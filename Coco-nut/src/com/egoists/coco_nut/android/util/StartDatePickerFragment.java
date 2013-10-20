@@ -35,7 +35,6 @@ public class StartDatePickerFragment extends DialogFragment implements OnDateSet
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        month += 1;
         EventBus.getDefault().post(new UpdateStartDateEvent(year, month, day));
     }
 }

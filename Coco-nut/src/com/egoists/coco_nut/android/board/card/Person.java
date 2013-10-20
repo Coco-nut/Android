@@ -17,6 +17,7 @@ public class Person implements Serializable {
     public static final String ENTITY_NAME_NAME       = "name";       // 사용자 이름
     public static final String ENTITY_NAME_PICTURE    = "picture";    // 사진
     public static final String ENTITY_NAME_PHONE      = "phone";      // 휴대폰 번호
+    public static final String ENTITY_NAME_SUM_RATE   = "sumRate";    // 평가 점수
     
     public String uuid;
 	public String name;
@@ -24,15 +25,16 @@ public class Person implements Serializable {
 	public String picture;
 	public int sumRate;
 	
-	public Person(BaasioUser user, boolean isme) {
-	    this(user.getUuid().toString(), user.getName(), user.getPicture(), isme);
+	public Person(BaasioUser user, boolean isme, int sumRate) {
+	    this(user.getUuid().toString(), user.getName(), user.getPicture(), isme, sumRate);
 	}
 	
-	public Person(String uuid, String name, String pictureUrl, boolean isme) {
+	public Person(String uuid, String name, String pictureUrl, boolean isme, int sumRate) {
 	    this.uuid = uuid;
         this.name = name;
         this.picture = pictureUrl; 
         this.isme = isme;
+        this.sumRate = sumRate;
     }
 
     public static ImageView getImageView(Context con) {

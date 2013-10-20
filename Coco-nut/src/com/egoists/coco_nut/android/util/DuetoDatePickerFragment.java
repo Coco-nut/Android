@@ -35,8 +35,7 @@ public class DuetoDatePickerFragment extends DialogFragment implements OnDateSet
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        month += 1;
+    public void onDateSet(DatePicker view, int year, int month, int day) {        
         EventBus.getDefault().post(new UpdateDuetoDateEvent(year, month, day));
     }
 }

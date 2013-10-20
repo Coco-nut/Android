@@ -17,24 +17,23 @@
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:gravity="center"
-			        android:checkedButton="@+id/CardEditStateTodo"
 			        android:orientation="horizontal" >
 			        <RadioButton
-			            android:id="@id/CardEditStateTodo"
+			            android:id="@+id/radioCardEditStateTodo"
 			            android:layout_width="0px"
 			            android:layout_height="wrap_content"
 			            android:gravity="center"
 			            android:layout_weight="1"
 			            android:text="@string/title_to_do" />
 			        <RadioButton
-			            android:id="@+id/CardEditStateDoing"
+			            android:id="@+id/radioCardEditStateDoing"
 			            android:layout_width="0px"
 			            android:layout_height="wrap_content"
 			            android:layout_weight="1"
 			            android:gravity="center"
 			            android:text="@string/title_in_progress" />
 			        <RadioButton
-			            android:id="@+id/CardEditStateDone"
+			            android:id="@+id/radioCardEditStateDone"
 			            android:layout_width="0px"
 			            android:layout_height="wrap_content"
 			            android:layout_weight="1"
