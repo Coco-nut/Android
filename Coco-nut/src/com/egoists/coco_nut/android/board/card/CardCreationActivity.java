@@ -169,7 +169,7 @@ public class CardCreationActivity extends Activity {
                                             mDialog.dismiss();
                                             if (response != null) {
                                                 DialogFactory
-                                                    .createNoButton(CardCreationActivity.this,R.string.title_succeed, "")
+                                                    .createNoButton(CardCreationActivity.this,R.string.title_succeed, "할 일에 카드가 등록되었습니다")
                                                     .setPositiveButton(
                                                             R.string.create_card_succeed,
                                                             new DialogInterface.OnClickListener() {

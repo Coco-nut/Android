@@ -19,6 +19,13 @@ public class DateConverter {
         return currentLocalTime.getTime();
     }
     
+    public static String getStringDate(long milsec) {
+        Date date = new Date(milsec);
+        SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd/EEE", Locale.US);
+        formater.setTimeZone(TimeZone.getDefault());
+        return formater.format(date);
+    }
+    
     public static String getStringTime(long milsec) {
         Date date = new Date(milsec);
         SimpleDateFormat formater = new SimpleDateFormat("HH:mm aa yyyy/MM/dd/EEE", Locale.US);

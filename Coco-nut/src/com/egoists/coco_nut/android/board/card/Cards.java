@@ -2,6 +2,7 @@ package com.egoists.coco_nut.android.board.card;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.codehaus.jackson.JsonNode;
@@ -82,16 +83,16 @@ public class Cards {
             card.uuid = baasioCard.getUuid().toString();
             card.label = label;
             card.status = state;
-            Calendar c = Calendar.getInstance();
+            Calendar startC = new GregorianCalendar();
+            Calendar endC = new GregorianCalendar();
             if (startMilSec > 0) {
-                c.setTimeInMillis(startMilSec);
-                card.startdate = c;
+                startC.setTimeInMillis(startMilSec);
+                card.startdate = startC;
             }
             if (endMilSec > 0) {
-                c.setTimeInMillis(endMilSec);
-                card.enddate = c;
+                endC.setTimeInMillis(endMilSec);
+                card.enddate = endC;
             }
-            
             
             cards.add(card);
         }

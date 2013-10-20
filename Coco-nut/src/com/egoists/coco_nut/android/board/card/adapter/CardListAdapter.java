@@ -91,7 +91,13 @@ public class CardListAdapter extends BaseAdapter {
             view.mSubTitle.setText(card.sub_title);
             
             view.mRatingBar.setRating(card.importance);
-            view.mDate.setText(DateConverter.getTimeString(card.startdate, card.enddate));
+            // 시간
+//          view.mDate.setText(DateConverter.getTimeString(card.startdate, card.enddate));
+            String strStartCal = (card.startdate == null) 
+                    ? "" : DateConverter.getStringDate(card.startdate.getTimeInMillis());
+            String strEndCal = (card.enddate == null) 
+                    ? "" : DateConverter.getStringDate(card.enddate.getTimeInMillis());
+            view.mDate.setText(strStartCal + " ~ " + strEndCal);
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             view.mParticipant.removeAllViews();
             

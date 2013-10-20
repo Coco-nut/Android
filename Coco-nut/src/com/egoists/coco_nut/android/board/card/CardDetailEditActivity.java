@@ -421,7 +421,7 @@ public class CardDetailEditActivity extends FragmentActivity {
                             mDialog.dismiss();
                             // 성공
                             DialogFactory
-                            .createNoButton(CardDetailEditActivity.this,R.string.title_succeed, "")
+                            .createNoButton(CardDetailEditActivity.this,R.string.title_succeed, "카드가 수정되었습니다")
                             .setPositiveButton(
                                     R.string.create_card_succeed,
                                     new DialogInterface.OnClickListener() {

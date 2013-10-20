@@ -110,7 +110,12 @@ public class CardDetailActivity extends Activity {
         txtCardDetailTitle.setText(mCard.title);
         txtCardDetailSubTitle.setText(mCard.sub_title);
         txtCardDetailDescription.setText(mCard.discription);
-        txtCardDetailDueTo.setText(DateConverter.getTimeString(mCard.startdate, mCard.enddate));
+        
+        String strStartCal = (mCard.startdate == null) 
+                ? "" : DateConverter.getStringTime(mCard.startdate.getTimeInMillis());
+        String strEndCal = (mCard.enddate == null) 
+                ? "" : DateConverter.getStringTime(mCard.enddate.getTimeInMillis());
+        txtCardDetailDueTo.setText(strStartCal + "\n ~ " + strEndCal);
         // 라벨 + 카테고리 추가
         String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
         txtCardDetailLabel.setText(labels[mCard.label]);

@@ -127,7 +127,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                     .setTabListener(this));
         }
         
-        mViewPager.setCurrentItem(1);   // 기본은 BriefingFragment
+        mViewPager.setCurrentItem(2);   // 기본은 진행중
         
         mCards = new ArrayList<Card>();
         mMyCards = new ArrayList<Card>();
@@ -235,10 +235,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         mDoneCards.clear();
         for (Card card : mCards) {
             AndLog.d("Classifying " + card.title + " card...");
-            for (Person p : card.participants) {    // TODO for Log
-                AndLog.d(p.name + " is joined in " + card.title + " card : " +
-                    p.uuid + " : " + p.picture);
-            }
+
             // 내가 속한 카드
             if (card.ismine) {
                 mMyCards.add(card);
