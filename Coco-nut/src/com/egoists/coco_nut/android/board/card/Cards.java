@@ -67,7 +67,8 @@ public class Cards {
                 int nParicipants = participants.size();
                 for (int i=0; i<nParicipants; i++) {
                     JsonNode user = participants.get(i);
-                    AndLog.d(user.get(Person.ENTITY_NAME_NAME).asText() + " is joined in this card : " +
+                    
+                    AndLog.d(user.get(Person.ENTITY_NAME_NAME).asText() + " is joined in " + title + " card : " +
                             user.get(Person.ENTITY_NAME_UUID).asText() + " : " + user.get(Person.ENTITY_NAME_PICTURE).asText());
                     groupUsers.add(new Person(
                             user.get(Person.ENTITY_NAME_UUID).asText(),
@@ -76,12 +77,6 @@ public class Cards {
                             user.get("isme").asBoolean()));
                 }
             }
-//            for (BaasioUser baasioUser : baasioUsers) {
-//                // TODO groupUsers 와 baasioUsers 를 가지고
-//                // TODO 카드에 추가된 참가자들을 추가한다
-//                groupUsers.add(new Person(baasioUser.getUuid().toString(), 
-//                        baasioUser.getName(), baasioUser.getPicture(), false));
-//            }
             
             Card card = new Card(title, subTitle, (int)rating, groupUsers);
             card.uuid = baasioCard.getUuid().toString();

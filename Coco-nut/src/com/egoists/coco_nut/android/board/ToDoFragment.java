@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
+import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.board.card.adapter.CardListAdapter;
 import com.egoists.coco_nut.android.board.event.RequestTodoCardsEvent;
 import com.egoists.coco_nut.android.board.event.TodoCardsEvent;
@@ -88,8 +89,14 @@ public class ToDoFragment extends Fragment {
      * @param event
      */
     public void onEvent(TodoCardsEvent event) {
-        AndLog.d("Get event");
+        
         mTodoCards = (ArrayList<Card>) event.cards;
+        // FOR Log
+        for (Card c : mTodoCards) {
+            for (Person p : c.participants)
+            AndLog.d(p.name + " is involved");
+        }
+        
         refreshCardList(mTodoCards);
     }
 }
