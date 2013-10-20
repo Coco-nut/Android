@@ -24,7 +24,7 @@ public class Cards {
         int state = 0;
         long startMilSec = -1;
         long endMilSec = -1;
-        ArrayList<Person> groupUsers = new ArrayList<Person>();
+        
         for (BaasioEntity baasioCard : baasioCards) {
             JsonNode nodeTitle = baasioCard.getProperty(Card.ENTITY_NAME_TITLE);
             if (!ObjectUtils.isEmpty(nodeTitle)) {
@@ -61,7 +61,7 @@ public class Cards {
                 endMilSec = nodeEndMilSec.asLong();
             }
             
-            groupUsers.clear();
+            ArrayList<Person> groupUsers = new ArrayList<Person>();
             JsonNode participants = baasioCard.getProperty(Card.ENTITY_NAME_PARTY);
             if (!ObjectUtils.isEmpty(participants)) {
                 int nParicipants = participants.size();

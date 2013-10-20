@@ -125,6 +125,15 @@ public class CardDetailEditActivity extends FragmentActivity {
         edTxtCardEditSubtitle.setText(mCard.sub_title);
         edTxtCardEditDescription.setText(mCard.discription);
         ratingCardEdit.setRating((float)mCard.importance);
+        // 일정 출력
+        if (mCard.startdate != null) {
+            txtStartDate.setText(getDateString(mCard.startdate));
+            txtStartTime.setText(getTimeString(mCard.startdate));
+        }
+        if (mCard.enddate != null) {
+            txtDueToDate.setText(getDateString(mCard.enddate));
+            txtDueToTime.setText(getTimeString(mCard.enddate));
+        }
         
         // 별점 리스너~
         ratingCardEdit.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
@@ -163,6 +172,12 @@ public class CardDetailEditActivity extends FragmentActivity {
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+    
+    void backToCardDetailActivity() {
+        // 종료
+        EventBus.getDefault().post(new UpdatedCardEvent(mCard));
+        this.finish();
     }
     
     @Override
@@ -206,6 +221,18 @@ public class CardDetailEditActivity extends FragmentActivity {
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
     
+    private String getDateString(Calendar c) {
+        if (c != null)
+            return c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONDAY) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH);
+        return "";
+    }
+    
+    private String getTimeString(Calendar c) {
+        if (c != null)
+            return c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
+        return "";
+    }
+    
     ///////////////////////////////////////////////////////
     //  EventBus 관련 이벤트 처리부
     ///////////////////////////////////////////////////////
@@ -220,15 +247,11 @@ public class CardDetailEditActivity extends FragmentActivity {
         // 날짜가 선택되어 있지 않았다면 현재 날짜로 바꿔준다
         if (setStartDate == false) {
             mStartCal = Calendar.getInstance();
-            txtStartDate.setText(mStartCal.get(Calendar.YEAR) 
-                    + "/" + mStartCal.get(Calendar.MONTH) 
-                    + "/" + mStartCal.get(Calendar.DAY_OF_MONTH));
+            txtStartDate.setText(getDateString(mStartCal));
             setStartDate = true;
         }
         mStartCal.set(Calendar.HOUR_OF_DAY, hour);
-        mStartCal.set(Calendar.MINUTE, minute);
-        
-        
+        mStartCal.set(Calendar.MINUTE, minute);        
     }
 
     public void onEvent(UpdateStartDateEvent event) {
@@ -238,7 +261,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         int month = event.m;
         int day = event.d;
         
-        txtStartDate.setText(year + "/" + month + "/" + day);
+        txtStartDate.setText(year + "/" + (month) + "/" + day);
         mStartCal = Calendar.getInstance();
         mStartCal.set(Calendar.YEAR, year);
         mStartCal.set(Calendar.MONTH, month);
@@ -256,15 +279,11 @@ public class CardDetailEditActivity extends FragmentActivity {
         // 날짜가 선택되어 있지 않았다면 현재 날짜로 바꿔준다
         if (setDutoDate == false) {
             mDuetoCal = Calendar.getInstance();
-            txtDueToDate.setText(mStartCal.get(Calendar.YEAR) 
-                    + "/" + mStartCal.get(Calendar.MONTH) 
-                    + "/" + mStartCal.get(Calendar.DAY_OF_MONTH));
+            txtDueToDate.setText(getDateString(mDuetoCal));
             setDutoDate = true;
         }
         mDuetoCal.set(Calendar.HOUR_OF_DAY, hour);
         mDuetoCal.set(Calendar.MINUTE, minute);
-        
-        
     }
 
     public void onEvent(UpdateDuetoDateEvent event) {
@@ -274,7 +293,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         int month = event.m;
         int day = event.d;
         
-        txtDueToDate.setText(year + "/" + month + "/" + day);
+        txtDueToDate.setText(year + "/" + (month) + "/" + day);
         mDuetoCal = Calendar.getInstance();
         mDuetoCal.set(Calendar.YEAR, year);
         mDuetoCal.set(Calendar.MONTH, month);
@@ -343,11 +362,7 @@ public class CardDetailEditActivity extends FragmentActivity {
         return false;
     }
     
-    void backToCardDetailActivity() {
-        // 종료
-        EventBus.getDefault().post(new UpdatedCardEvent(mCard));
-        this.finish();
-    }
+    
     
     void doUpdateByBaasio() {
         BaasioEntity entity = new BaasioEntity(Card.ENTITY);

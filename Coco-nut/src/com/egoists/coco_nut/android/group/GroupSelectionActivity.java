@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.group.adapter.GroupSelectionPagerAdapter;
@@ -69,6 +70,8 @@ public class GroupSelectionActivity extends FragmentActivity {
 	
 	@Click({R.id.btn_notices})
 	void goToKanban() {
+	    Toast toast = Toast.makeText(this, "푸쉬 기능은 차후 업데이트에 반영될 예정입니다", Toast.LENGTH_SHORT); 
+	    toast.show();
 	}
 	
 	@Click({R.id.btn_setting})

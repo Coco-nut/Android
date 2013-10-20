@@ -130,6 +130,13 @@ public class CardDetailActivity extends Activity {
         }
     }
     
+    
+    // 폰의 back 버튼 누를 경우
+    @Override
+    public void onBackPressed() {
+        backToBoardTabActivity();
+    }
+    
     ///////////////////////////////////////////////////////
     //  EventBus 관련 이벤트 처리부
     ///////////////////////////////////////////////////////

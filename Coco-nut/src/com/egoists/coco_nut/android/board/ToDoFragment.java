@@ -90,13 +90,17 @@ public class ToDoFragment extends Fragment {
      */
     public void onEvent(TodoCardsEvent event) {
         
-        mTodoCards = (ArrayList<Card>) event.cards;
-        // FOR Log
-        for (Card c : mTodoCards) {
-            for (Person p : c.participants)
-            AndLog.d(p.name + " is involved");
-        }
-        
+        // TODO 테스트 할 것
+//        mTodoCards = (ArrayList<Card>) event.cards;
+//        for (Card c : mTodoCards) { // FOR Log
+//            for (Person p : c.participants)
+//            AndLog.d(p.name + " is involved");
+//        }
+        mTodoCards = (ArrayList<Card>) ((BoardTabActivity)mContext).mTodoCards;
+      for (Card c : mTodoCards) { // FOR Log
+      for (Person p : c.participants)
+      AndLog.d(p.name + " is involved");
+  }
         refreshCardList(mTodoCards);
     }
 }

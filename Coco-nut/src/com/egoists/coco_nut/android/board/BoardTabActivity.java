@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Cards;
+import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.board.event.AllCardsEvent;
 import com.egoists.coco_nut.android.board.event.DoingCardsEvent;
 import com.egoists.coco_nut.android.board.event.DoneCardsEvent;
@@ -233,6 +234,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         mDoingCards.clear();
         mDoneCards.clear();
         for (Card card : mCards) {
+            AndLog.d("Classifying " + card.title + " card...");
+            for (Person p : card.participants) {    // TODO for Log
+                AndLog.d(p.name + " is joined in " + card.title + " card : " +
+                    p.uuid + " : " + p.picture);
+            }
             // 내가 속한 카드
             if (card.ismine) {
                 mMyCards.add(card);
@@ -339,18 +345,19 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                 AndLog.d("My Card Fragment");
                 return new MyCardsFragment_();
             case 1:
-            	AndLog.d("Brieging Fragment");
-                return new BriefingFragment();
-            case 2:
                 AndLog.d("ToDo Fragment");
                 return new ToDoFragment_();
-            case 3:
+            case 2:
                 AndLog.d("Doing Fragment");
                 return new DoingFragment_();
-            case 4:
-            default:
+            case 3:
                 AndLog.d("Done Fragment");
                 return new DoneFragment_();
+            case 4:
+            default:
+                AndLog.d("Brieging Fragment");
+                return new BriefingFragment();
+                
             }
         }
 
@@ -366,13 +373,13 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
             case 0:
                 return getString(R.string.title_my_works);
             case 1:
-                return getString(R.string.title_briefing);
-            case 2:
                 return getString(R.string.title_to_do);
-            case 3:
+            case 2:
                 return getString(R.string.title_in_progress);
-            case 4:
+            case 3:
                 return getString(R.string.title_done);
+            case 4:
+                return getString(R.string.title_briefing);
             }
             return null;
         }
