@@ -139,7 +139,7 @@ public class PeerView extends RelativeLayout {
 			for (Card c : mActivity.mCards)
 				if (c.status == 2)
 					for (int j = 0; j < c.participants.size(); j++)
-						if (c.participants.get(j).uuid.equals(u.getUuid())){
+						if (c.participants.get(j).uuid.equals(u.getUuid().toString())){
 							ratings[i] += c.participants.get(j).sumRate;
 							divider[i] ++;
 						}

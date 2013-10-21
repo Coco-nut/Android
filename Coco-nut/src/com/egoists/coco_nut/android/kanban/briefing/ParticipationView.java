@@ -164,7 +164,7 @@ public class ParticipationView extends RelativeLayout  {
 			for (Card c : mActivity.mCards)
 				if (c.status == 2)
 					for (int j = 0; j < c.participants.size(); j++)
-						if (c.participants.get(j).uuid.equals(u.getUuid()))
+						if (c.participants.get(j).uuid.equals(u.getUuid().toString()))
 							participation_ratio[i] += 
 									Math.pow((1+W),c.importance)*c.participants.get(j).sumRate;
 			normalization += participation_ratio[i];
@@ -175,6 +175,7 @@ public class ParticipationView extends RelativeLayout  {
 				participation_ratio[i] = 1.0 / number_of_people;
 			else
 				participation_ratio[i] /= normalization;
+		
 	}
 	private void locate(){
 		people_center_x = new int[number_of_people];
