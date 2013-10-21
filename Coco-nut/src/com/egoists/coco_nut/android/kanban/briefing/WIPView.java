@@ -216,10 +216,22 @@ public class WIPView extends View {
 		
 
 		for(int i=0; i<mCards.size(); i++){
-			if (mCards.get(i).timeofdoing != null)
+			
+			if (mCards.get(i).status == 1){
+				if (mCards.get(i).startdate != null)
+					changesDoing.add(mCards.get(i).startdate);
+			}
+			if (mCards.get(i).status == 2){
+				if (mCards.get(i).startdate != null)
+					changesDoing.add(mCards.get(i).startdate);
+				if (mCards.get(i).enddate != null)
+					changesDone.add(mCards.get(i).enddate);
+			}
+			
+		/*	if (mCards.get(i).timeofdoing != null)
 				changesDoing.add(mCards.get(i).timeofdoing);
 			if (mCards.get(i).timeofdone != null)
-				changesDone.add(mCards.get(i).timeofdone);
+				changesDone.add(mCards.get(i).timeofdone);*/
 		}
 		dateofchanges = new ArrayList<Calendar>();
 		dateofchanges.addAll(changesDoing);
