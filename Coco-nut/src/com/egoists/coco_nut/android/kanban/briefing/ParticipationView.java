@@ -225,7 +225,7 @@ public class ParticipationView extends RelativeLayout  {
 		{
 			faces[i] = getImageView();
 			if (mActivity.mUsers.get(i).getPicture() != null) 
-				mImageFetcher.loadImage(mActivity.mUsers.get(i).getPicture(), faces[i]);
+				mImageFetcher.loadImage(mActivity.mUsers.get(i).getPicture(), faces[i], R.drawable.briefing_face);
 			
 			faces[i].setX(x(people_center_x[i] - 45));
 			faces[i].setY(y(people_center_y[i]) - x(45));

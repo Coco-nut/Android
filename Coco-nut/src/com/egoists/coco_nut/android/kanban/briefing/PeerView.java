@@ -160,7 +160,7 @@ public class PeerView extends RelativeLayout {
 			
 			pictures[i] = getImageView();
 			if (person.getPicture() != null)
-				mImageFetcher.loadImage(person.getPicture(), pictures[i]);
+				mImageFetcher.loadImage(person.getPicture(), pictures[i], R.drawable.briefing_face);
 			this.addView(pictures[i]);
 			pictures[i].setX(x(picturecenter_x - pictureradius));
 			pictures[i].setY(y(picturecenter_y - pictureradius +i*people_dy));
