@@ -158,10 +158,9 @@ public class WIPView extends View {
 			canvas.drawLine( x(leftline_x), y(leftline_y2), x(bottomline_x2), y(leftline_y2), bottomline_paint);
 			
 			//Draw centerLine
-			if(nLines != 1)
-				for(int i = 1; i <= nLines; i++)
-					canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
-							x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
+			for(int i = 1; i <= nLines; i++)
+				canvas.drawLine(x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y1), 
+						x((int)(centerline_x1 + centerline_dx*i)), y(leftline_y2), centerline_paint);
 			
 			//Draw alarms
 			for(int i = 0; i <number_of_alarms; i ++)
@@ -226,7 +225,7 @@ public class WIPView extends View {
 		dateofchanges.addAll(changesDoing);
 		dateofchanges.addAll(changesDone);
 		
-		number_of_dates = dateofchanges.size();
+		number_of_dates = dateofchanges.size()+1;
 		WIP = new int[number_of_dates];
 		Done = new int[number_of_dates];
 		
@@ -235,7 +234,7 @@ public class WIPView extends View {
 		int curwip = 0;
 		int curdone = 0;
 		maxWD = 0;
-		for(int i=0; i<number_of_dates; i++){
+		for(int i=0; i<(number_of_dates-1); i++){
 			if (changesDoing.contains(dateofchanges.get(i)))
 				curwip ++;
 			else{
@@ -247,7 +246,9 @@ public class WIPView extends View {
 			if (maxWD < WIP[i] + Done[i])
 				maxWD = WIP[i] + Done[i];
 		}
-
+		dateofchanges.add(Calendar.getInstance());
+		WIP[number_of_dates-1] = WIP[number_of_dates-2];
+		Done[number_of_dates-1] = Done[number_of_dates-2];
 		currentdate = Calendar.getInstance();
 	}
 	
