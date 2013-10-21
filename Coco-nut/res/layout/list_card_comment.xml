@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutCardCommentRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/userlist_bg"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp" >
+        <ImageView
+	        android:id="@+id/imgCommenter"
+	        android:layout_width="35dp"
+	        android:layout_height="35dp"
+	        android:background="@color/userlist_bg"
+	        />
+	    <LinearLayout
+	        android:layout_width="0px"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center_vertical"
+	        android:orientation="vertical"
+	        android:paddingLeft="10dp" >
+	        <TextView
+	            android:id="@+id/txtCommenterName"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:includeFontPadding="false"
+	            android:textSize="@dimen/user_list_font_size"
+	            android:textColor="@color/font_bold_gray"
+	            android:text="이름"
+	            />
+	        <TextView
+	            android:id="@+id/txtComment"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:includeFontPadding="false"
+	            android:textColor="@color/font_bold_gray"
+	            android:text="이메일"
+	            android:textSize="@dimen/user_list_font_size"
+	            android:textStyle="bold" />
+	    </LinearLayout>
+    </LinearLayout>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white_coconut" />
+</LinearLayout>

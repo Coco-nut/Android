@@ -14,4 +14,5 @@ public class CardViewHolder {
     public TextView mDate;
     public TextView mCategory;
     public LinearLayout mParticipant;
+    public TextView mComments;
 }

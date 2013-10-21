@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +75,7 @@ public class CardListAdapter extends BaseAdapter {
             view.mTitle = (TextView)convertView.findViewById(R.id.txtCardListTitle);
             view.mSubTitle = (TextView)convertView.findViewById(R.id.txtCardListSubTitle);
             view.mRatingBar = (RatingBar)convertView.findViewById(R.id.ratingListCard);
+            view.mComments = (TextView)convertView.findViewById(R.id.txtCardListComment);
             view.mDate = (TextView)convertView.findViewById(R.id.txtCardListDueTo);
             view.mCategory = (TextView)convertView.findViewById(R.id.viewCategory);
             view.mParticipant = (LinearLayout)convertView.findViewById(R.id.layoutCardListParticipant);
@@ -107,8 +107,12 @@ public class CardListAdapter extends BaseAdapter {
                     ? "" : DateConverter.getStringDate(card.enddate.getTimeInMillis());
             view.mDate.setText(strStartCal + " ~ " + strEndCal);
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
-            view.mParticipant.removeAllViews();
             
+            if (card.comments != null)  // 댓글 수
+                view.mComments.setText(""+card.comments.size());
+            
+            // 참가자
+            view.mParticipant.removeAllViews();
             AndLog.d("show pictures for " + card.participants.size() + " users");
             ImageView pictureView;
             for (Person person : card.participants) {

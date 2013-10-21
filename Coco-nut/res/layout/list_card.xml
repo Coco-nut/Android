@@ -85,32 +85,7 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="@dimen/card_subtitle_size"
                 android:text="0" />
-            <!-- 체크리스트 -->
-            <ImageView 
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/card_check"/>
-            <TextView
-                android:id="@+id/txtCardListCheckDone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="@dimen/card_subtitle_size"
-                android:text="0" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:textSize="@dimen/card_subtitle_size"
-                android:text="/" />
-            <TextView
-                android:id="@+id/txtCardListCheckTodo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:textSize="@dimen/card_subtitle_size"
-                android:text="0" />
+            
         </LinearLayout>
         <!-- 참가자 -->
         <LinearLayout

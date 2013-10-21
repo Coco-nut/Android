@@ -91,7 +91,7 @@ public class Cards {
                     JsonNode user = participants.get(i);
                     
                     AndLog.d(user.get(Person.ENTITY_NAME_NAME).asText() + " is joined in " + title + " card : " +
-                            user.get(Person.ENTITY_NAME_UUID).asText() + " : " + user.get(Person.ENTITY_NAME_PICTURE).asText());
+                            user.get(Person.ENTITY_NAME_UUID).asText() + " : " + user.get(Person.ENTITY_NAME_SUM_RATE).asInt());
                     groupUsers.add(new Person(
                             user.get(Person.ENTITY_NAME_UUID).asText(),
                             user.get(Person.ENTITY_NAME_NAME).asText(),
@@ -114,8 +114,26 @@ public class Cards {
                 }
             }
             
+            // 댓글
+            ArrayList<Comment> comments = new ArrayList<Comment>();
+            JsonNode jnodeComments = baasioCard.getProperty(Card.ENTITY_NAME_COMMENTS);
+            if (!ObjectUtils.isEmpty(jnodeComments)) {
+                int n = jnodeComments.size();
+                for (int i=0; i<n; i++) {
+                    JsonNode comment = jnodeComments.get(i);
+                    
+                    comments.add(new Comment(comment.get(Comment.ENTITY_COMMENTER).asText(),
+                            comment.get(Comment.ENTITY_COMMENTER_UUID).asText(),
+                            comment.get(Comment.ENTITY_COMMENTER_PICTURE).asText(),
+                            comment.get(Comment.ENTITY_COMMENTE).asText(),
+                            comment.get(Comment.ENTITY_TIME).asLong()));
+                }
+            }
+            
             Card card = new Card(title, subTitle, (int)rating, groupUsers);
             card.voters = (voters.size() > 0) ? voters : null;
+            card.comments = (comments.size() > 0) ? comments : null;
+            
             card.discription = description;
             card.uuid = baasioCard.getUuid().toString();
             card.label = label;

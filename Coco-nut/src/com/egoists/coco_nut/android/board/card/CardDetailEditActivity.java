@@ -86,6 +86,8 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
     TextView txtDueToTime;
     @ViewById
     TextView txtDueToDate;
+    @ViewById
+    EditText edTxtCardDetailComment;
    
     // 카드 상태 
     @ViewById
@@ -248,6 +250,9 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         }
     }
 
+    ///////////////////////////////////////////////////////
+    //  날짜, 시간 관련
+    ///////////////////////////////////////////////////////
     
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new StartDatePickerFragment();
@@ -410,7 +415,9 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         return false;
     }
     
-    
+    ///////////////////////////////////////////////////////
+    //  BaasIO 관련 통신 처리부
+    ///////////////////////////////////////////////////////
     
     void doUpdateByBaasio() {
         BaasioEntity entity = new BaasioEntity(Card.ENTITY);
@@ -490,7 +497,6 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
                                     R.string.create_card_succeed,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            finish();
                                             backToCardDetailActivity();
                                             }
                                         })
