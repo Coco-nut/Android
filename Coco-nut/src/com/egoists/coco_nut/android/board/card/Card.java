@@ -21,6 +21,7 @@ public class Card implements Serializable {
     public static final String ENTITY_NAME_DUETO_DATE      = "enddate";
     public static final String ENTITY_NAME_DOING_DATE   = "timeofdoing";    // 하는 중으로 이동한 시간
     public static final String ENTITY_NAME_DONE_DATE    = "timeofdone";     // 한 일로 이동한 시간
+    public static final String ENTITY_NAME_VOTERS    = "voters";     // 평가자 정보
     
     public static final int ENTITY_VALUE_STATE        = 0;            // 0:todo, 1:doing, 2:done
     

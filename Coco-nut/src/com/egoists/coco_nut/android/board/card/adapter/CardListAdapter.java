@@ -95,7 +95,7 @@ public class CardListAdapter extends BaseAdapter {
             
             // 상호 평가 안한 놈이면 빨간색
             if (card.status == 2 && hasParticipants(card) == true && didIVote(card) == false) {
-                view.mTitle.setTextColor(Color.RED);
+                view.mTitle.setTextColor(ColoredCardLabel.getColor(0));
             }
             view.mSubTitle.setText(card.sub_title);
             

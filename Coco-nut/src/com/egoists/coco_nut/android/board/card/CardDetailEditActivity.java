@@ -416,13 +416,12 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         BaasioEntity entity = new BaasioEntity(Card.ENTITY);
         // UUID
         entity.setUuid(UUID.fromString(mCard.uuid));
-        mCard.title = edTxtCardEditTitle.getText().toString();
         // 제목
+        mCard.title = edTxtCardEditTitle.getText().toString();
         entity.setProperty(Card.ENTITY_NAME_TITLE, mCard.title);
-        mCard.sub_title = edTxtCardEditSubtitle.getText().toString();
         // 부제목
+        mCard.sub_title = edTxtCardEditSubtitle.getText().toString();
         entity.setProperty(Card.ENTITY_NAME_SUBTITLE, mCard.sub_title);
-        mCard.discription = edTxtCardEditDescription.getText().toString();
         // 상태
         entity.setProperty(Card.ENTITY_NAME_STATE, mCard.status);
         if (mCard.status == 1)
@@ -430,9 +429,10 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         if (mCard.status == 2)
             entity.setProperty(Card.ENTITY_NAME_DONE_DATE, Calendar.getInstance().getTimeInMillis());
         // 상세내역
+        mCard.discription = edTxtCardEditDescription.getText().toString();
         entity.setProperty(Card.ENTITY_NAME_DESCRIPTION, mCard.discription);
-        mCard.importance = mCard.importance;
         // 중요도
+        mCard.importance = mCard.importance;
         entity.setProperty(Card.ENTITY_NAME_RATING, (int)mCard.importance);
         // 라벨
         entity.setProperty(Card.ENTITY_NAME_LABEL, mCard.label);

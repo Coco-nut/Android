@@ -101,7 +101,21 @@ public class Cards {
                 }
             }
             
+            // 카드 투표자
+            ArrayList<Voter> voters = new ArrayList<Voter>();
+            JsonNode jnodeVoters = baasioCard.getProperty(Card.ENTITY_NAME_VOTERS);
+            if (!ObjectUtils.isEmpty(jnodeVoters)) {
+                int n = jnodeVoters.size();
+                for (int i=0; i<n; i++) {
+                    JsonNode voter = jnodeVoters.get(i);
+                    
+                    AndLog.d(voter.get(Voter.ENTITY_NAME_UUID).asText() + " voted");
+                    voters.add(new Voter(voter.get(Voter.ENTITY_NAME_UUID).asText()));
+                }
+            }
+            
             Card card = new Card(title, subTitle, (int)rating, groupUsers);
+            card.voters = (voters.size() > 0) ? voters : null;
             card.discription = description;
             card.uuid = baasioCard.getUuid().toString();
             card.label = label;
