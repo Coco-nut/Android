@@ -8,8 +8,9 @@ public class Voter implements Serializable {
 
     public static final String ENTITY_NAME_UUID       = "uuid";       // 사용자 UUID
     
-    public Voter() {
-        // TODO Auto-generated constructor stub
+    public String uuid;
+    public Voter(String uuid) {
+        this.uuid = uuid;
     }
 
 }

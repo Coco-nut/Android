@@ -42,6 +42,7 @@ public class Card implements Serializable {
     public Calendar timeofdone;
     
     public ArrayList<Person> participants;
+    public ArrayList<Voter> voters = null;
     
     public int status; //0:do, 1:doing, 2:done
     public boolean ismine;

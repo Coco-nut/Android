@@ -1,11 +1,11 @@
 package com.egoists.coco_nut.android.board.card.adapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,11 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.board.card.Voter;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.DateConverter;
+import com.kth.baasio.Baas;
 
 public class CardListAdapter extends BaseAdapter {
     
@@ -28,6 +30,7 @@ public class CardListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<Card> mCardList;
     private ImageFetcher mImageFetcher;
+    private String mMyUuid;
     
     public CardListAdapter(Context context, ArrayList<Card> cardList) {
         super();
@@ -35,6 +38,7 @@ public class CardListAdapter extends BaseAdapter {
         mCardList = cardList;
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageFetcher = new ImageFetcher(mContext);
+        mMyUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
     }
 
     @Override
@@ -88,11 +92,15 @@ public class CardListAdapter extends BaseAdapter {
         
         if (card != null) {
             view.mTitle.setText(card.title);
+            
+            // 상호 평가 안한 놈이면 빨간색
+            if (card.status == 2 && hasParticipants(card) == true && didIVote(card) == false) {
+                view.mTitle.setTextColor(Color.RED);
+            }
             view.mSubTitle.setText(card.sub_title);
             
             view.mRatingBar.setRating(card.importance);
             // 시간
-//          view.mDate.setText(DateConverter.getTimeString(card.startdate, card.enddate));
             String strStartCal = (card.startdate == null) 
                     ? "" : DateConverter.getStringDate(card.startdate.getTimeInMillis());
             String strEndCal = (card.enddate == null) 
@@ -117,16 +125,53 @@ public class CardListAdapter extends BaseAdapter {
             view.mRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // 카드가 완료되고 내가 아직 평가를 안했으면 평점 입력으로 이동한다
+                    if (card.status == 2 && hasParticipants(card) == true) {
+                        
+                        boolean didVote = didIVote(card);
+                        
+                        if (didVote == false) {
+                            // 평점 입력으로 이동
+                            Intent i = new Intent(mContext, com.egoists.coco_nut.android.board.card.CardVoteActivity_.class);
+                            i.putExtra("card_detail", card);
+                            mContext.startActivity(i);
+                            return;
+                        }
+                    }
+                    
                     // 카드 디테일로 이동
-                    Intent i = new Intent(mContext,
-                            com.egoists.coco_nut.android.board.card.CardDetailActivity_.class);
+                    Intent i = new Intent(mContext, com.egoists.coco_nut.android.board.card.CardDetailActivity_.class);
                     AndLog.d("Push card detail event");
                     i.putExtra("card_detail", card);
                     mContext.startActivity(i);
+                    
                 }
             });
         }
         return convertView;
+    }
+    
+    boolean hasParticipants(Card card) {
+        return (card.participants != null && card.participants.size() > 0) ? true : false;
+    }
+    
+    // 내가 평가했는지 여부
+    boolean didIVote(Card card) {
+        boolean didIVote = false;
+        
+        if (hasParticipants(card)) {
+            AndLog.d("Check whether I have voted");
+            if (card.voters != null) {
+                for (Voter voter : card.voters) {
+                    if (mMyUuid.equals(voter.uuid)) {
+                        didIVote = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return didIVote;
     }
 
 }

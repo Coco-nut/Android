@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical" >
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/font_common_coconut"
+        android:textSize="@dimen/login_font_size"
+        android:textStyle="normal|italic"
+        android:text="본 카드는 완료되었습니다. 참가자들이 본 카드의 등록 업무를 얼마나 잘 완료했는지 평가해주세요"
+        />
+    <LinearLayout
+        android:id="@+id/layCardVote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+    <Button 
+        android:id="@+id/btnCardVote"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="평점 완료" />    
+</LinearLayout>
