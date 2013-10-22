@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
         });
         
 	    // Request Timeout : 8s
-	    Baas.setTimeout(8000, 8000);
+//	    Baas.setTimeout(8000, 8000);
 	    waitAndPreLogin();
 	}
 	
