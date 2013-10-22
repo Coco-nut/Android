@@ -62,6 +62,7 @@ public class GroupInvitationActivity extends Activity {
         
         // 액션바
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("그룹 사용자 추가");
         

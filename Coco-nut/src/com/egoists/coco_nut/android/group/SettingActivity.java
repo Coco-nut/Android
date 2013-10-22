@@ -15,6 +15,7 @@ public class SettingActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.only_back_coconut, menu);
+        getActionBar().setLogo(R.drawable.ic_coconut_white_logo);
         return true;
     }
     

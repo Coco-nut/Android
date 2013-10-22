@@ -66,6 +66,7 @@ public class CardCreationActivity extends Activity {
         
         // 액션바
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
         actionBar.setDisplayHomeAsUpEnabled(true);
         
         // 별점 리스너~

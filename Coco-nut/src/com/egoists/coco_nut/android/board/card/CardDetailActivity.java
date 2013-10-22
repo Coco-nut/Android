@@ -92,6 +92,7 @@ public class CardDetailActivity extends Activity {
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("카드 상세");
         

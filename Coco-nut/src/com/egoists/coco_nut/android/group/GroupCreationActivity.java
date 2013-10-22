@@ -51,6 +51,7 @@ public class GroupCreationActivity extends Activity {
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
         actionBar.setDisplayHomeAsUpEnabled(true);
         
         mTemplete = 0;  // 그룹 탬플릿 (default=0)

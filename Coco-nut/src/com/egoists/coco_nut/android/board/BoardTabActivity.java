@@ -88,6 +88,7 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
 //        Android BUG! 해결책은?
 //        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);

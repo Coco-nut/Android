@@ -135,6 +135,7 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
+        actionBar.setLogo(R.drawable.ic_coconut_white_logo);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("카드 수정");
         

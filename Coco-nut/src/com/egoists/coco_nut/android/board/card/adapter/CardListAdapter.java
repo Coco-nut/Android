@@ -127,6 +127,8 @@ public class CardListAdapter extends BaseAdapter {
             
             if (card.comments != null)  // 댓글 수
                 view.mComments.setText(""+card.comments.size());
+            else
+                view.mComments.setText(""+0);
             
             // 참가자
             view.mParticipant.removeAllViews();

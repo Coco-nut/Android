@@ -47,6 +47,7 @@ public class GroupSelectionActivity extends FragmentActivity {
 	    // Adapter는 얘를 만나면 실제 그룹이 아니라 그룹 생성을 표시한다.
 	    mDummyGroup = new BaasioGroup();
 	    mDummyGroup.setTitle(DUMMY_GROUP_TITLE);
+	    getActionBar().setLogo(R.drawable.ic_coconut_white_logo);
 	    
 	    // 아답터 셋팅
 	    mGroupSelectionPagerAdapter = new GroupSelectionPagerAdapter(

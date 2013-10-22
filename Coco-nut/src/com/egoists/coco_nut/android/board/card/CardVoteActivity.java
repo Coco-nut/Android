@@ -60,6 +60,7 @@ public class CardVoteActivity extends Activity {
         mMyUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
         
         mVoterInfo = new HashMap<String, Float>();
+        getActionBar().setLogo(R.drawable.ic_coconut_white_logo);
         
         // 평가 대상 사용자 출력
         int nParticipant = mCard.participants.size(); 
