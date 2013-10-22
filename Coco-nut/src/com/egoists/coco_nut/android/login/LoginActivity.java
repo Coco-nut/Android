@@ -6,9 +6,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +53,9 @@ public class LoginActivity extends Activity {
 	EditText edTxtLoginId;
 	@ViewById
 	EditText edTxtLoginPassword;
+	@ViewById
+	ViewGroup viewGroupLogin;
+	
 	@AnimationRes
     Animation fadeIn;
 	
@@ -66,6 +72,21 @@ public class LoginActivity extends Activity {
 	    EventBus.getDefault().register(this);
 	    mContext = this;
 	    SettingActivity.LoginPref = new LoginPreference(mContext);
+	    
+	    // 화면 터치시 키보드 내리기
+	    viewGroupLogin.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTxtLoginId.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtLoginPassword.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+        
 	    waitAndPreLogin();
 	}
 	

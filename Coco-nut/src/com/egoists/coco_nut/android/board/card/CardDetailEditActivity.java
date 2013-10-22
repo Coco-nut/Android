@@ -17,7 +17,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
@@ -30,6 +32,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -86,8 +89,9 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
     TextView txtDueToTime;
     @ViewById
     TextView txtDueToDate;
+    
     @ViewById
-    EditText edTxtCardDetailComment;
+    ScrollView viewGroupCardEdit;
    
     // 카드 상태 
     @ViewById
@@ -134,6 +138,21 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("카드 수정");
+        
+        // 화면 터치시 키보드 내리기
+        viewGroupCardEdit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTxtCardEditTitle.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtCardEditSubtitle.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtCardEditDescription.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
         
         // 라디오 버튼
         // 할 일일 경우 완료 체크박스 표시 불가.

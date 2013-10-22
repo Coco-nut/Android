@@ -230,13 +230,6 @@ public class CardDetailActivity extends Activity {
         sendCommentByBaasio(commentToBeSend);
     }
     
-//    // 입력 키보드가 올라와 있다면 내린다
-//    public void hideSoftKeyboard(View v) {
-//        AndLog.d("Hide softkeyboard");
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.hideSoftInputFromWindow(edTxtCardDetailComment.getWindowToken(), 0);
-//    }
-    
     void refresh() {
         drawComments();
         isUpdated = true;

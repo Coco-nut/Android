@@ -8,7 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
@@ -46,6 +49,8 @@ public class CardCreationActivity extends Activity {
     RatingBar ratingCreateCard;
     @ViewById
     Spinner spinnerCardCreateCategory;
+    @ViewById
+    ViewGroup viewGroupCreateCard;
         
     public static final String RELATION_NAME          = "group_card";
     
@@ -68,6 +73,20 @@ public class CardCreationActivity extends Activity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 mCardRating = (int) rating;
+            }
+        });
+        
+        // 화면 터치시 키보드 내리기
+        viewGroupCreateCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTextCreateCardTitle.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTextCreateCardSubTitle.getWindowToken(), 0);
+                }
+                return false;
             }
         });
         

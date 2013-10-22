@@ -8,7 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -33,6 +36,9 @@ public class GroupCreationActivity extends Activity {
     @ViewById
     ImageView imgSelectedGroupTemplete;
     
+    @ViewById
+    ViewGroup viewGroupCreateGroup;
+    
     public static final String EXTRA_CREATED_GROUP_UUID = "created_group_uuid";
     
     private Context mContext;
@@ -48,6 +54,19 @@ public class GroupCreationActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         
         mTemplete = 0;  // 그룹 탬플릿 (default=0)
+        
+        // 화면 터치시 키보드 내리기
+        viewGroupCreateGroup.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTxtCreateProj.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
     }
     
     @Override

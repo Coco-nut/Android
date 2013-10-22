@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,6 +40,9 @@ public class SignupActivity extends Activity {
     EditText edTxtSignUpConfirmPassword;
     @ViewById
     TextView txtSignUpMessage;
+    
+    @ViewById
+    ViewGroup viewGroupSignUp;
         
     private Context mContext;
     private ProgressDialog mDialog;
@@ -45,6 +52,22 @@ public class SignupActivity extends Activity {
     void initSignupForm() {
         mContext = this;
         edTxtSignUpId.setText(MyAndroidInfo.getMyIdFromEmail(this));
+        
+        // 화면 터치시 키보드 내리기
+        viewGroupSignUp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTxtSignUpId.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtSignUpName.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtSignUpPassword.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(edTxtSignUpConfirmPassword.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
     }
         
     @Click(R.id.btnSignUp)
