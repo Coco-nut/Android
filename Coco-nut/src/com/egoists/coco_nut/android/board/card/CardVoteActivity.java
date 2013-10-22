@@ -28,6 +28,7 @@ import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.kth.baasio.Baas;
 import com.kth.baasio.callback.BaasioCallback;
@@ -93,6 +94,12 @@ public class CardVoteActivity extends Activity {
         
         this.finish();
     }
+    
+    // 평가하지 않은 참여자가 있을 경우 메시지
+    @UiThread
+    void showErrorMessage() {
+        BaasioDialogFactory.createErrorDialog(mContext, R.string.error_require_vote_info).show();
+    }
 
     @Click(R.id.btnCardVote)
     void doVoteByBaasio() {
@@ -106,6 +113,10 @@ public class CardVoteActivity extends Activity {
         // 평가자
         ArrayList<Voter> voters = (mCard.voters == null) ? new ArrayList<Voter>() : mCard.voters;            
         for (Person person : mCard.participants) {
+            if (mVoterInfo.get(person.uuid) == null) {    // 평가하지 않은 항목이 있을 경우
+                showErrorMessage();
+                return;
+            }
             float rate = mVoterInfo.get(person.uuid);
             if (rate > 0) {
                 person.sumRate += (int)rate-5;

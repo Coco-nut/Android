@@ -23,6 +23,7 @@
     <string name="error_require_signup">등록되지 않은 회원입니다. 회원으로 가입하세요.</string>
     <string name="error_require_card_title">카드의 제목은 필수 입력입니다.</string>
     <string name="err_empty_user_profile">수정 내역을 입력하세요</string>
+    <string name="error_require_vote_info">평가하지 않은 참여자가 있습니다. 평가를 완료해주세요.</string>
     
     <string name="login_message">코코넛은 전화번호의 본인 사용 확인 및\n 부정사용 방지를 위하여 인증을 필요로 합니다.</string>
     <string name="login">로그인</string>
