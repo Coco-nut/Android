@@ -476,15 +476,10 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         // 카드 상태가 완료이면 사용자 업데이트 안함
         if (mCard.status != 2) {
             // 실제로 체크한 사용자만 추려내서 업데이트한다
-            mCard.ismine = false;
-            String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
-            
             for (int i=0; i<mUsers.size(); i++) {
                 if (mIsJoined[i]) {
                     BaasioUser user = mUsers.get(i);
-                    boolean isMe = (myUuid.equals(user.getUuid().toString())) ? true : false;
-                    mCard.ismine = true;
-                    mParticipant.add(new Person(user, isMe, 5 * (mUsers.size() - 1)));
+                    mParticipant.add(new Person(user, 5 * (mUsers.size() - 1)));
                 }
             }
             mCard.participants = mParticipant;

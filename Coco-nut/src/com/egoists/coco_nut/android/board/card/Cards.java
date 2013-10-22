@@ -10,6 +10,7 @@ import org.codehaus.jackson.JsonNode;
 import android.content.res.Resources;
 
 import com.egoists.coco_nut.android.util.AndLog;
+import com.kth.baasio.Baas;
 import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.user.BaasioUser;
 import com.kth.baasio.utils.ObjectUtils;
@@ -83,20 +84,25 @@ public class Cards {
             }
             
             // 카드 참가자
+            String myUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
+            
             ArrayList<Person> groupUsers = new ArrayList<Person>();
             JsonNode participants = baasioCard.getProperty(Card.ENTITY_NAME_PARTY);
             if (!ObjectUtils.isEmpty(participants)) {
                 int nParicipants = participants.size();
                 for (int i=0; i<nParicipants; i++) {
                     JsonNode user = participants.get(i);
-                    
+                    // 참가자가 본인인지 확인
+                    boolean isMe = (myUuid.equals(user.get(Person.ENTITY_NAME_UUID).asText())) ? true : false;
+                    // 참가자 입력
                     AndLog.d(user.get(Person.ENTITY_NAME_NAME).asText() + " is joined in " + title + " card : " +
-                            user.get(Person.ENTITY_NAME_UUID).asText() + " : " + user.get(Person.ENTITY_NAME_SUM_RATE).asInt());
+                            user.get(Person.ENTITY_NAME_UUID).asText() + " : " + user.get(Person.ENTITY_NAME_SUM_RATE).asInt() +
+                            ", " + isMe);
                     groupUsers.add(new Person(
                             user.get(Person.ENTITY_NAME_UUID).asText(),
                             user.get(Person.ENTITY_NAME_NAME).asText(),
                             user.get(Person.ENTITY_NAME_PICTURE).asText(),
-                            user.get("isme").asBoolean(),
+                            isMe,
                             user.get(Person.ENTITY_NAME_SUM_RATE).asInt()));
                 }
             }

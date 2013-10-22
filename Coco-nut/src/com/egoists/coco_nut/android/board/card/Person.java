@@ -25,8 +25,8 @@ public class Person implements Serializable {
 	public String picture;
 	public int sumRate;
 	
-	public Person(BaasioUser user, boolean isme, int sumRate) {
-	    this(user.getUuid().toString(), user.getName(), user.getPicture(), isme, sumRate);
+	public Person(BaasioUser user, int sumRate) {
+	    this(user.getUuid().toString(), user.getName(), user.getPicture(), false, sumRate);
 	}
 	
 	public Person(String uuid, String name, String pictureUrl, boolean isme, int sumRate) {

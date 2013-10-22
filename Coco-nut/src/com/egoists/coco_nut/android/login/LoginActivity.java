@@ -33,6 +33,7 @@ import com.googlecode.androidannotations.annotations.NoTitle;
 import com.googlecode.androidannotations.annotations.UiThread;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.googlecode.androidannotations.annotations.res.AnimationRes;
+import com.kth.baasio.Baas;
 import com.kth.baasio.callback.BaasioCallback;
 import com.kth.baasio.callback.BaasioSignInCallback;
 import com.kth.baasio.entity.user.BaasioUser;
@@ -87,6 +88,8 @@ public class LoginActivity extends Activity {
             }
         });
         
+	    // Request Timeout : 8s
+	    Baas.setTimeout(8000, 8000);
 	    waitAndPreLogin();
 	}
 	
