@@ -229,8 +229,12 @@ public class WIPView extends View {
 				if (mCards.get(i).enddate != null)
 					changesDone.add(mCards.get(i).enddate);
 			}
-			if(currentdate.compareTo(mCards.get(i).enddate) < 0)
-				currentdate.setTimeInMillis(mCards.get(i).enddate.getTimeInMillis());
+			if(mCards.get(i).startdate != null)
+				if(currentdate.compareTo(mCards.get(i).startdate) < 0)
+					currentdate.setTimeInMillis(mCards.get(i).startdate.getTimeInMillis());
+			if(mCards.get(i).enddate != null)
+				if(currentdate.compareTo(mCards.get(i).enddate) < 0)
+					currentdate.setTimeInMillis(mCards.get(i).enddate.getTimeInMillis());
 			
 		/*	if (mCards.get(i).timeofdoing != null)
 				changesDoing.add(mCards.get(i).timeofdoing);
@@ -262,7 +266,7 @@ public class WIPView extends View {
 			if (maxWD < WIP[i] + Done[i])
 				maxWD = WIP[i] + Done[i];
 		}
-		dateofchanges.add(Calendar.getInstance());
+		dateofchanges.add(currentdate);
 		WIP[number_of_dates-1] = WIP[number_of_dates-2];
 		Done[number_of_dates-1] = Done[number_of_dates-2];
 	}
