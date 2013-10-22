@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.board.card.Voter;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
-import com.egoists.coco_nut.android.util.DateConverter;
+import com.egoists.coco_nut.android.util.EtcUtils;
 import com.kth.baasio.Baas;
 
 public class CardListAdapter extends BaseAdapter {
@@ -93,19 +94,35 @@ public class CardListAdapter extends BaseAdapter {
         if (card != null) {
             view.mTitle.setText(card.title);
             
-            // 상호 평가 안한 놈이면 빨간색
-            if (card.status == 2 && hasParticipants(card) == true && didIVote(card) == false) {
-                view.mTitle.setTextColor(ColoredCardLabel.getColor(0));
+            // 카드 상태에 대한 색상 지정
+            if (card.status == 2) { // 완료 중 평가 대기 빨간색, 평가 완료 회색
+                if (hasParticipants(card) == true && didIVote(card) == false) {
+                    view.mTitle.setTextColor(ColoredCardLabel.getColor(0));
+                } else {
+                    view.mTitle.setTextColor(ColoredCardLabel.getColor(10));
+                }
+                view.mSubTitle.setTextColor(ColoredCardLabel.getColor(10));
+                view.mDate.setTextColor(ColoredCardLabel.getColor(10));
+                view.mComments.setTextColor(ColoredCardLabel.getColor(10));
+            } else {    // 할일, 하는중은 검은색
+                view.mTitle.setTextColor(Color.BLACK);
+                view.mSubTitle.setTextColor(Color.BLACK);
+                view.mDate.setTextColor(Color.BLACK);
+                view.mComments.setTextColor(Color.BLACK);
             }
             view.mSubTitle.setText(card.sub_title);
             
             view.mRatingBar.setRating(card.importance);
             // 시간
             String strStartCal = (card.startdate == null) 
-                    ? "" : DateConverter.getStringDate(card.startdate.getTimeInMillis());
+                    ? "" : EtcUtils.getOnlyDateString(card.startdate.getTimeInMillis());
             String strEndCal = (card.enddate == null) 
-                    ? "" : DateConverter.getStringDate(card.enddate.getTimeInMillis());
-            view.mDate.setText(strStartCal + " ~ " + strEndCal);
+                    ? "" : EtcUtils.getOnlyDateString(card.enddate.getTimeInMillis());
+            if (strStartCal.length() == 0 && strEndCal.length() == 0)
+                view.mDate.setText("?");
+            else
+                view.mDate.setText(strStartCal + " ~ " + strEndCal);
+            
             view.mCategory.setBackgroundColor(ColoredCardLabel.getColor(card.label));
             
             if (card.comments != null)  // 댓글 수

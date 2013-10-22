@@ -6,10 +6,10 @@
         <item>기획</item>
         <item>자료조사</item>
         <item>문서작성</item>
+        <item>발표</item>
         <item>디자인</item>
         <item>개발</item>
         <item>테스트</item>
         <item>기타</item>
-        <item>-</item>
     </string-array>
 </resources>

@@ -44,6 +44,8 @@
     <string name="create_group_succeed">프로젝트 생성에 성공하였습니다</string>
     
     <string name="create_card_succeed">카드 등록에 성공하였습니다</string>
+    <string name="send_comment_succeed">댓글이 등록 되었습니다</string>
+    <string name="doing_send_comment">댓글 등록 중....</string>
     
     <string name="card_detail_title">제목</string>
     <string name="card_detail_subtitle">부제목</string>

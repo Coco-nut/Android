@@ -32,8 +32,8 @@ import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
-import com.egoists.coco_nut.android.util.DateConverter;
 import com.egoists.coco_nut.android.util.DialogFactory;
+import com.egoists.coco_nut.android.util.EtcUtils;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
@@ -163,10 +163,13 @@ public class CardDetailActivity extends Activity {
         
         // 카드 시작, 종료 시간
         String strStartCal = (mCard.startdate == null) 
-                ? "" : DateConverter.getStringTime(mCard.startdate.getTimeInMillis());
+                ? "" : EtcUtils.getSimpleDateString(mCard.startdate.getTimeInMillis());
         String strEndCal = (mCard.enddate == null) 
-                ? "" : DateConverter.getStringTime(mCard.enddate.getTimeInMillis());
-        txtCardDetailDueTo.setText(strStartCal + "\n ~ " + strEndCal);
+                ? "" : EtcUtils.getSimpleDateString(mCard.enddate.getTimeInMillis());
+        if (strStartCal.length() == 0 && strEndCal.length() == 0)
+            txtCardDetailDueTo.setText("카드 시작/종료 시간을 설정해주세요");
+        else
+            txtCardDetailDueTo.setText(strStartCal + "\n ~ " + strEndCal);
         
         // 라벨 + 카테고리 추가
         String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
@@ -203,7 +206,7 @@ public class CardDetailActivity extends Activity {
                 
                 // 댓글 시간
                 TextView txtName = (TextView)userItemRoot.findViewById(R.id.txtCommenterName);
-                txtName.setText(DateConverter.getStringTime(comment.time));
+                txtName.setText(EtcUtils.getSimpleDateString(comment.time));
                 // 댓글
                 TextView txtComment = (TextView)userItemRoot.findViewById(R.id.txtComment);
                 txtComment.setText(comment.comment);
@@ -273,7 +276,7 @@ public class CardDetailActivity extends Activity {
         JsonNode jsonNode = mapper.convertValue(mCard.comments, JsonNode.class);
         entity.setProperty(Card.ENTITY_NAME_COMMENTS, jsonNode);
         
-        mDialog = ProgressDialog.show(CardDetailActivity.this, "", "댓글 등록 중", true);
+        mDialog = ProgressDialog.show(CardDetailActivity.this, "", getString(R.string.doing_send_comment), true);
         entity.updateInBackground(
                 new BaasioCallback<BaasioEntity>() {
 
@@ -290,9 +293,9 @@ public class CardDetailActivity extends Activity {
                             mDialog.dismiss();
                             // 성공
                             DialogFactory
-                            .createNoButton(CardDetailActivity.this,R.string.title_succeed, "댓글이 등록 되었습니다")
+                            .createNoButton(CardDetailActivity.this, R.string.title_succeed, R.string.send_comment_succeed)
                             .setPositiveButton(
-                                    R.string.create_card_succeed,
+                                    R.string.title_confirm,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             refresh();
