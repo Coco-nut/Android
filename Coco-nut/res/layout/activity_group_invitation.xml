@@ -27,6 +27,12 @@
                 android:inputType="text"
                 android:singleLine="true" >
 	        </EditText>
+	        <Button
+	            android:id="@+id/btnSearchUser"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/title_search"
+	            />
         </LinearLayout>
     </LinearLayout>
     <FrameLayout

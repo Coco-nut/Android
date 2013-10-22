@@ -26,6 +26,7 @@ import com.egoists.coco_nut.android.util.BaasioDialogFactory;
 import com.egoists.coco_nut.android.util.CoconutUrlEncoder;
 import com.egoists.coco_nut.android.util.LoginPreference;
 import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.Click;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.UiThread;
@@ -117,6 +118,7 @@ public class GroupInvitationActivity extends Activity {
         }
     }
     
+    @Click(R.id.btnSearchUser)
     void getMyFriends() {
         // 사용자 검색시 나온 키보드 내려놓기
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -187,8 +189,13 @@ public class GroupInvitationActivity extends Activity {
         backToProjectSelectionActivity();
     }
     
-    // 사용자 추가
+    /**
+     * 사용자 추가
+     * @param userUuid
+     */
     public void addUserToGroup(UUID userUuid) {
+        mDialog = ProgressDialog.show(GroupInvitationActivity.this, "", "추가중", true);
+        
         BaasioUser user = new BaasioUser();
         user.setUuid(UUID.fromString(userUuid.toString()));         // 추가하려는 회원의 uuid   
 
@@ -201,17 +208,56 @@ public class GroupInvitationActivity extends Activity {
                     @Override
                     public void onException(BaasioException e) {
                         // 실패
+                        mDialog.dismiss();
                         AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                         BaasioDialogFactory.createErrorDialog(mContext, e).show();
                     }
 
                     @Override
                     public void onResponse(BaasioUser response) {
+                        mDialog.dismiss();
                         if (response != null) {
                             // 성공
-                            String username = response.getUsername(); // ID(Username)
-                            AndLog.d("Succeed : " + username + " is added");
-                            Toast.makeText(mContext, "Succeed : " + username + " is added", Toast.LENGTH_SHORT).show();
+                            String name = response.getName(); // ID(Username)
+                            AndLog.d("Succeed : " + name + " is added");
+                            Toast.makeText(mContext, name + " 이 그룹에 추가되었습니다", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+    
+    /**
+     * 사용자 삭제
+     * @param userUuid
+     */
+    public void removeUserToGroup(UUID userUuid) {
+        mDialog = ProgressDialog.show(GroupInvitationActivity.this, "", "삭제중", true);
+        
+        BaasioUser user = new BaasioUser();
+        user.setUuid(UUID.fromString(userUuid.toString()));         // 추가하려는 회원의 uuid   
+
+        BaasioGroup entity = new BaasioGroup();
+        entity.setUuid(UUID.fromString(mCreatedGroupUuid));         // Group의 uuid
+        entity.removeInBackground(
+                user
+                , new BaasioCallback<BaasioUser>() {
+
+                    @Override
+                    public void onException(BaasioException e) {
+                        // 실패
+                        mDialog.dismiss();
+                        AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                        BaasioDialogFactory.createErrorDialog(mContext, e).show();
+                    }
+
+                    @Override
+                    public void onResponse(BaasioUser response) {
+                        mDialog.dismiss();
+                        if (response != null) {
+                            // 성공
+                            String name = response.getName(); // ID(Username)
+                            AndLog.d("Succeed : " + name + " is added");
+                            Toast.makeText(mContext, name + " 이 그룹에서 삭제되었습니다", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
