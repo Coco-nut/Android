@@ -152,8 +152,15 @@ public class PeerView extends RelativeLayout {
 				ratings[i] /= (divider[i] * (number_of_people - 1));
 		
 		names = new String[number_of_people];
-		pictures = new ImageView[number_of_people];
 		star = new Bitmap[number_of_people];
+		if (pictures != null)
+		{
+			for(i=0; i< number_of_people; i++)
+			{
+				removeView(pictures[i]);
+			}
+		}
+		pictures = new ImageView[number_of_people];
 		for (i=0;i<number_of_people; i++)
 		{
 			BaasioUser person = mActivity.mUsers.get(i); 
