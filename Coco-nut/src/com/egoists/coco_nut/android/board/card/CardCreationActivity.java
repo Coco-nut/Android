@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.Spinner;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -93,9 +93,9 @@ public class CardCreationActivity extends Activity {
         // 카드 라벨 설정 스피너 생성
         String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
         spinnerCardCreateCategory.setPrompt("카드 라벨을 고르세요");
-        CardLabelArrayAdapter adSpin = new CardLabelArrayAdapter(mContext, android.R.layout.simple_spinner_item, labels); 
+        ArrayAdapter<String> adSpin = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, labels); 
         spinnerCardCreateCategory.setAdapter(adSpin);
-        spinnerCardCreateCategory.setSelection(adSpin.getCount());
+        spinnerCardCreateCategory.setSelection(adSpin.getCount()-1);    // 기본 = 마지막 라벨 : 기타
         
         spinnerCardCreateCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override

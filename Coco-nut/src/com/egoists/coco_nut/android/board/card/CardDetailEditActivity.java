@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -37,7 +38,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
-import com.egoists.coco_nut.android.board.card.adapter.CardLabelArrayAdapter;
 import com.egoists.coco_nut.android.board.event.GroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.RequestGroupUsersEvent;
 import com.egoists.coco_nut.android.board.event.UpdateDuetoDateEvent;
@@ -57,7 +57,6 @@ import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.ViewById;
-import com.kth.baasio.Baas;
 import com.kth.baasio.callback.BaasioCallback;
 import com.kth.baasio.entity.entity.BaasioEntity;
 import com.kth.baasio.entity.user.BaasioUser;
@@ -196,10 +195,10 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         // 카드 라벨 설정 스피너 생성
         String[] labels = getResources().getStringArray(R.array.selectedCardLabel);
         spinnerCardEditCategory.setPrompt("카드 라벨을 고르세요");
-        CardLabelArrayAdapter adSpin = new CardLabelArrayAdapter(mContext, android.R.layout.simple_spinner_item, labels); 
+        ArrayAdapter<String> adSpin = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_item, labels); 
         spinnerCardEditCategory.setAdapter(adSpin);
         if (mCard.label == -1) {
-            spinnerCardEditCategory.setSelection(adSpin.getCount());
+            spinnerCardEditCategory.setSelection(adSpin.getCount()-1);    // 기본 = 마지막 라벨 : 기타
         } else {
             spinnerCardEditCategory.setSelection(mCard.label);
         }
