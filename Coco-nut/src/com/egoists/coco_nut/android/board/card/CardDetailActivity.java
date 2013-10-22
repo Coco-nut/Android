@@ -16,9 +16,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
@@ -71,6 +75,9 @@ public class CardDetailActivity extends Activity {
     @ViewById
     EditText edTxtCardDetailComment;
     
+    @ViewById
+    ScrollView scrollCardDetail;
+    
     private Context mContext;
     private ImageFetcher mImageFetcher;
     private LayoutInflater mInflater;
@@ -93,6 +100,20 @@ public class CardDetailActivity extends Activity {
         
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
+        // 화면 터치시 키보드 내리기
+        scrollCardDetail.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+                    AndLog.d("Touch");
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edTxtCardDetailComment.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+        
+        // 카드 상세 화면 그리기
         drawCardDetail();
     }
     
@@ -208,6 +229,13 @@ public class CardDetailActivity extends Activity {
         String commentToBeSend = edTxtCardDetailComment.getText().toString();
         sendCommentByBaasio(commentToBeSend);
     }
+    
+//    // 입력 키보드가 올라와 있다면 내린다
+//    public void hideSoftKeyboard(View v) {
+//        AndLog.d("Hide softkeyboard");
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(edTxtCardDetailComment.getWindowToken(), 0);
+//    }
     
     void refresh() {
         drawComments();
