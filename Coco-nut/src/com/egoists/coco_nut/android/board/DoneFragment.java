@@ -19,11 +19,14 @@ import com.egoists.coco_nut.android.board.event.RequestDoneCardsEvent;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
 
 @EFragment
 public class DoneFragment extends Fragment {
+    @ViewById
+    View layoutMyCardMessage;
 
     private CardListAdapter mListAdapter;
     private ArrayList<Card> mDoneCards;
@@ -34,7 +37,7 @@ public class DoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         AndLog.d("onCreateView");
         
-        View view = inflater.inflate(R.layout.fragment_my_cards, container, false);
+        View view = inflater.inflate(R.layout.fragment_cards, container, false);
         ListView list = (ListView)view.findViewById(R.id.list);  
         list.setAdapter(mListAdapter);
         
@@ -71,6 +74,13 @@ public class DoneFragment extends Fragment {
     @UiThread
     void refreshCardList(List<Card> cards) {
         AndLog.d("Refresh " + cards.size() + " cards");
+        
+        // 카드에 아무것도 없으면 안내 메시지 출력
+        if (cards.size() > 0) 
+            layoutMyCardMessage.setVisibility(View.INVISIBLE);
+        else
+            layoutMyCardMessage.setVisibility(View.VISIBLE);
+        
         mListAdapter.update(cards);
     }
     
