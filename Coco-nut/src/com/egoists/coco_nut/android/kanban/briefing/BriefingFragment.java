@@ -89,6 +89,7 @@ public class BriefingFragment extends Fragment {
      * @param event
      */
     public void onEvent(AllCardsEvent event) {
+        AndLog.d("Refresh Kanban Briefing Board");
         gantview.refresh();
         wipview.refresh();
         partiview.refresh();

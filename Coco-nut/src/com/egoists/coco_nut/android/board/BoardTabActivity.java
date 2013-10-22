@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Cards;
-import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.board.event.AllCardsEvent;
 import com.egoists.coco_nut.android.board.event.DoingCardsEvent;
 import com.egoists.coco_nut.android.board.event.DoneCardsEvent;
