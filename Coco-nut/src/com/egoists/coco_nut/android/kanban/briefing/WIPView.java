@@ -242,8 +242,9 @@ public class WIPView extends View {
 				if(currentdate.compareTo(mCards.get(i).startdate) < 0)
 					currentdate.setTimeInMillis(mCards.get(i).startdate.getTimeInMillis());
 			if(mCards.get(i).enddate != null)
-				if(currentdate.compareTo(mCards.get(i).enddate) < 0)
-					currentdate.setTimeInMillis(mCards.get(i).enddate.getTimeInMillis());
+				if(changesDone.size() != 0)
+					if(currentdate.compareTo(changesDone.get(changesDone.size()-1)) < 0)
+						currentdate.setTimeInMillis(changesDone.get(changesDone.size()-1).getTimeInMillis());
 			
 		/*	if (mCards.get(i).timeofdoing != null)
 				changesDoing.add(mCards.get(i).timeofdoing);

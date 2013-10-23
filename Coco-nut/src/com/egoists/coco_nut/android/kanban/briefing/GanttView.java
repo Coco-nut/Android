@@ -332,7 +332,7 @@ public class GanttView extends View {
 			flag[i].setBounds( x(flag_x1 + i%3*flag_dx), y(flag_y1 + i/3*flag_dy), x(flag_x2 + i%3*flag_dx), y(flag_y2 + i/3*flag_dy));
 		
 		icon.setBounds(x(leftline_x), y(icon_y1), x(icon_x2), y(icon_y2));
-		down.setBounds(x(330), y(996), x(390), y(Math.max(1050, top_margin + chart_height + 250)-20));
+		down.setBounds(x(330), y(Math.max(1050, top_margin + chart_height + 250)-54), x(390), y(Math.max(1050, top_margin + chart_height + 250)-20));
 		label_cropped = new Bitmap[number_of_cards];
 		label_x1 = new int[number_of_cards];
 		label_x2 = new int[number_of_cards];
