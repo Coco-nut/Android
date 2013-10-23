@@ -2,25 +2,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="알림 설정">
-
-        <CheckBoxPreference
-                android:key="push"
-                android:title="푸시 알람 받기"
-                android:summary="심심할 떄 푸시 알람을 받습니다." />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
             android:title="내 정보설정">
-
         <Preference
                 android:key="profile"
                 android:title="내 프로필 설정"
                 android:summary="프로필 사진, 이름, 전화번호 등등 수정"
                 android:dialogTitle="그냥 넣어봤음 아무일도 일어나지 않지" />
-        
-        <EditTextPreference
+        <Preference
                 android:key="password"
                 android:title="계정 설정"
                 android:summary="비밀번호 변경"
@@ -28,22 +16,13 @@
     </PreferenceCategory>
     <PreferenceCategory
             android:title="서비스 정보">
-
         <Preference
                 android:key="version"
                 android:title="버전 정보"
                 android:summary="0.01"/>
-        
-        <Preference
-                android:key="notice"
-                android:title="공지사항"/>
-        <Preference
-                android:key="help"
-                android:title="도움말"/>
     </PreferenceCategory>
     <PreferenceCategory
             android:title="로그아웃">
-
         <Preference
                 android:key="logout"
                 android:title="로그아웃"/>

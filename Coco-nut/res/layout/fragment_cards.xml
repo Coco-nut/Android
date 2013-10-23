@@ -16,10 +16,17 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:background="@color/userlist_bg"
+	        android:orientation="vertical"
+	        android:gravity="center"
 	        android:id="@+id/layoutMyCardMessage">
+	        <ImageView 
+	            android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_empty_card"
+                />
 	        <TextView
 	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
+	            android:layout_height="wrap_content"
 	            android:gravity="center"
 	            android:text="이 곳엔 카드가 없습니다.\n카드를 추가하거나 카드 상태를 수정하세요."/>
 	        

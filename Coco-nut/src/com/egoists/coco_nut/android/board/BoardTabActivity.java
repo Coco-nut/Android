@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
@@ -164,12 +165,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
                 startActivity(i);
                 return true;
 //            case R.id.menu_notification:
-//                //노티.. 고민좀 해봐야할듯
+//                //노티..
 //                return true;
-            case R.id.menu_setting:
-//                startActivity(new Intent(this, 
-//                        com.egoists.coco_nut.android.kanban.KanbanSettingActivity.class));
-                return true;
+//            case R.id.menu_setting:
+//                Toast toast = Toast.makeText(this, "그룹 설정 기능은 곧 반영됩니다. 조금만 기다려주세요", Toast.LENGTH_SHORT);
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
