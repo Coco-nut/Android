@@ -89,7 +89,7 @@ public class LoginActivity extends Activity {
         });
         
 	    // Request Timeout : 8s
-//	    Baas.setTimeout(8000, 8000);
+	    Baas.setTimeout(8000, 8000);
 	    waitAndPreLogin();
 	}
 	
@@ -198,6 +198,11 @@ public class LoginActivity extends Activity {
                 mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
                 if (e.getStatusCode() != null) {
+                    if (e.getErrorCode() == 0) {
+                        // 네트워크 오류
+                        BaasioDialogFactory.createErrorDialog(mContext, R.string.error_network).show();
+                        return;
+                    }
                     if (e.getErrorCode() == 201) {
                         // username(ID) 또는 비밀번호 오류
                         BaasioDialogFactory.createErrorDialog(mContext, R.string.error_login_fail).show();

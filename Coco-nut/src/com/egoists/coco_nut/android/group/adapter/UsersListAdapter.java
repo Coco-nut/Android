@@ -134,20 +134,6 @@ public class UsersListAdapter extends BaseAdapter {
                 
             });
         }
-        
-//        if (view.mRoot != null) {
-//            view.mRoot.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    // 리스트에서 본인 삭제
-//                    mUserList.remove(position);
-//                    UsersListAdapter.this.notifyDataSetChanged();
-//                    
-//                    // 사용자 그룹에 추가
-//                    ((GroupInvitationActivity)mActivity).addUserToGroup(entity.getUuid());
-//                }
-//            });
-//        }
         return convertView;
     }
 }

@@ -174,6 +174,11 @@ public class GroupInvitationActivity extends Activity {
             public void onException(BaasioException e) {
                 mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                if (e.getErrorCode() == 0) {
+                    // 네트워크 오류
+                    BaasioDialogFactory.createErrorDialog(mContext, R.string.error_network).show();
+                    return;
+                }
                 BaasioDialogFactory.createErrorDialog(mContext, e).show();
             }
         });

@@ -317,6 +317,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
             @Override
             public void onException(BaasioException e) {
                 mDialog.dismiss();
+                if (e.getErrorCode() == 0) {
+                    // 네트워크 오류
+                    BaasioDialogFactory.createErrorDialog(mContext, R.string.error_network).show();
+                    return;
+                }
                 BaasioDialogFactory.createErrorDialog(mContext, e).show();
             }
         });

@@ -64,7 +64,7 @@ public class ImageCache {
     // Compression settings when writing images to disk cache
     private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.PNG;
 
-    private static final int DEFAULT_COMPRESS_QUALITY = 75;
+    private static final int DEFAULT_COMPRESS_QUALITY = 100;
 
     private static final String CACHE_FILENAME_PREFIX = "cache_";
 

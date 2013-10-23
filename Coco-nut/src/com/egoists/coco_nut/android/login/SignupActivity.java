@@ -104,6 +104,11 @@ public class SignupActivity extends Activity {
             public void onException(BaasioException e) {
                 mDialog.dismiss();
                 AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                if (e.getErrorCode() == 0) {
+                    // 네트워크 오류
+                    BaasioDialogFactory.createErrorDialog(mContext, R.string.error_network).show();
+                    return;
+                }
                 if (e.getErrorCode() == 913) {
                     // 이미 가입된 사용자
                     BaasioDialogFactory.createErrorDialog(mContext, R.string.error_userid_already_exist).show();

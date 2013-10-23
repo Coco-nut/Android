@@ -136,6 +136,11 @@ public class GroupCreationActivity extends Activity {
                     public void onException(BaasioException e) {
                         // 실패
                         AndLog.e(e.getErrorCode() + " : " + e.getErrorDescription());
+                        if (e.getErrorCode() == 0) {
+                            // 네트워크 오류
+                            BaasioDialogFactory.createErrorDialog(mContext, R.string.error_network).show();
+                            return;
+                        }
                         BaasioDialogFactory.createErrorDialog(mContext, e).show();
                     }
 

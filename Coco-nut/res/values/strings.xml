@@ -19,6 +19,7 @@
     <string name="title_checklist">체크리스트</string>
     <string name="title_search">검색</string>
     
+    <string name="error_network">네트워크 통신이 원활하지 않습니다. 잠시후 다시 시도 해주세요.</string>
     <string name="err_empty_login_form">아이디 혹은 패스워드를 입력해주십시오</string>
     <string name="error_equaled_password">패쓰워드가 일치하지 않습니다. 다시 입력하세요.</string>
     <string name="error_login_fail">로그인에 실패하였습니다. ID, 비밀번호를 확인하세요.</string>
