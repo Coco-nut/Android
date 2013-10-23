@@ -227,7 +227,16 @@ public class WIPView extends View {
 				if (mCards.get(i).startdate != null)
 					changesDoing.add(mCards.get(i).startdate);
 				if (mCards.get(i).enddate != null)
-					changesDone.add(mCards.get(i).enddate);
+				{
+					changesDone.add((Calendar) mCards.get(i).enddate.clone());
+					
+					//시작 시간이 널이 아니고 끝나는 시간이 시작 시간 이전이면 끝나는 시간을 시작 시간 하루 이후로 수정
+					if (mCards.get(i).startdate != null &&
+							changesDone.get(changesDone.size()-1).compareTo(mCards.get(i).startdate) <0)
+						changesDone.get(changesDone.size()-1).setTimeInMillis
+						(mCards.get(i).startdate.getTimeInMillis() + 3600*1000*24);
+				}
+					
 			}
 			if(mCards.get(i).startdate != null)
 				if(currentdate.compareTo(mCards.get(i).startdate) < 0)
