@@ -1,0 +1,12 @@
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="그룹 설정">
+        <Preference
+                android:key="invite"
+                android:title="그룹원 초대"
+                android:summary="이 그룹에 함께할 사용자들을 초대"
+                android:dialogTitle="그냥 넣어봤음 아무일도 일어나지 않지" />
+    </PreferenceCategory>
+</PreferenceScreen>

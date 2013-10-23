@@ -113,8 +113,8 @@ public class UsersListAdapter extends BaseAdapter {
                 view.mName.setText(entity.getName());
             }
             
-            if (!ObjectUtils.isEmpty(entity.getEmail())) {
-                view.mBody.setText(entity.getEmail());
+            if (!ObjectUtils.isEmpty(entity.getUsername())) {
+                view.mBody.setText(entity.getUsername());
             }
             
             view.mJoin.setOnCheckedChangeListener(new OnCheckedChangeListener() {

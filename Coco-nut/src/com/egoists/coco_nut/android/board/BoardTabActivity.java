@@ -167,9 +167,11 @@ public class BoardTabActivity extends FragmentActivity implements TabListener {
 //            case R.id.menu_notification:
 //                //노티..
 //                return true;
-//            case R.id.menu_setting:
-//                Toast toast = Toast.makeText(this, "그룹 설정 기능은 곧 반영됩니다. 조금만 기다려주세요", Toast.LENGTH_SHORT);
-//                return true;
+            case R.id.menu_setting:
+                Intent intent = new Intent(this, com.egoists.coco_nut.android.group.GroupSettingActivity.class);
+                intent.putExtra(ARG_GROUP_UUID, mExtraGroupUuid);
+                startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

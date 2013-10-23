@@ -13,11 +13,11 @@
         android:icon="@drawable/ic_noti_coconut"
         android:showAsAction="always|withText"       
         />
-         
+    -->
     <item
         android:title="설정" 
         android:id="@+id/menu_setting"
         android:icon="@drawable/ic_sett_coconut"
         android:showAsAction="always|withText"     
-        />-->
+        />
 </menu>
