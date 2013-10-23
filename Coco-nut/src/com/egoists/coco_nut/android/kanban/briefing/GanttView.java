@@ -222,7 +222,7 @@ public class GanttView extends View {
 			startdates[i] = mActivity.mCards.get(i).startdate;
 			if (startdates[i] == null)
 				startdates[i] = day_of_start;	
-			enddates[i] = mActivity.mCards.get(i).enddate;
+			enddates[i] = (Calendar) mActivity.mCards.get(i).enddate.clone();
 			enddates[i].setTimeInMillis(enddates[i].getTimeInMillis() + 3600*1000*24);
 			if (enddates[i] == null)
 				enddates[i] = day_of_end;	
