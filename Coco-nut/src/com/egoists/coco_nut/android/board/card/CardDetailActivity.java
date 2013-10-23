@@ -29,6 +29,7 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.adapter.ColoredCardLabel;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -98,7 +99,7 @@ public class CardDetailActivity extends Activity {
         
         mContext = this;
         mImageFetcher = new ImageFetcher(mContext);
-        
+        mImageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         // 화면 터치시 키보드 내리기
@@ -122,6 +123,18 @@ public class CardDetailActivity extends Activity {
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+    
+    @Override
+    public void onResume() {
+        mImageFetcher.setExitTasksEarly(false);
+        super.onResume();
+    }
+    
+    @Override
+    public void onPause() {
+        mImageFetcher.setExitTasksEarly(true);
+        super.onPause();
     }
     
     @Override

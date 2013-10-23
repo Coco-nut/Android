@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.egoists.coco_nut.android.BaasioConfig;
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -71,7 +72,7 @@ public class UserSettingActivity extends Activity {
     void initUserSettingForm() {
         mContext = this;
         ImageFetcher imageFetcher = new ImageFetcher(mContext);
-        
+        imageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("설정");

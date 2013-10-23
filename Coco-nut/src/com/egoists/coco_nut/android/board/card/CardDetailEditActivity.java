@@ -45,6 +45,7 @@ import com.egoists.coco_nut.android.board.event.UpdateDuetoTimeEvent;
 import com.egoists.coco_nut.android.board.event.UpdateStartDateEvent;
 import com.egoists.coco_nut.android.board.event.UpdateStartTimeEvent;
 import com.egoists.coco_nut.android.board.event.UpdatedCardEvent;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -128,7 +129,7 @@ public class CardDetailEditActivity extends FragmentActivity implements android.
         mContext = this;
         EventBus.getDefault().register(this);
         mImageFetcher = new ImageFetcher(mContext);
-        
+        mImageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         mParticipant = new ArrayList<Person>();

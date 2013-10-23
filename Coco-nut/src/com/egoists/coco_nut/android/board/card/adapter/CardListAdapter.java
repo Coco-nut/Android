@@ -19,6 +19,7 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
 import com.egoists.coco_nut.android.board.card.Voter;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.EtcUtils;
@@ -38,6 +39,7 @@ public class CardListAdapter extends BaseAdapter {
         mCardList = cardList;
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageFetcher = new ImageFetcher(mContext);
+        mImageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         mMyUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득
     }
 

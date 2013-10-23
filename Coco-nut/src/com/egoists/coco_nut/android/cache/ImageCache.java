@@ -62,7 +62,7 @@ public class ImageCache {
     private static final int DEFAULT_DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
 
     // Compression settings when writing images to disk cache
-    private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
+    private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.PNG;
 
     private static final int DEFAULT_COMPRESS_QUALITY = 75;
 
@@ -73,7 +73,7 @@ public class ImageCache {
     // Constants to easily toggle various caches
     private static final boolean DEFAULT_MEM_CACHE_ENABLED = true;
 
-    private static final boolean DEFAULT_DISK_CACHE_ENABLED = true;
+    private static final boolean DEFAULT_DISK_CACHE_ENABLED = false;
 
     private static final boolean DEFAULT_CLEAR_DISK_CACHE_ON_START = false;
 

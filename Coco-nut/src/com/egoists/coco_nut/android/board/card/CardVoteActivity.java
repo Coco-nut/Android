@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.event.ReloadEvent;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.egoists.coco_nut.android.util.BaasioDialogFactory;
@@ -55,6 +56,7 @@ public class CardVoteActivity extends Activity {
     void initFrom() {
         mContext = this;
         mImageFetcher = new ImageFetcher(mContext);
+        mImageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         mInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         
         mMyUuid = Baas.io().getSignedInUser().getUuid().toString(); // 본인 UUID 획득

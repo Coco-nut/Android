@@ -26,6 +26,7 @@ import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.BoardTabActivity;
 import com.egoists.coco_nut.android.board.card.Card;
 import com.egoists.coco_nut.android.board.card.Person;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.util.AndLog;
 import com.kth.baasio.entity.user.BaasioUser;
@@ -87,6 +88,7 @@ public class PeerView extends RelativeLayout {
 		super(context);
 		mActivity = (BoardTabActivity) context;
 		mImageFetcher = new ImageFetcher(context);
+		mImageFetcher.setImageCache(new ImageCache(context, "COCONUT"));
 		//get screen resolution
 		resolution = new Point();
 		((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(resolution);

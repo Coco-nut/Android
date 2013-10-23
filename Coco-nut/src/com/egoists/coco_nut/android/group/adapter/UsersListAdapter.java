@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.egoists.coco_nut.android.R;
 import com.egoists.coco_nut.android.board.card.CardCreationActivity;
+import com.egoists.coco_nut.android.cache.ImageCache;
 import com.egoists.coco_nut.android.cache.ImageFetcher;
 import com.egoists.coco_nut.android.group.GroupInvitationActivity;
 import com.egoists.coco_nut.android.util.AndLog;
@@ -36,6 +37,7 @@ public class UsersListAdapter extends BaseAdapter {
         mContext = context;
         mUserList = userList;
         mImageFetcher = new ImageFetcher(mContext);
+        mImageFetcher.setImageCache(new ImageCache(mContext, "COCONUT"));
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
