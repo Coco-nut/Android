@@ -91,6 +91,12 @@ public class SignupActivity extends Activity {
             return;
         }
         
+        // 입력 길이 체크
+        if (passwd.length() < 8) {
+            BaasioDialogFactory.createErrorDialog(mContext, R.string.error_not_proper_length_password).show();
+            return;
+        }
+        
         doSignUpByBaasio(userId, userName, passwd);
     }
         

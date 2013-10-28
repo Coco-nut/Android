@@ -19,7 +19,7 @@
         <Preference
                 android:key="version"
                 android:title="버전 정보"
-                android:summary="0.1.4"/>
+                android:summary="0.1.5"/>
     </PreferenceCategory>
     <PreferenceCategory
             android:title="로그아웃">
